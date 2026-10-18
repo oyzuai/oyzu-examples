@@ -1,0 +1,87 @@
+name: Examples verification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Exact candidate Oyzu release tag (otherwise the configured pin)'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: examples-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  catalog:
+    name: Catalog structure
+    runs-on: ubuntu-24.04
+    outputs:
+      recipes: ${{ steps.affected.outputs.recipes }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: node verification/catalog.mjs
+      - id: affected
+        env:
+          EXAMPLES_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node verification/affected.mjs
+  native:
+    name: Native examples (${{ matrix.recipe }})
+    needs: catalog
+    if: needs.catalog.outputs.recipes != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        recipe: ${{ fromJSON(needs.catalog.outputs.recipes) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Acquire the selected published Oyzu artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OYZU_RELEASE_TAG: ${{ inputs.release_tag || vars.OYZU_RELEASE_TAG }}
+          OYZU_RELEASE_ASSET: ${{ vars.OYZU_RELEASE_ASSET }}
+          OYZU_RELEASE_SHA256: ${{ vars.OYZU_RELEASE_SHA256 }}
+          OYZU_RELEASE_EXECUTABLE: ${{ vars.OYZU_RELEASE_EXECUTABLE }}
+        run: node verification/install-cli.mjs
+      - name: Build and consume the committed native recipe
+        env:
+          EXAMPLES_RECIPE: ${{ matrix.recipe }}
+        run: node verification/verify.mjs "$EXAMPLES_RECIPE" "$OYZU_CLI" ".oyzu/verification/$EXAMPLES_RECIPE.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: verification-${{ matrix.recipe }}
+          path: .oyzu/verification/*.json
+  notify-docs:
+    needs: [catalog, native]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.native.result == 'success'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Request a reviewable pin update after verified native changes
+        env:
+          GH_TOKEN: ${{ secrets.OYZU_EXAMPLES_DISPATCH_TOKEN }}
+          EXAMPLES_COMMIT: ${{ github.sha }}
+          EXAMPLES_RECIPES: ${{ needs.catalog.outputs.recipes }}
+        run: |
+          test -n "$GH_TOKEN" || { echo '::error::Configure OYZU_EXAMPLES_DISPATCH_TOKEN with scoped dispatch access to oyzuai/oyzu'; exit 1; }
+          jq -n --arg commit "$EXAMPLES_COMMIT" --argjson recipes "$EXAMPLES_RECIPES" '{event_type:"examples-verified",client_payload:{commit:$commit,recipes:$recipes}}' | gh api repos/oyzuai/oyzu/dispatches --input -

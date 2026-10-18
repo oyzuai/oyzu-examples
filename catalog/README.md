@@ -1,0 +1,493 @@
+# Learning paths and coverage
+
+Generated from coverage.json, learning-paths.json and per-recipe metadata.
+Use verification records for exact subjects; structural checks do not run builds.
+
+## Your first hour
+
+Inspect a plan, build, inspect outputs and run native tests.
+
+1. [Your first build](../getting-started/first-build/README.md)
+2. [Build a native npm application](../builds/node/npm-application/README.md)
+3. [Build a conventional Go command](../builds/go/command/README.md)
+
+## Adopt an existing project
+
+Preserve native conventions and add only necessary exceptions.
+
+1. [Your first build](../getting-started/first-build/README.md)
+2. [Use native tasks, groups and hooks](#tasks-and-hooks)
+3. [Build a pnpm workspace](#pnpm-workspace)
+4. [Acquire private dependencies without leaking credentials](#private-dependencies)
+
+## Deliver a release
+
+Build, inspect evidence, publish, retrieve and retry safely.
+
+1. [Your first build](../getting-started/first-build/README.md)
+2. [Publish finalized OCI file artifacts](#oci-publication)
+3. [Publish to an existing GitHub Release](#github-publication)
+4. [Reconcile several publication destinations](#multiple-destinations)
+
+## Coordinate a larger system
+
+Connect workspaces, generators, artifacts and selected deployment mechanisms.
+
+1. [Connect Go workspace modules](#go-workspace)
+2. [Compose a Rust workspace](#rust-workspace)
+3. [Connect an image and Helm chart](#image-chart-composition)
+4. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
+5. [Build a small polyglot service application](#polyglot-reference)
+
+## Native baselines
+
+| Recipe | Product support | Recipe readiness |
+| --- | --- | --- |
+| [Your first build](../getting-started/first-build/README.md) | implemented-partial | executable |
+| [Build a native npm application](../builds/node/npm-application/README.md) | implemented-partial | executable |
+| [Build a conventional Go command](../builds/go/command/README.md) | implemented-partial | executable |
+| [Build a Python wheel](../builds/python/pip-package/README.md) | implemented-partial | executable |
+| [Build a single-module Maven application](../builds/maven/application/README.md) | implemented-partial | executable |
+| [Build a native Gradle application](../builds/gradle/application/README.md) | implemented-partial | blocked |
+| [Package a conventional Ant application](../builds/ant/application/README.md) | implemented-partial | blocked |
+| [Package an SDK-style .NET library](../builds/dotnet/library/README.md) | implemented-partial | blocked |
+| [Build a minimal Docker file image](../builds/docker/file-image/README.md) | implemented-partial | executable |
+| [Package a minimal Helm chart](../builds/helm/configmap/README.md) | implemented-partial | executable |
+
+## Gaps and assessments
+
+No runnable project or Run action is supplied for these entries. Product support
+and missing example qualification remain separate facts.
+
+### npm-package
+
+**Consume an npm package**. Product support: implemented-partial; recipe readiness: planned.
+
+The collection has an npm directory application; a separately consumed native package archive still needs its own recipe.
+
+Next proof: Build a package with Oyzu, install the delivered tarball in a second project, and call its exported API.
+
+### pnpm-workspace
+
+**Build a pnpm workspace**. Product support: implemented-partial; recipe readiness: planned.
+
+Current pnpm support has bounded native lock and acquisition constraints; this collection has no qualified workspace recipe.
+
+Next proof: Generate the real native lock, build two related packages and consume their delivered archives without workspace source links.
+
+### yarn-classic-workspace
+
+**Build a Yarn Classic workspace**. Product support: implemented-partial; recipe readiness: planned.
+
+Yarn means Classic here. A current recipe and manager-owned lock must be exercised before publishing instructions.
+
+Next proof: Build a Classic workspace through the captured manager and consume its packages independently.
+
+### uv-library
+
+**Build a uv-managed Python library**. Product support: implemented-partial; recipe readiness: planned.
+
+The uv adapter exists, but this collection has no independently verified native uv lock and consumer.
+
+Next proof: Generate uv.lock with the selected native uv, build the wheel and install it in an isolated consumer.
+
+### poetry-package
+
+**Build a Poetry-managed package**. Product support: implemented-partial; recipe readiness: planned.
+
+Poetry support does not qualify every lock format or supply a recorded example.
+
+Next proof: Lock a small package with native Poetry, build through Oyzu and install only its delivered wheel.
+
+### legacy-python
+
+**Build a legacy Python extension**. Product support: implemented-partial; recipe readiness: planned.
+
+A legacy setup.py recipe needs a genuine native compiler prerequisite and a compiled-extension consumer proof.
+
+Next proof: Build and import the delivered extension with the declared native prerequisites, keeping unrelated runtimes unavailable.
+
+### go-workspace
+
+**Connect Go workspace modules**. Product support: implemented-partial; recipe readiness: planned.
+
+The single-command baseline does not qualify go.work relationships or several executable outputs.
+
+Next proof: Build local modules linked through go.work and run each delivered command after changing the shared library.
+
+### rust-workspace
+
+**Compose a Rust workspace**. Product support: implemented-partial; recipe readiness: planned.
+
+The first-build binary does not qualify workspace packaging, features, build scripts or procedural macros.
+
+Next proof: Build an application with a path library and procedural macro, consume the output, then change a generator input and observe rebuilding.
+
+### maven-reactor
+
+**Build a Maven reactor**. Product support: implemented-partial; recipe readiness: planned.
+
+A single-module build does not prove reactor relationships, integration-test reports or WAR output.
+
+Next proof: Build a library/application reactor, run the delivered application and collect its native integration-test report.
+
+### gradle-composite
+
+**Build a Gradle composite**. Product support: implemented-partial; recipe readiness: planned.
+
+Composite builds and custom native test tasks need a focused recipe using the admitted Gradle contracts.
+
+Next proof: Build an included library and application, consume the delivered result and verify the custom suite report.
+
+### ant-tests
+
+**Keep Ant assertions and coverage visible**. Product support: implemented-partial; recipe readiness: planned.
+
+The packaging baseline does not qualify custom targets or JUnit/coverage collection.
+
+Next proof: Run a real Ant test suite, inspect native reports, then introduce a failed assertion and require a failed Oyzu result.
+
+### dotnet-solution
+
+**Build a locked .NET solution**. Product support: implemented-partial; recipe readiness: planned.
+
+The current .NET product proof is Linux captured and needs its explicitly provisioned SDK image; broad host support is unproved.
+
+Next proof: Build a solution with locked restore and project references under SDK 10.0.401, consume its NuGet package and record exact SDK/host facts.
+
+### image-chart-composition
+
+**Connect an image and Helm chart**. Product support: implemented-partial; recipe readiness: planned.
+
+Image output, directory materialization, chart bindings and deployment are separate contracts and still need a collection proof.
+
+Next proof: Materialize a producer into an image, bind its immutable digest into a chart, and verify both delivered artifacts without deploying.
+
+### helm-dependencies
+
+**Package local Helm dependencies**. Product support: implemented-partial; recipe readiness: planned.
+
+The basic chart has no dependency or umbrella-chart proof.
+
+Next proof: Package a local library dependency, render the delivered umbrella chart and check the selected values and packaged dependency identity.
+
+### tasks-and-hooks
+
+**Use native tasks, groups and hooks**. Product support: implemented-partial; recipe readiness: planned.
+
+Native task discovery is distinct from authored hook ordering and qualified group selection.
+
+Next proof: Run grouped native tasks, attach a narrow hook, fail a required task and inspect preserved exit/report behavior.
+
+### private-dependencies
+
+**Acquire private dependencies without leaking credentials**. Product support: implemented-partial; recipe readiness: planned.
+
+The source fixtures are design contracts and bounded acquisition proofs; no public collection recipe has qualified disposable authenticated endpoints.
+
+Next proof: Use scoped test repositories, acquire through supported routes and prove replay and reports contain no credential values.
+
+### incremental-builds
+
+**Observe reuse and invalidation**. Product support: implemented-partial; recipe readiness: planned.
+
+A repeated successful build alone does not prove the right graph was reused or invalidated.
+
+Next proof: Build two consumers, repeat unchanged work, change one shared input and require exactly the relevant dependent artifacts to change.
+
+### platform-matrices
+
+**Separate host, executor and artifact targets**. Product support: implemented-partial; recipe readiness: planned.
+
+Host execution, isolated execution and artifact target compatibility are independent and not universally qualified.
+
+Next proof: Exercise selected supported host/target pairs and record independent tests, artifact identities and unsupported placements.
+
+### reports-and-failures
+
+**Inspect reports and failed outputs**. Product support: implemented-partial; recipe readiness: planned.
+
+The successful baselines do not cover all required failure/report scenarios.
+
+Next proof: Fail a real native test after a successful build and require rejected acceptance, retained failed reports and no successful replacement artifact.
+
+### oci-publication
+
+**Publish finalized OCI file artifacts**. Product support: implemented-partial; recipe readiness: planned.
+
+The provider is experimental. This collection still needs a real registry proof with explicit test witnesses, native retrieval, exact identity, matching repeat and conflict checks.
+
+Next proof: Use a disposable registry, preexisting signed test evidence and explicit signing keys; retrieve payload/evidence and preserve completed effects on retry.
+
+### github-publication
+
+**Publish to an existing GitHub Release**. Product support: implemented-partial; recipe readiness: planned.
+
+A separately provisioned test release and scoped asset credential are required. The adapter does not create/finalize releases or overwrite/delete assets.
+
+Next proof: Publish payload and evidence to an authorized test release, retrieve via GitHub, compare bytes, repeat and exercise occupied/partial states.
+
+### multiple-destinations
+
+**Reconcile several publication destinations**. Product support: implemented-partial; recipe readiness: planned.
+
+Distinct artifact selections are supported in scope, but independent destinations are not an atomic transaction.
+
+Next proof: Succeed at one authorized destination, fail the next, preserve the first receipt and finish only unfinished effects on retry.
+
+### npm-publication
+
+**Publish a native npm package**. Product support: planned; recipe readiness: planned.
+
+Native npm publication is agreed destination scope but is outside the current experimental file-artifact provider slice.
+
+Next proof: After separate provider implementation, publish with native coordinates, retrieve with npm and install in a downstream project.
+
+### python-publication
+
+**Publish a native Python distribution**. Product support: planned; recipe readiness: planned.
+
+Wheels and sdists wrapped in generic OCI objects do not implement native Python publication.
+
+Next proof: After separate provider implementation, publish to a disposable Python index and install the retrieved distribution.
+
+### native-image-publication
+
+**Push a native OCI image**. Product support: planned; recipe readiness: planned.
+
+Generic OCI file-artifact publication does not establish image manifests, layers, indexes or a downstream image pull.
+
+Next proof: Qualify native image publication independently, then pull by immutable digest and run the delivered application.
+
+### other-package-publication
+
+**Assess other native package protocols**. Product support: planned; recipe readiness: planned.
+
+Maven repositories, NuGet, Cargo registries and chart repositories need separate provider and retrieval assessments.
+
+Next proof: Select one concrete protocol and qualify native coordinates, authentication, retrieval, conflict and retry behavior before offering runnable commands.
+
+### other-distribution
+
+**Assess static assets and release binaries**. Product support: planned; recipe readiness: planned.
+
+Release-binary and object/static distribution mechanisms have independent requirements; a generic upload is not their qualification.
+
+Next proof: Select a protocol and scoped test target, retrieve exact payload/evidence and verify its native consumption.
+
+### kubernetes-deployment
+
+**Observe Kubernetes readiness and rollback**. Product support: planned; recipe readiness: planned.
+
+The public deployment-kind contract is draft and is not implemented by a kind SDK or oyzu kind command. A chart build is not an observed deployment.
+
+Next proof: Select a real public integration or explicit external-tool task, deploy an immutable artifact, observe readiness, update and roll back with cleanup.
+
+### static-deployment
+
+**Serve a built static website**. Product support: generic-task; recipe readiness: planned.
+
+A provider-specific example must name its external tool and disposable target; the generic task does not confer native deployment integration.
+
+Next proof: Deliver the same built directory, observe served content at the destination and remove the disposable resources.
+
+### machine-deployment
+
+**Activate a service on a disposable machine**. Product support: planned; recipe readiness: planned.
+
+No machine/service provider has been selected or qualified for this collection.
+
+Next proof: Deliver one immutable package to an authorized machine, activate it, observe health and document rollback/cleanup.
+
+### cloud-deployment
+
+**Assess cloud application and serverless targets**. Product support: planned; recipe readiness: planned.
+
+No cloud provider or account scope is selected; desired-state submission alone is not a deployment proof.
+
+Next proof: Choose one public provider integration with scoped credentials and observe the destination serving the selected artifact.
+
+### infrastructure-changes
+
+**Preview and apply infrastructure explicitly**. Product support: generic-task; recipe readiness: planned.
+
+Invoking an external infrastructure tool through tasks does not establish a native graph or policy-authority integration.
+
+Next proof: Use a disposable scoped target, review a native preview, apply only the authorized change and inspect actual outputs/cleanup.
+
+### release-promotion
+
+**Promote the same artifact across environments**. Product support: planned; recipe readiness: planned.
+
+Environment names grant no authority and the collection has no qualified promotion provider.
+
+Next proof: Promote one existing immutable artifact through selected environments without rebuilding, checking authority and observed destination identity.
+
+### ci
+
+**Use Oyzu from CI without private source**. Product support: implemented-partial; recipe readiness: planned.
+
+Public example execution needs an approved downloadable CLI and checksum until a public engine release exists.
+
+Next proof: Configure a public approved binary, verify its checksum, run affected recipes on PRs and retain exact non-secret records.
+
+### polyglot-reference
+
+**Build a small polyglot service application**. Product support: implemented-partial; recipe readiness: planned.
+
+The independent baselines do not yet demonstrate a complete polyglot application with consumer-owned artifact relationships.
+
+Next proof: Combine a service, frontend and shared package, materialize image/chart inputs, verify delivered behavior and link back to focused recipes.
+
+### developer-tool-reference
+
+**Release a small developer tool**. Product support: implemented-partial; recipe readiness: planned.
+
+The first-build binary is not a complete signed/retrieved developer-tool release flow.
+
+Next proof: Build a tool with a library, run tests, inspect required evidence, publish to authorized targets, retrieve and run the same finalized bytes.
+
+### assess-make
+
+**Assess Make**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Make integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-cmake
+
+**Assess CMake**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native CMake integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-meson-ninja
+
+**Assess Meson and Ninja**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Meson and Ninja integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-bazel
+
+**Assess Bazel**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Bazel integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-buck2
+
+**Assess Buck2**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Buck2 integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-pants
+
+**Assess Pants**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Pants integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-nx
+
+**Assess Nx**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Nx integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-turborepo
+
+**Assess Turborepo**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Turborepo integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-bun
+
+**Assess Bun**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Bun integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-deno
+
+**Assess Deno**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Deno integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-modern-yarn
+
+**Assess Modern Yarn**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Modern Yarn integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-sbt
+
+**Assess sbt**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native sbt integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-nix
+
+**Assess Nix**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Nix integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-swift-xcode
+
+**Assess SwiftPM and Xcode**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native SwiftPM and Xcode integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-ruby
+
+**Assess Bundler and Rake**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Bundler and Rake integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-elixir
+
+**Assess Mix**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Mix integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-dart-flutter
+
+**Assess Dart and Flutter**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Dart and Flutter integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+
+### assess-haskell
+
+**Assess Cabal and Stack**. Product support: unsupported; recipe readiness: planned.
+
+This collection has no qualified native Cabal and Stack integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.
+
+Next proof: Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe.
+

@@ -3,12 +3,26 @@
   "slug": "first-build",
   "title": "Your first build",
   "difficulty": "beginner",
-  "ecosystems": ["rust"],
-  "capabilities": ["build", "tools", "artifacts", "tests"],
+  "ecosystems": [
+    "rust"
+  ],
+  "capabilities": [
+    "build",
+    "tools",
+    "artifacts",
+    "tests"
+  ],
   "productSupport": "implemented-partial",
   "maturity": "executable",
-  "prerequisites": ["Oyzu installation", "Rust selected by project configuration"],
-  "profiles": ["host"],
-  "verification": [],
+  "prerequisites": [
+    "Oyzu installation",
+    "Rust selected by project configuration"
+  ],
+  "profiles": [
+    "host"
+  ],
+  "verification": [
+    "verification/records/first-build-windows.json"
+  ],
   "traceability": []
 }

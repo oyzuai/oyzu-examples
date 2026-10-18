@@ -1,0 +1,28 @@
+{
+  "id": "go-command",
+  "slug": "go-command",
+  "title": "Build a conventional Go command",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "go"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Oyzu can acquire Go 1.24.13. This recipe requests host execution; it does not qualify cgo or cross-compilation."
+  ],
+  "profiles": [
+    "see-recipe"
+  ],
+  "verification": [
+    "verification/records/go-command-windows.json"
+  ],
+  "traceability": [
+    "EX-006",
+    "EX-016"
+  ]
+}

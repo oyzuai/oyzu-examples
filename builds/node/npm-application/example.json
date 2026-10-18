@@ -1,0 +1,29 @@
+{
+  "id": "node-application",
+  "slug": "node-application",
+  "title": "Build a native npm application",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "node"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
+  ],
+  "profiles": [
+    "see-recipe"
+  ],
+  "verification": [
+    "verification/records/node-application-windows.json"
+  ],
+  "traceability": [
+    "EX-007",
+    "EX-018",
+    "EX-050"
+  ]
+}

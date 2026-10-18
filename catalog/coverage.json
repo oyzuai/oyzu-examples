@@ -1,6 +1,1884 @@
 {
   "recipes": [
-    {"id": "first-build", "path": "getting-started/first-build", "kind": "recipe"}
+    {
+      "id": "first-build",
+      "path": "getting-started/first-build",
+      "kind": "recipe"
+    },
+    {
+      "id": "node-application",
+      "path": "builds/node/npm-application",
+      "kind": "recipe"
+    },
+    {
+      "id": "go-command",
+      "path": "builds/go/command",
+      "kind": "recipe"
+    },
+    {
+      "id": "python-package",
+      "path": "builds/python/pip-package",
+      "kind": "recipe"
+    },
+    {
+      "id": "maven-application",
+      "path": "builds/maven/application",
+      "kind": "recipe"
+    },
+    {
+      "id": "gradle-application",
+      "path": "builds/gradle/application",
+      "kind": "recipe"
+    },
+    {
+      "id": "ant-application",
+      "path": "builds/ant/application",
+      "kind": "recipe"
+    },
+    {
+      "id": "dotnet-library",
+      "path": "builds/dotnet/library",
+      "kind": "recipe"
+    },
+    {
+      "id": "docker-file-image",
+      "path": "builds/docker/file-image",
+      "kind": "recipe"
+    },
+    {
+      "id": "helm-chart",
+      "path": "builds/helm/configmap",
+      "kind": "recipe"
+    }
   ],
-  "gaps": []
+  "gaps": [
+    {
+      "id": "npm-package",
+      "title": "Consume an npm package",
+      "ecosystems": [
+        "node",
+        "npm"
+      ],
+      "capabilities": [
+        "build",
+        "consume"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The collection has an npm directory application; a separately consumed native package archive still needs its own recipe.",
+      "nextProof": "Build a package with Oyzu, install the delivered tarball in a second project, and call its exported API."
+    },
+    {
+      "id": "pnpm-workspace",
+      "title": "Build a pnpm workspace",
+      "ecosystems": [
+        "node",
+        "pnpm"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Current pnpm support has bounded native lock and acquisition constraints; this collection has no qualified workspace recipe.",
+      "nextProof": "Generate the real native lock, build two related packages and consume their delivered archives without workspace source links."
+    },
+    {
+      "id": "yarn-classic-workspace",
+      "title": "Build a Yarn Classic workspace",
+      "ecosystems": [
+        "node",
+        "yarn-classic"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Yarn means Classic here. A current recipe and manager-owned lock must be exercised before publishing instructions.",
+      "nextProof": "Build a Classic workspace through the captured manager and consume its packages independently."
+    },
+    {
+      "id": "uv-library",
+      "title": "Build a uv-managed Python library",
+      "ecosystems": [
+        "python",
+        "uv"
+      ],
+      "capabilities": [
+        "build",
+        "consume"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The uv adapter exists, but this collection has no independently verified native uv lock and consumer.",
+      "nextProof": "Generate uv.lock with the selected native uv, build the wheel and install it in an isolated consumer."
+    },
+    {
+      "id": "poetry-package",
+      "title": "Build a Poetry-managed package",
+      "ecosystems": [
+        "python",
+        "poetry"
+      ],
+      "capabilities": [
+        "build",
+        "consume"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Poetry support does not qualify every lock format or supply a recorded example.",
+      "nextProof": "Lock a small package with native Poetry, build through Oyzu and install only its delivered wheel."
+    },
+    {
+      "id": "legacy-python",
+      "title": "Build a legacy Python extension",
+      "ecosystems": [
+        "python"
+      ],
+      "capabilities": [
+        "build",
+        "native-code"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "A legacy setup.py recipe needs a genuine native compiler prerequisite and a compiled-extension consumer proof.",
+      "nextProof": "Build and import the delivered extension with the declared native prerequisites, keeping unrelated runtimes unavailable."
+    },
+    {
+      "id": "go-workspace",
+      "title": "Connect Go workspace modules",
+      "ecosystems": [
+        "go"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The single-command baseline does not qualify go.work relationships or several executable outputs.",
+      "nextProof": "Build local modules linked through go.work and run each delivered command after changing the shared library."
+    },
+    {
+      "id": "rust-workspace",
+      "title": "Compose a Rust workspace",
+      "ecosystems": [
+        "rust"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces",
+        "generated-sources"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The first-build binary does not qualify workspace packaging, features, build scripts or procedural macros.",
+      "nextProof": "Build an application with a path library and procedural macro, consume the output, then change a generator input and observe rebuilding."
+    },
+    {
+      "id": "maven-reactor",
+      "title": "Build a Maven reactor",
+      "ecosystems": [
+        "maven"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "A single-module build does not prove reactor relationships, integration-test reports or WAR output.",
+      "nextProof": "Build a library/application reactor, run the delivered application and collect its native integration-test report."
+    },
+    {
+      "id": "gradle-composite",
+      "title": "Build a Gradle composite",
+      "ecosystems": [
+        "gradle"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces",
+        "tests"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Composite builds and custom native test tasks need a focused recipe using the admitted Gradle contracts.",
+      "nextProof": "Build an included library and application, consume the delivered result and verify the custom suite report."
+    },
+    {
+      "id": "ant-tests",
+      "title": "Keep Ant assertions and coverage visible",
+      "ecosystems": [
+        "ant"
+      ],
+      "capabilities": [
+        "build",
+        "tests"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The packaging baseline does not qualify custom targets or JUnit/coverage collection.",
+      "nextProof": "Run a real Ant test suite, inspect native reports, then introduce a failed assertion and require a failed Oyzu result."
+    },
+    {
+      "id": "dotnet-solution",
+      "title": "Build a locked .NET solution",
+      "ecosystems": [
+        "dotnet"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces",
+        "tests"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The current .NET product proof is Linux captured and needs its explicitly provisioned SDK image; broad host support is unproved.",
+      "nextProof": "Build a solution with locked restore and project references under SDK 10.0.401, consume its NuGet package and record exact SDK/host facts."
+    },
+    {
+      "id": "image-chart-composition",
+      "title": "Connect an image and Helm chart",
+      "ecosystems": [
+        "docker",
+        "helm"
+      ],
+      "capabilities": [
+        "build",
+        "composition"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Image output, directory materialization, chart bindings and deployment are separate contracts and still need a collection proof.",
+      "nextProof": "Materialize a producer into an image, bind its immutable digest into a chart, and verify both delivered artifacts without deploying."
+    },
+    {
+      "id": "helm-dependencies",
+      "title": "Package local Helm dependencies",
+      "ecosystems": [
+        "helm"
+      ],
+      "capabilities": [
+        "build",
+        "workspaces"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The basic chart has no dependency or umbrella-chart proof.",
+      "nextProof": "Package a local library dependency, render the delivered umbrella chart and check the selected values and packaged dependency identity."
+    },
+    {
+      "id": "tasks-and-hooks",
+      "title": "Use native tasks, groups and hooks",
+      "ecosystems": [
+        "oyzu"
+      ],
+      "capabilities": [
+        "tasks",
+        "hooks",
+        "configuration"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Native task discovery is distinct from authored hook ordering and qualified group selection.",
+      "nextProof": "Run grouped native tasks, attach a narrow hook, fail a required task and inspect preserved exit/report behavior."
+    },
+    {
+      "id": "private-dependencies",
+      "title": "Acquire private dependencies without leaking credentials",
+      "ecosystems": [
+        "node",
+        "python",
+        "go",
+        "rust",
+        "maven",
+        "gradle",
+        "ant",
+        "helm"
+      ],
+      "capabilities": [
+        "dependencies",
+        "credentials"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The source fixtures are design contracts and bounded acquisition proofs; no public collection recipe has qualified disposable authenticated endpoints.",
+      "nextProof": "Use scoped test repositories, acquire through supported routes and prove replay and reports contain no credential values."
+    },
+    {
+      "id": "incremental-builds",
+      "title": "Observe reuse and invalidation",
+      "ecosystems": [
+        "oyzu"
+      ],
+      "capabilities": [
+        "cache",
+        "affected-builds"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "A repeated successful build alone does not prove the right graph was reused or invalidated.",
+      "nextProof": "Build two consumers, repeat unchanged work, change one shared input and require exactly the relevant dependent artifacts to change."
+    },
+    {
+      "id": "platform-matrices",
+      "title": "Separate host, executor and artifact targets",
+      "ecosystems": [
+        "oyzu"
+      ],
+      "capabilities": [
+        "build",
+        "platforms"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Host execution, isolated execution and artifact target compatibility are independent and not universally qualified.",
+      "nextProof": "Exercise selected supported host/target pairs and record independent tests, artifact identities and unsupported placements."
+    },
+    {
+      "id": "reports-and-failures",
+      "title": "Inspect reports and failed outputs",
+      "ecosystems": [
+        "oyzu"
+      ],
+      "capabilities": [
+        "tests",
+        "reports",
+        "failures"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The successful baselines do not cover all required failure/report scenarios.",
+      "nextProof": "Fail a real native test after a successful build and require rejected acceptance, retained failed reports and no successful replacement artifact."
+    },
+    {
+      "id": "oci-publication",
+      "title": "Publish finalized OCI file artifacts",
+      "ecosystems": [
+        "oci"
+      ],
+      "capabilities": [
+        "publish",
+        "retrieve",
+        "retry"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The provider is experimental. This collection still needs a real registry proof with explicit test witnesses, native retrieval, exact identity, matching repeat and conflict checks.",
+      "nextProof": "Use a disposable registry, preexisting signed test evidence and explicit signing keys; retrieve payload/evidence and preserve completed effects on retry."
+    },
+    {
+      "id": "github-publication",
+      "title": "Publish to an existing GitHub Release",
+      "ecosystems": [
+        "github"
+      ],
+      "capabilities": [
+        "publish",
+        "retrieve",
+        "retry"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "A separately provisioned test release and scoped asset credential are required. The adapter does not create/finalize releases or overwrite/delete assets.",
+      "nextProof": "Publish payload and evidence to an authorized test release, retrieve via GitHub, compare bytes, repeat and exercise occupied/partial states."
+    },
+    {
+      "id": "multiple-destinations",
+      "title": "Reconcile several publication destinations",
+      "ecosystems": [
+        "oci",
+        "github"
+      ],
+      "capabilities": [
+        "publish",
+        "retry"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Distinct artifact selections are supported in scope, but independent destinations are not an atomic transaction.",
+      "nextProof": "Succeed at one authorized destination, fail the next, preserve the first receipt and finish only unfinished effects on retry."
+    },
+    {
+      "id": "npm-publication",
+      "title": "Publish a native npm package",
+      "ecosystems": [
+        "node",
+        "npm"
+      ],
+      "capabilities": [
+        "publish",
+        "consume"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Native npm publication is agreed destination scope but is outside the current experimental file-artifact provider slice.",
+      "nextProof": "After separate provider implementation, publish with native coordinates, retrieve with npm and install in a downstream project."
+    },
+    {
+      "id": "python-publication",
+      "title": "Publish a native Python distribution",
+      "ecosystems": [
+        "python",
+        "pypi"
+      ],
+      "capabilities": [
+        "publish",
+        "consume"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Wheels and sdists wrapped in generic OCI objects do not implement native Python publication.",
+      "nextProof": "After separate provider implementation, publish to a disposable Python index and install the retrieved distribution."
+    },
+    {
+      "id": "native-image-publication",
+      "title": "Push a native OCI image",
+      "ecosystems": [
+        "docker",
+        "oci"
+      ],
+      "capabilities": [
+        "publish",
+        "retrieve"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Generic OCI file-artifact publication does not establish image manifests, layers, indexes or a downstream image pull.",
+      "nextProof": "Qualify native image publication independently, then pull by immutable digest and run the delivered application."
+    },
+    {
+      "id": "other-package-publication",
+      "title": "Assess other native package protocols",
+      "ecosystems": [
+        "maven",
+        "nuget",
+        "cargo",
+        "helm"
+      ],
+      "capabilities": [
+        "publish"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Maven repositories, NuGet, Cargo registries and chart repositories need separate provider and retrieval assessments.",
+      "nextProof": "Select one concrete protocol and qualify native coordinates, authentication, retrieval, conflict and retry behavior before offering runnable commands."
+    },
+    {
+      "id": "other-distribution",
+      "title": "Assess static assets and release binaries",
+      "ecosystems": [
+        "object-storage",
+        "github"
+      ],
+      "capabilities": [
+        "publish"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Release-binary and object/static distribution mechanisms have independent requirements; a generic upload is not their qualification.",
+      "nextProof": "Select a protocol and scoped test target, retrieve exact payload/evidence and verify its native consumption."
+    },
+    {
+      "id": "kubernetes-deployment",
+      "title": "Observe Kubernetes readiness and rollback",
+      "ecosystems": [
+        "kubernetes",
+        "helm"
+      ],
+      "capabilities": [
+        "deploy",
+        "rollback"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The public deployment-kind contract is draft and is not implemented by a kind SDK or oyzu kind command. A chart build is not an observed deployment.",
+      "nextProof": "Select a real public integration or explicit external-tool task, deploy an immutable artifact, observe readiness, update and roll back with cleanup."
+    },
+    {
+      "id": "static-deployment",
+      "title": "Serve a built static website",
+      "ecosystems": [
+        "static-web"
+      ],
+      "capabilities": [
+        "deploy",
+        "verify"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "generic-task",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "A provider-specific example must name its external tool and disposable target; the generic task does not confer native deployment integration.",
+      "nextProof": "Deliver the same built directory, observe served content at the destination and remove the disposable resources."
+    },
+    {
+      "id": "machine-deployment",
+      "title": "Activate a service on a disposable machine",
+      "ecosystems": [
+        "ssh",
+        "vm"
+      ],
+      "capabilities": [
+        "deploy",
+        "verify"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "No machine/service provider has been selected or qualified for this collection.",
+      "nextProof": "Deliver one immutable package to an authorized machine, activate it, observe health and document rollback/cleanup."
+    },
+    {
+      "id": "cloud-deployment",
+      "title": "Assess cloud application and serverless targets",
+      "ecosystems": [
+        "cloud"
+      ],
+      "capabilities": [
+        "deploy"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "No cloud provider or account scope is selected; desired-state submission alone is not a deployment proof.",
+      "nextProof": "Choose one public provider integration with scoped credentials and observe the destination serving the selected artifact."
+    },
+    {
+      "id": "infrastructure-changes",
+      "title": "Preview and apply infrastructure explicitly",
+      "ecosystems": [
+        "terraform",
+        "pulumi"
+      ],
+      "capabilities": [
+        "deploy",
+        "infrastructure"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "generic-task",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Invoking an external infrastructure tool through tasks does not establish a native graph or policy-authority integration.",
+      "nextProof": "Use a disposable scoped target, review a native preview, apply only the authorized change and inspect actual outputs/cleanup."
+    },
+    {
+      "id": "release-promotion",
+      "title": "Promote the same artifact across environments",
+      "ecosystems": [
+        "oyzu"
+      ],
+      "capabilities": [
+        "deploy",
+        "promote"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "planned",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Environment names grant no authority and the collection has no qualified promotion provider.",
+      "nextProof": "Promote one existing immutable artifact through selected environments without rebuilding, checking authority and observed destination identity."
+    },
+    {
+      "id": "ci",
+      "title": "Use Oyzu from CI without private source",
+      "ecosystems": [
+        "github-actions"
+      ],
+      "capabilities": [
+        "ci",
+        "build"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "Public example execution needs an approved downloadable CLI and checksum until a public engine release exists.",
+      "nextProof": "Configure a public approved binary, verify its checksum, run affected recipes on PRs and retain exact non-secret records."
+    },
+    {
+      "id": "polyglot-reference",
+      "title": "Build a small polyglot service application",
+      "ecosystems": [
+        "go",
+        "node",
+        "docker",
+        "helm"
+      ],
+      "capabilities": [
+        "reference-application",
+        "composition"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The independent baselines do not yet demonstrate a complete polyglot application with consumer-owned artifact relationships.",
+      "nextProof": "Combine a service, frontend and shared package, materialize image/chart inputs, verify delivered behavior and link back to focused recipes."
+    },
+    {
+      "id": "developer-tool-reference",
+      "title": "Release a small developer tool",
+      "ecosystems": [
+        "rust",
+        "github",
+        "oci"
+      ],
+      "capabilities": [
+        "reference-application",
+        "publish"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "implemented-partial",
+      "maturity": "planned",
+      "role": "workflow",
+      "currentGap": "The first-build binary is not a complete signed/retrieved developer-tool release flow.",
+      "nextProof": "Build a tool with a library, run tests, inspect required evidence, publish to authorized targets, retrieve and run the same finalized bytes."
+    },
+    {
+      "id": "assess-make",
+      "title": "Assess Make",
+      "ecosystems": [
+        "make"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native Make integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-cmake",
+      "title": "Assess CMake",
+      "ecosystems": [
+        "cmake"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-generator",
+      "currentGap": "This collection has no qualified native CMake integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-meson-ninja",
+      "title": "Assess Meson and Ninja",
+      "ecosystems": [
+        "meson-ninja"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native Meson and Ninja integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-bazel",
+      "title": "Assess Bazel",
+      "ecosystems": [
+        "bazel"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native Bazel integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-buck2",
+      "title": "Assess Buck2",
+      "ecosystems": [
+        "buck2"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native Buck2 integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-pants",
+      "title": "Assess Pants",
+      "ecosystems": [
+        "pants"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "orchestrator",
+      "currentGap": "This collection has no qualified native Pants integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-nx",
+      "title": "Assess Nx",
+      "ecosystems": [
+        "nx"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "orchestrator",
+      "currentGap": "This collection has no qualified native Nx integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-turborepo",
+      "title": "Assess Turborepo",
+      "ecosystems": [
+        "turborepo"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "orchestrator",
+      "currentGap": "This collection has no qualified native Turborepo integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-bun",
+      "title": "Assess Bun",
+      "ecosystems": [
+        "bun"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "runtime",
+      "currentGap": "This collection has no qualified native Bun integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-deno",
+      "title": "Assess Deno",
+      "ecosystems": [
+        "deno"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "runtime",
+      "currentGap": "This collection has no qualified native Deno integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-modern-yarn",
+      "title": "Assess Modern Yarn",
+      "ecosystems": [
+        "modern-yarn"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "package-manager",
+      "currentGap": "This collection has no qualified native Modern Yarn integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-sbt",
+      "title": "Assess sbt",
+      "ecosystems": [
+        "sbt"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native sbt integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-nix",
+      "title": "Assess Nix",
+      "ecosystems": [
+        "nix"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "environment-manager",
+      "currentGap": "This collection has no qualified native Nix integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-swift-xcode",
+      "title": "Assess SwiftPM and Xcode",
+      "ecosystems": [
+        "swift-xcode"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native SwiftPM and Xcode integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-ruby",
+      "title": "Assess Bundler and Rake",
+      "ecosystems": [
+        "ruby"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "package-manager",
+      "currentGap": "This collection has no qualified native Bundler and Rake integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-elixir",
+      "title": "Assess Mix",
+      "ecosystems": [
+        "elixir"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "build-engine",
+      "currentGap": "This collection has no qualified native Mix integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-dart-flutter",
+      "title": "Assess Dart and Flutter",
+      "ecosystems": [
+        "dart-flutter"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "runtime",
+      "currentGap": "This collection has no qualified native Dart and Flutter integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    },
+    {
+      "id": "assess-haskell",
+      "title": "Assess Cabal and Stack",
+      "ecosystems": [
+        "haskell"
+      ],
+      "capabilities": [
+        "build",
+        "assessment"
+      ],
+      "difficulty": "intermediate",
+      "productSupport": "unsupported",
+      "maturity": "planned",
+      "role": "package-manager",
+      "currentGap": "This collection has no qualified native Cabal and Stack integration. A generic task invocation is not native graph, acquisition, artifact or evidence support.",
+      "nextProof": "Select a concrete native project and ownership contract, then prove its real build, dependency capture, delivered artifact and consumer before adding a runnable recipe."
+    }
+  ],
+  "traceability": [
+    {
+      "id": "EX-001",
+      "acceptance": [
+        "TOOL-01",
+        "TOOL-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tools/install-and-lock/scenario.json"
+      }
+    },
+    {
+      "id": "EX-002",
+      "acceptance": [
+        "ENV-01",
+        "ENV-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/environments/switch-projects/scenario.json"
+      }
+    },
+    {
+      "id": "EX-003",
+      "acceptance": [
+        "CFG-01",
+        "CFG-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/environments/local-overrides/scenario.json"
+      }
+    },
+    {
+      "id": "EX-004",
+      "acceptance": [
+        "ENV-04",
+        "DIST-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/environments/headless-exec/scenario.json"
+      }
+    },
+    {
+      "id": "EX-005",
+      "acceptance": [
+        "ENV-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/environments/repository-trust/scenario.json"
+      }
+    },
+    {
+      "id": "EX-006",
+      "acceptance": [
+        "TASK-01",
+        "BUILDER-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tasks/go-implicit/scenario.json"
+      }
+    },
+    {
+      "id": "EX-007",
+      "acceptance": [
+        "TASK-01",
+        "BUILDER-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tasks/npm-scripts/scenario.json"
+      }
+    },
+    {
+      "id": "EX-008",
+      "acceptance": [
+        "TASK-06",
+        "PLAN-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tasks/grouped-targets/scenario.json"
+      }
+    },
+    {
+      "id": "EX-009",
+      "acceptance": [
+        "TASK-02",
+        "TASK-03",
+        "TASK-04"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tasks/overrides-and-hooks/scenario.json"
+      }
+    },
+    {
+      "id": "EX-010",
+      "acceptance": [
+        "TASK-05",
+        "CACHE-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tasks/cached-hooks/scenario.json"
+      }
+    },
+    {
+      "id": "EX-011",
+      "acceptance": [
+        "BUILDER-01",
+        "EXEC-02",
+        "BUNDLE-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/python-uv-library/scenario.json"
+      }
+    },
+    {
+      "id": "EX-012",
+      "acceptance": [
+        "PLAN-01",
+        "BUILDER-04",
+        "BUILDER-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/python-api/scenario.json"
+      }
+    },
+    {
+      "id": "EX-013",
+      "acceptance": [
+        "EXEC-02",
+        "BUILDER-04"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/python-pip/scenario.json"
+      }
+    },
+    {
+      "id": "EX-014",
+      "acceptance": [
+        "BUILDER-01",
+        "BUNDLE-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/python-poetry/scenario.json"
+      }
+    },
+    {
+      "id": "EX-015",
+      "acceptance": [
+        "EXEC-01",
+        "EXEC-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/python-legacy-native/scenario.json"
+      }
+    },
+    {
+      "id": "EX-016",
+      "acceptance": [
+        "PLAN-01",
+        "BUILDER-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/go-app/scenario.json"
+      }
+    },
+    {
+      "id": "EX-017",
+      "acceptance": [
+        "BUILDER-02",
+        "EXEC-04",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/go-workspace-cgo/scenario.json"
+      }
+    },
+    {
+      "id": "EX-018",
+      "acceptance": [
+        "BUILDER-01",
+        "BUILDER-04"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/node-package/scenario.json"
+      }
+    },
+    {
+      "id": "EX-019",
+      "acceptance": [
+        "BUILDER-04",
+        "PLAN-04"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/node-managers/scenario.json"
+      }
+    },
+    {
+      "id": "EX-020",
+      "acceptance": [
+        "BUILDER-02",
+        "PLAN-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/node-workspace/scenario.json"
+      }
+    },
+    {
+      "id": "EX-021",
+      "acceptance": [
+        "BUILDER-01",
+        "BUNDLE-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/rust-app/scenario.json"
+      }
+    },
+    {
+      "id": "EX-022",
+      "acceptance": [
+        "BUILDER-02",
+        "EXEC-01",
+        "PLAN-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/rust-workspace/scenario.json"
+      }
+    },
+    {
+      "id": "EX-023",
+      "acceptance": [
+        "BUILDER-02",
+        "BUNDLE-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/java-maven-reactor/scenario.json"
+      }
+    },
+    {
+      "id": "EX-024",
+      "acceptance": [
+        "TOOL-01",
+        "BUILDER-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/java-gradle-multi-project/scenario.json"
+      }
+    },
+    {
+      "id": "EX-025",
+      "acceptance": [
+        "BUILDER-04",
+        "TASK-01"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/java-ant/scenario.json"
+      }
+    },
+    {
+      "id": "EX-026",
+      "acceptance": [
+        "EXEC-01",
+        "BUILDER-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/docker-offline/scenario.json"
+      }
+    },
+    {
+      "id": "EX-027",
+      "acceptance": [
+        "PLAN-05",
+        "EXEC-04",
+        "PLAN-07",
+        "PLAN-08",
+        "BUILDER-07",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/container-variants/scenario.json"
+      }
+    },
+    {
+      "id": "EX-028",
+      "acceptance": [
+        "BUILDER-01",
+        "BUILDER-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/helm-chart/scenario.json"
+      }
+    },
+    {
+      "id": "EX-029",
+      "acceptance": [
+        "BUILDER-05",
+        "BUNDLE-01",
+        "PLAN-07",
+        "PLAN-08",
+        "BUILDER-07",
+        "PACK-09",
+        "PACK-10",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/image-and-chart/scenario.json"
+      }
+    },
+    {
+      "id": "EX-030",
+      "acceptance": [
+        "PLAN-02",
+        "TASK-06",
+        "PLAN-07",
+        "PLAN-08",
+        "BUILDER-07",
+        "PACK-09",
+        "PACK-10",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/mixed-monorepo/scenario.json"
+      }
+    },
+    {
+      "id": "EX-031",
+      "acceptance": [
+        "PLAN-06",
+        "CACHE-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/generated-source/scenario.json"
+      }
+    },
+    {
+      "id": "EX-032",
+      "acceptance": [
+        "PLAN-05",
+        "BUNDLE-01",
+        "MODEL-02",
+        "MODEL-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/compatibility-matrix/scenario.json"
+      }
+    },
+    {
+      "id": "EX-033",
+      "acceptance": [
+        "PLAN-05",
+        "CACHE-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/affected-graph/scenario.json"
+      }
+    },
+    {
+      "id": "EX-034",
+      "acceptance": [
+        "CACHE-01",
+        "CACHE-03",
+        "CACHE-06"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/cache/oci-standalone/scenario.json"
+      }
+    },
+    {
+      "id": "EX-035",
+      "acceptance": [
+        "CACHE-04",
+        "REL-06"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/cache/producer-evidence/scenario.json"
+      }
+    },
+    {
+      "id": "EX-036",
+      "acceptance": [
+        "BUNDLE-02",
+        "BUNDLE-04",
+        "BUNDLE-06"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/artifacts/failed-bundle/scenario.json"
+      }
+    },
+    {
+      "id": "EX-037",
+      "acceptance": [
+        "REL-01",
+        "REL-02",
+        "REL-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/release/eligibility/scenario.json"
+      }
+    },
+    {
+      "id": "EX-038",
+      "acceptance": [
+        "REL-04",
+        "BUNDLE-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/release/publication-retries/scenario.json"
+      }
+    },
+    {
+      "id": "EX-039",
+      "acceptance": [
+        "AGENT-01",
+        "CONN-05",
+        "PROTO-02"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/managed/tool-catalog/scenario.json"
+      }
+    },
+    {
+      "id": "EX-040",
+      "acceptance": [
+        "AGENT-02",
+        "AGENT-03",
+        "CONN-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/managed/package-proxy/scenario.json"
+      }
+    },
+    {
+      "id": "EX-041",
+      "acceptance": [
+        "CFG-02",
+        "AGENT-04",
+        "PROTO-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/managed/logout-and-outage/scenario.json"
+      }
+    },
+    {
+      "id": "EX-042",
+      "acceptance": [
+        "EXEC-01",
+        "EXEC-06"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/security/sandbox-escape/scenario.json"
+      }
+    },
+    {
+      "id": "EX-043",
+      "acceptance": [
+        "PROTO-03",
+        "PLAN-06"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/managed/policy-checks/scenario.json"
+      }
+    },
+    {
+      "id": "EX-044",
+      "acceptance": [
+        "EXEC-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/service-test/scenario.json"
+      }
+    },
+    {
+      "id": "EX-045",
+      "acceptance": [
+        "DIST-01",
+        "DIST-02",
+        "DIST-03"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/lifecycle/desktop-independent/scenario.json"
+      }
+    },
+    {
+      "id": "EX-046",
+      "acceptance": [
+        "ENV-04",
+        "ENV-05",
+        "DIST-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/environments/shell-lifecycle/scenario.json"
+      }
+    },
+    {
+      "id": "EX-047",
+      "acceptance": [
+        "MISE-01",
+        "MISE-04",
+        "TOOL-04"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/tools/backend-routing/scenario.json"
+      }
+    },
+    {
+      "id": "EX-048",
+      "acceptance": [
+        "CONN-06",
+        "REL-02",
+        "REL-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/release/source-control-facts/scenario.json"
+      }
+    },
+    {
+      "id": "EX-049",
+      "acceptance": [
+        "PLAN-07",
+        "PLAN-08",
+        "BUILDER-07",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/materialize-selected-artifacts/scenario.json"
+      }
+    },
+    {
+      "id": "EX-050",
+      "acceptance": [
+        "PLAN-07",
+        "PLAN-08",
+        "BUILDER-07",
+        "MODEL-11",
+        "MODEL-12",
+        "MODEL-13"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/builds/materialize-directory/scenario.json"
+      }
+    },
+    {
+      "id": "EX-051",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/python-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-052",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/node-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-053",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/java-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-054",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/go-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-055",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/rust-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-056",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/helm-private/scenario.json"
+      }
+    },
+    {
+      "id": "EX-057",
+      "acceptance": [
+        "EXEC-02",
+        "EXEC-07",
+        "BUILDER-08",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/container-os-packages/scenario.json"
+      }
+    },
+    {
+      "id": "EX-058",
+      "acceptance": [
+        "EXEC-07",
+        "BUILDER-08",
+        "BUILDER-05",
+        "CONN-03",
+        "DEP-01",
+        "DEP-02",
+        "DEP-03",
+        "DEP-04",
+        "DEP-05",
+        "DEP-06",
+        "DEP-07",
+        "PACK-04",
+        "PACK-05"
+      ],
+      "fixtureStatus": "authored",
+      "source": {
+        "repository": "oyzuai/oyzu",
+        "revision": "e275c16ff05a370819d4922ca77afd633ff548e4",
+        "path": "examples/dependencies/docker-credential-boundary/scenario.json"
+      }
+    }
+  ]
 }
