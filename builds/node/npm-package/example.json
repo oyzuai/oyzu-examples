@@ -16,10 +16,10 @@
   "productSupport": "implemented-partial",
   "maturity": "experimental",
   "executionProfiles": [
-    "native-host"
+    "captured"
   ],
   "prerequisites": [
-    "Installed Oyzu and the tools/executor named in the recipe"
+    "Provision Docker and the compatible captured executor named in the recipe; install its declared tools for development and downstream consumption."
   ],
   "verification": [
     "verification/records/npm-package-windows.json"

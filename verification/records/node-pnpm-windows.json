@@ -13,7 +13,7 @@
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "recorded-in-bundle",
+  "execution": "captured",
   "target": {
     "arch": "amd64",
     "os": "linux"
@@ -55,5 +55,6 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:22:01.988Z"
+  "recordedAt": "2026-10-18T06:22:01.988Z",
+  "profileEvidence": "The recorded build explicitly selected --isolated; this annotation clarifies that already observed execution."
 }

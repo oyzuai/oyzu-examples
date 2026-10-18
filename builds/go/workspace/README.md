@@ -1,6 +1,6 @@
 # Build related Go workspace modules
 
-Run `oyzu install --frozen`, `oyzu run list`, `oyzu build --plan`, `oyzu build --full` and `oyzu inspect dist`. Native go.work owns both modules. Run the delivered service executable and expect `Hello from the workspace library.` Change the shared implementation to return `Updated workspace library.`, build again, and run the newly collected executable. The output must change without downloading a public substitute for the contained module. Native Go supplies the relationship; this is not two unrelated Oyzu targets.
+Run `oyzu install --frozen`, `oyzu run list`, `oyzu build --plan`, `oyzu build --isolated --full` and `oyzu inspect dist`. Native go.work owns both modules. Run the delivered service executable and expect `Hello from the workspace library.` Change the shared implementation to return `Updated workspace library.`, build again, and run the newly collected executable. The output must change without downloading a public substitute for the contained module. Native Go supplies the relationship; this is not two unrelated Oyzu targets.
 
 This workspace uses the captured Go executor on the measured Windows host.
 Provision Docker and the Go SDK image oyzu-toolchain/go:1.24-mod0.25.0 with a
