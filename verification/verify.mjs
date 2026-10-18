@@ -173,7 +173,7 @@ async function verifyNative(id, cli, output) {
       observations.push('Native go.work build and delivered consumer used the contained shared module');
       const source=path.join(scratch,'shared/greeting.go');fs.writeFileSync(source,fs.readFileSync(source,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
       const test=path.join(scratch,'shared/greeting_test.go');fs.writeFileSync(test,fs.readFileSync(test,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
-      build(['--full']);invoke(['inspect','dist']);
+      build(['--isolated','--full']);invoke(['inspect','dist']);
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const result=rebuilt.artifacts.find(item=>item.name==='primary');
       if(!result || result.digest===artifact.digest) throw Error('Workspace library change did not reach the executable');
