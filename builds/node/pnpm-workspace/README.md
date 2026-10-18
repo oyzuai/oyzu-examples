@@ -7,7 +7,8 @@ the single-package pnpm recipe.
 
 ## Prerequisites
 
-Use an Oyzu binary with the captured pnpm workspace adapter, Docker and the
+Use an Oyzu binary with the captured pnpm workspace adapter and Windows Linux-link
+preparation fix when controlling the build from Windows, Docker and the
 already provisioned `oyzu-toolchain/node:pnpm10.11.0-node22` image. Node and pnpm
 requirements belong in project/oyzu.toml and the native packageManager field.
 Initial tool preparation needs network access; the projects have no external
@@ -15,11 +16,13 @@ runtime dependencies. A generated native lock is not verification.
 
 ## Current verification boundary
 
-The Windows captured attempt reached successful workspace version projection,
-then failed during prepare with BUILD_FAILED: Unsupported reparse point type.
-The archive consumer has not run. This recipe is blocked; the commands below
-describe the intended proof, not a passing result. Oyzu tracking issue 636 owns
-the product blocker.
+The recorded Windows controller and Linux captured executor build both archives,
+run the required package tests/quality checks, and install only those archives
+into an independent offline consumer. Use the exact CLI digest and recipe tree
+in the successful record. Earlier CLIs failed with Unsupported reparse point type
+after version projection; that unsuccessful record remains preserved. The fix
+handles Docker/WSL Linux links in private execution copies and does not authorize
+native Windows symlink recreation or broader filesystem access.
 
 ## Build and inspect
 

@@ -18,7 +18,8 @@
   ],
   "verification": [
     "verification/records/gradle-application-windows.json",
-    "verification/records/gradle-application-native-windows.json"
+    "verification/records/gradle-application-native-windows.json",
+    "verification/records/gradle-application-captured-windows.json"
   ],
   "traceability": [
     "EX-024"

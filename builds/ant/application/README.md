@@ -15,7 +15,7 @@ Copy the complete `project/` to a directory outside this collection. Run there:
 
 ```sh
 oyzu build --plan
-oyzu build
+oyzu build --isolated
 oyzu inspect dist
 ```
 
@@ -33,6 +33,10 @@ build.xml owns compile and jar prerequisites. The project has no external Java d
 ## Consume the delivered artifact
 
 Inspect the delivered JAR, then run java -cp `<delivered-jar>` example.Hello with a compatible provisioned JDK. Expect Hello from Ant.
+
+The executor is provisioned from Oyzu's existing Ant image definition. Its
+immutable identity is recorded with the independent consumer. Earlier missing-image
+failures remain historical evidence and do not qualify this successful subject.
 
 Use recorded artifact paths and identities. This baseline build does not claim
 tests, coverage, lint or format checks that were not selected. Failed checks and

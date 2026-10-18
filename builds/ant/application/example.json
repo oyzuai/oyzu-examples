@@ -12,15 +12,17 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "executable",
   "prerequisites": [
     "The captured Ant builder needs its documented provisioned native Java/Ant executor. Ant acquisition is not supplied by adding an invented tool provider. See the current Ant reference before running."
   ],
-  "verification": [],
+  "verification": [
+    "verification/records/ant-application-windows.json",
+    "verification/records/ant-application-captured-windows.json"
+  ],
   "traceability": [
     "EX-025"
   ],
-  "currentGap": "The required explicitly provisioned Ant executor is absent locally. No Ant build or downstream consumer is qualified.",
   "executionProfiles": [
     "captured"
   ]

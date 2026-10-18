@@ -12,18 +12,18 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "executable",
   "prerequisites": [
-    "Oyzu can acquire the selected CPython 3.13 line. Initial preparation needs access to the native build-backend packages. This package has no runtime dependencies."
+    "Docker and the explicitly provisioned uv 0.12.21 / CPython 3.12 executor. Native requires-python owns compatibility; no managed uv or locked Python handoff is claimed. Initial build-backend acquisition needs network; the wheel has no runtime dependencies."
   ],
   "verification": [
-    "verification/records/python-uv-windows.json"
+    "verification/records/python-uv-windows.json",
+    "verification/records/python-uv-captured-windows.json"
   ],
   "traceability": [
     "EX-013"
   ],
-  "currentGap": "Current preparation reports resolved recipe missing from pin proposal for oyzu:uv 0.12.21, with no admitted platform builds. Native uv lock generation passed; the Oyzu flow remains blocked.",
   "executionProfiles": [
-    "captured-candidate"
+    "captured"
   ]
 }

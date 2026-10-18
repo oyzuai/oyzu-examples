@@ -89,7 +89,7 @@ async function verifyNative(id, cli, output) {
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
     fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
     process.env.OYZU_USER_CONFIG=userConfig;
-    const captured = capturedGradle || ['node-pnpm','node-yarn-classic','pnpm-workspace','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
+    const captured = capturedGradle || ['node-pnpm','node-yarn-classic','pnpm-workspace','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart','ant-application','dotnet-library','python-uv','python-poetry'].includes(id);
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && (!captured || id==='npm-package' || id==='go-workspace')) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
     const full = ['first-build', 'node-application', 'node-yarn-classic', 'npm-package', 'pnpm-workspace', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
@@ -100,7 +100,18 @@ async function verifyNative(id, cli, output) {
     if (manifest.status !== 'succeeded' || !manifest.artifacts.length) throw Error('Expected a successful delivered artifact');
     const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : id === 'go-workspace' ? manifest.artifacts.find(item => item.name === 'primary') : manifest.artifacts[0];
     if (!artifact) throw Error('Expected native primary artifact missing');
-    let deliveredArtifact=artifact, deliveredManifest=manifest;
+    const runtimeFacts = snapshot => {
+      const readBundle = relative => {
+        const filename=path.resolve(scratch,'dist',relative);
+        if(!filename.startsWith(path.join(scratch,'dist')+path.sep)) throw Error('Runtime evidence leaves inspected bundle');
+        return JSON.parse(fs.readFileSync(filename,'utf8'));
+      };
+      const identify = tool => ({id:tool.id,version:tool.version,digest:tool.digest,platform:tool.platform});
+      const plan=readBundle(snapshot.planPath);
+      return {buildTools:(plan.tools??[]).map(identify),dependencyManagers:(snapshot.evidence??[])
+        .filter(item=>item.kind==='dependency-snapshot').map(item=>readBundle(item.path).manager).filter(Boolean).map(identify)};
+    };
+    let deliveredArtifact=artifact, deliveredManifest=manifest, deliveredFacts=runtimeFacts(manifest);
     const executable = path.resolve(scratch, 'dist', artifact.path);
     if (!executable.startsWith(path.join(scratch, 'dist') + path.sep)) throw Error('Artifact leaves bundle');
     const consumeGo=item=>{
@@ -158,7 +169,7 @@ async function verifyNative(id, cli, output) {
       const changed=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const selection=changed.extensions?.['oyzu.dev/selection'];
       if(changed.artifacts.length!==1 || changed.artifacts[0].target!=='api' || changed.actions.some(item=>item.target!=='api') || selection?.mode!=='affected' || !selection.excluded.some(item=>item.target==='web')) throw Error('Edited API did not select only its own native work and exclude web');
-      deliveredArtifact=changed.artifacts[0];deliveredManifest=changed;
+      deliveredArtifact=changed.artifacts[0];deliveredManifest=changed;deliveredFacts=runtimeFacts(changed);
       actual=invoke(['exec','--','node',path.join(scratch,'dist',changed.artifacts[0].path,'index.cjs')]);expected='Updated api.';
       observations.push('Unchanged Git baseline yielded an empty bundle; editing API source/test selected API only and its delivered consumer observed the edit');
     } else if (id === 'npm-package') {
@@ -207,7 +218,7 @@ async function verifyNative(id, cli, output) {
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const result=rebuilt.artifacts.find(item=>item.name==='primary');
       if(!result || result.digest===artifact.digest) throw Error('Workspace library change did not reach the executable');
-      deliveredArtifact=result;deliveredManifest=rebuilt;
+      deliveredArtifact=result;deliveredManifest=rebuilt;deliveredFacts=runtimeFacts(rebuilt);
       actual=consumeGo(result);expected='Updated workspace library.';
       observations.push('Changed shared implementation and its test expectation; rebuilt delivered consumer observed the changed library');
     } else if (id === 'maven-reactor') {
@@ -247,11 +258,19 @@ async function verifyNative(id, cli, output) {
     } else if (id === 'python-package' || id === 'python-uv' || id === 'python-poetry') {
       const wheels = artifact.kind === 'directory' ? fs.readdirSync(executable).filter(name => name.endsWith('.whl')).map(name => path.join(executable, name)) : [executable];
       if (wheels.length !== 1) throw Error('Expected one delivered Python wheel');
-      invoke(['exec', '--', 'python', '-m', 'venv', 'consumer']);
-      const python = path.join(scratch, 'consumer', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
-      invoke(['exec', '--', python, '-m', 'pip', 'install', '--no-index', '--no-deps', wheels[0]]);
-      // Run outside the source directory so only the installed wheel supplies it.
-      actual = invoke(['exec', '--', python, '-I', '-c', 'import greeting; print(greeting.hello())']);
+      if(id==='python-package') {
+        invoke(['exec', '--', 'python', '-m', 'venv', 'consumer']);
+        const python = path.join(scratch, 'consumer', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+        invoke(['exec', '--', python, '-m', 'pip', 'install', '--no-index', '--no-deps', wheels[0]]);
+        // Run outside the source directory so only the installed wheel supplies it.
+        actual = invoke(['exec', '--', python, '-I', '-c', 'import greeting; print(greeting.hello())']);
+      } else {
+        const image=id==='python-uv'?'oyzu-toolchain/uv:0.12.21-python3.12':'oyzu-toolchain/poetry:2.5.1-python3.12';
+        observations.push('Independent delivered-wheel consumer interpreter: '+container(image,'python',[],['--version']));
+        const code='import pathlib,subprocess,sys,tempfile,venv; root=pathlib.Path(tempfile.mkdtemp())/"consumer"; venv.create(root,with_pip=True); python=str(root/"bin/python"); subprocess.run([python,"-m","pip","install","--no-index","--no-deps",'+JSON.stringify('/input/'+path.basename(wheels[0]))+'],check=True,stdout=sys.stderr); subprocess.run([python,"-I","-c","import greeting; print(greeting.hello())"],check=True)';
+        actual=container(image,'python',['type=bind,source='+path.dirname(wheels[0])+',target=/input,readonly'],['-I','-c',code]);
+        observations.push('Only delivered wheel bytes mounted; network disabled; no Python tool-lock handoff or host-runtime qualification claimed');
+      }
       expected = 'Hello from Python.';
     } else if (id === 'helm-chart') {
       actual = container('oyzu-toolchain/helm:3.22.0', 'helm', ['type=bind,source=' + path.dirname(executable) + ',target=/input,readonly'], ['template', 'hello', '/input/' + path.basename(executable)]);
@@ -321,7 +340,7 @@ async function verifyNative(id, cli, output) {
       invoke(['build']); invoke(['inspect','dist']);
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       if (rebuilt.artifacts[0].digest===artifact.digest) throw Error('Generator input change did not change artifact');
-      deliveredArtifact=rebuilt.artifacts[0];deliveredManifest=rebuilt;
+      deliveredArtifact=rebuilt.artifacts[0];deliveredManifest=rebuilt;deliveredFacts=runtimeFacts(rebuilt);
       actual=run(path.join(scratch,'dist',rebuilt.artifacts[0].path),[],scratch);
       expected='Release channel: preview';
       commands.push(['<delivered tool>', 'observed stable, unchanged repeat, then preview after channel.txt change']);
@@ -339,7 +358,8 @@ async function verifyNative(id, cli, output) {
     }
     if (actual !== expected) throw Error('Delivered artifact consumer returned unexpected output');
     if (full && !manifest.reports.some(report => report.kind === 'junit' || /junit/i.test(JSON.stringify(report)))) throw Error('Native test report missing');
-    const execution = deliveredManifest.extensions?.['oyzu.dev/invocation']?.execution ?? (captured?'captured':'recorded-in-bundle');
+    const backends=deliveredManifest.actions.filter(action=>action.target===deliveredArtifact.target).map(action=>action.sandbox?.backend).filter(Boolean);
+    const execution = backends.length ? (backends.every(backend=>backend==='docker')?'captured':backends.every(backend=>backend!=='docker')?'native-host':'mixed') : (captured?'captured':'recorded-in-bundle');
     const deliveredTarget=deliveredManifest.targets.find(item=>item.id===deliveredArtifact.target);
     if(!deliveredTarget) throw Error('Delivered consumer target is missing from its producing manifest');
     const record = {
@@ -348,6 +368,7 @@ async function verifyNative(id, cli, output) {
       host: {os: process.platform, arch: process.arch}, execution, target: deliveredTarget.platform,
       commands, observations, result: 'passed', artifact: {digest: deliveredArtifact.digest, sourceTree:deliveredManifest.source.treeDigest, output: actual},
       nativeConsumerImages: containers,
+      ...deliveredFacts,
       configurationScope:'Copied project and disposable empty user settings; native machine/organization controls retained',
       reports: deliveredManifest.reports.map(report => ({kind: report.kind, digest: report.digest})),
       limits: [full ? 'Full native checks selected; no other host or cross-compilation qualification' : 'Fast build and delivered consumer only; native quality checks not selected', 'No live publication or deployment qualification'],

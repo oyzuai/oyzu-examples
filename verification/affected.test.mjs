@@ -25,6 +25,7 @@ function fixture(t) {
   const recipes = [
     {id: 'first-build', path: 'getting-started/first-build'},
     {id: 'go-command', path: 'builds/go/command'},
+    {id: 'gradle-application', path: 'builds/gradle/application'},
     {id: 'go-workspace', path: 'builds/go/workspace'},
     {id: 'npm-package', path: 'builds/node/npm-package'}
   ];
@@ -71,7 +72,7 @@ test('editorial changes verify the baseline, common verifier changes retain all 
   assert.deepEqual(select().selectedNativeRecipes, ['first-build']);
   assert.deepEqual(select().requiredExternalRecipes, []);
   write('verification/new-check.mjs', '// shared verification change\n');
-  assert.deepEqual(select().selectedNativeRecipes, ['first-build', 'go-command']);
+  assert.deepEqual(select().selectedNativeRecipes, ['first-build', 'go-command', 'gradle-application']);
   assert.deepEqual(select().requiredExternalRecipes, ['go-workspace', 'npm-package']);
 });
 
@@ -85,9 +86,18 @@ test('CI retains failed subject records and gates notification on external proof
 
 test('a record update requires its recipe proof without invoking unrelated captured recipes', t => {
   const {write, select} = fixture(t);
-  write('verification/records/first-build.json', '{"result":"passed"}\n');
+  write('verification/records/first-build.json', '{"result":"passed","execution":"native-host"}\n');
   assert.deepEqual(select().selectedNativeRecipes, ['first-build']);
   assert.deepEqual(select().requiredExternalRecipes, []);
   write('verification/records/npm-package.json', '{"result":"failed"}\n');
   assert.deepEqual(select().requiredExternalRecipes, ['npm-package']);
+});
+
+test('a host-capable recipe cannot qualify an updated captured proof with only its host job', t => {
+  const {write,select}=fixture(t);
+  write('verification/records/gradle-application.json',JSON.stringify({result:'passed',execution:'captured'}));
+  assert.deepEqual(select().selectedNativeRecipes,['gradle-application']);
+  assert.deepEqual(select().requiredExternalRecipes,['gradle-application']);
+  write('verification/records/gradle-application.json',JSON.stringify({result:'passed',execution:'native-host'}));
+  assert.deepEqual(select().requiredExternalRecipes,[]);
 });

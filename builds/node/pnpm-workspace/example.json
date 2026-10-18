@@ -14,18 +14,18 @@
     "consume"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "executable",
   "prerequisites": [
-    "An existing pnpm 10.11.0 and Node 22 captured executor, Docker and normal Oyzu tool preparation. No registry runtime dependencies."
+    "Oyzu with the Windows Linux-link preparation fix, the existing pnpm 10.11.0 and Node 22 captured executor, Docker and normal tool preparation. No registry runtime dependencies."
   ],
   "verification": [
-    "verification/records/pnpm-workspace-windows.json"
+    "verification/records/pnpm-workspace-windows.json",
+    "verification/records/pnpm-workspace-captured-windows.json"
   ],
   "traceability": [
     "EX-020"
   ],
   "executionProfiles": [
-    "captured-candidate"
-  ],
-  "currentGap": "Windows captured preparation fails with BUILD_FAILED: Unsupported reparse point type after workspace version projection. The independent archive consumer has not run. Tracked in Oyzu issue 636."
+    "captured"
+  ]
 }

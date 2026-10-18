@@ -15,7 +15,7 @@ Copy the complete `project/` to a directory outside this collection. Run there:
 
 ```sh
 oyzu build --plan
-oyzu build
+oyzu build --isolated
 oyzu inspect dist
 ```
 
@@ -33,6 +33,11 @@ The SDK project owns framework and package identity. This sample targets net10.0
 ## Consume the delivered artifact
 
 Use a separate console project targeting net10.0, add the delivered NuGet package from a directory-only NuGet source, and call Greeting.Hello(). Expect Hello from .NET. A restore from a public package feed would not verify this artifact.
+
+The tested executor uses the pinned SDK 10.0.401 definition matching this
+builder's current SDK contract, rather than assuming a newer SDK is equivalent.
+Its immutable identity is recorded with the independent package consumer. Earlier
+missing-image failures remain historical evidence.
 
 Use recorded artifact paths and identities. This baseline build does not claim
 tests, coverage, lint or format checks that were not selected. Failed checks and

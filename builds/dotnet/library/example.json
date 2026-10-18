@@ -11,16 +11,16 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "executable",
   "prerequisites": [
     "Current Oyzu .NET support requires the separately provisioned Linux captured SDK 10.0.401 executor. There is no host adapter or automatic .NET SDK installer. Do not treat the presence of dotnet on Windows as equivalent qualification."
   ],
   "verification": [
-    "verification/records/dotnet-library-windows.json"
+    "verification/records/dotnet-library-windows.json",
+    "verification/records/dotnet-library-captured-windows.json"
   ],
   "traceability": [],
   "executionProfiles": [
     "captured"
-  ],
-  "currentGap": "The latest captured attempt is blocked because the required .NET 10.0.401 executor image is absent. Earlier bounded execution does not qualify this current source and prerequisite set."
+  ]
 }

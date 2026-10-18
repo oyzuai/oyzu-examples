@@ -17,6 +17,10 @@ reports identify the same successful consumer phase, including the edited
 captured source. They do not relabel an initial artifact as the later result.
 An explicitly isolated build is recorded as captured execution; the controller
 host and artifact target remain separate fields.
+New records retain native manager and build-tool/executor identities from the
+inspected dependency snapshots and plan. Edited-input scenarios keep those facts
+with the same manifest phase as the consumed artifact. Controller OS, execution
+sandbox and artifact target are reported independently.
 The harness selects a disposable empty user configuration through
 OYZU_USER_CONFIG so hidden user preferences do not become project prerequisites.
 Native machine/organization configuration remains binding, and the shared
@@ -47,11 +51,21 @@ records for inspection. Run `node --test verification/affected.test.mjs` to chec
 selection, notification gates and failure-record retention.
 Updates under `verification/records/` require the owning recipe's check according
 to its metadata; a new native proof record does not require unrelated executors.
+An updated successful captured record also requires its provided-executor lane,
+even when that recipe can run natively, as with Gradle. A successful host job
+cannot qualify a captured claim. The receiving updater enforces that distinction
+over the complete pin delta, including earlier commits in the batch.
 Gradle's conventional application baseline uses its Oyzu-managed host tools.
 EXAMPLES_GRADLE_CAPTURED=1 explicitly requests the separate provisioned-executor
 lane, as the manual workflow does. Yarn Classic always uses its provided captured
 executor, with its version declared in native package.json and recorded by
 preparation; it is not an admitted managed-tool request.
+uv and Poetry use their explicitly provisioned captured manager/runtime images.
+An independent container installs only the delivered wheel offline and imports it
+in an isolated virtual environment. Records identify the actual interpreter;
+the existing Poetry image name does not promise that its runtime is Python 3.12.
+Explicit locked-Python handoff to captured workers remains unsupported and is
+not implied by either recipe's success.
 For the Go workspace proof, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
 compatible Go executor through Oyzu's ordinary `--image go=...` option. The
 verifier records that reference, immutable image identity and actual command;
