@@ -1,0 +1,25 @@
+{
+  "id": "developer-tool",
+  "slug": "developer-tool",
+  "title": "Build a release tool with a native Cargo workspace",
+  "difficulty": "advanced",
+  "ecosystems": [
+    "rust"
+  ],
+  "capabilities": [
+    "build",
+    "composition",
+    "artifacts",
+    "consumer"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "prerequisites": [
+    "See the canonical recipe for native tools and execution limits"
+  ],
+  "profiles": [
+    "local"
+  ],
+  "verification": [],
+  "traceability": []
+}

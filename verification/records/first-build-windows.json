@@ -1,8 +1,9 @@
 {
   "recipe": "first-build",
   "subject": {
-    "commit": "59c1f7fd645ac26c35a24f3d98863655be26868f",
-    "recipe_sha256": "c1fd1658a36bd9b5740d17b375100e2b61835694dd3063be95a012101a26b4a0"
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "f3d5732f10f1905ddc13d5c11daa60182d8928811bd8ea1c1ed77b37fd6f4b7d",
+    "recipe_tree": "3bd53f73ec39d307d215cbe3e1028ada45355a6e"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
@@ -45,21 +46,23 @@
   ],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:52d8df5214b08f946bf2a8f2b3e53b51ca2731f2f7654155f07b105d4d0f3bca",
+    "digest": "sha256:4b1aacb0b9c139ea8bbb7c10c98f4738118f6b34bf75e575515ec25c1a031dd4",
     "output": "Hello, developer! Built with Oyzu."
   },
+  "nativeConsumerImages": [],
   "reports": [
     {
       "kind": "test",
-      "digest": "sha256:2649997b4add3fc2622aec37bc60da40890e71455622b8c8852ef86f0602e441"
+      "digest": "sha256:25cb6c7ac876b24e60cecdfa60ae0e09d9a1820a2cdee91f779962897c9a677e"
     },
     {
       "kind": "coverage",
-      "digest": "sha256:dd834175ece81a48a73d8a725867e9c2fe241159f7d4b59dcb784fff3bf69a3d"
+      "digest": "sha256:3632baa15f2f426d025e14434fac5def76bec41ebc3ec19a13021f1b282e1265"
     }
   ],
   "limits": [
-    "No captured execution, cross-compilation or other host qualification"
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T03:42:47.680Z"
+  "recordedAt": "2026-10-18T04:31:50.845Z"
 }

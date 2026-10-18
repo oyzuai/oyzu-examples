@@ -1,0 +1,26 @@
+{
+  "id": "python-poetry",
+  "slug": "python-poetry",
+  "title": "Build a package with Poetry",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "python"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "prerequisites": [
+    "Oyzu can acquire the selected CPython 3.13 line. Initial preparation needs access to the native build-backend packages. This package has no runtime dependencies."
+  ],
+  "profiles": [
+    "see-recipe"
+  ],
+  "verification": [],
+  "traceability": [
+    "EX-013"
+  ],
+  "currentGap": "Candidate native-manager recipe awaiting its own captured build and downstream consumer record."
+}

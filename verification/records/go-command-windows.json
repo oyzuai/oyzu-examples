@@ -1,0 +1,67 @@
+{
+  "recipe": "go-command",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "0f2d15994a957990538f5a04cc76504576285b614804691b2bc25bbb2c668789",
+    "recipe_tree": "39586355b9b164dabfd1ec917019f83ccf72d28c"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered executable>"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:1d6f819873d6684068757dcac86375898bb6e79fd73b1a9a1c3592b91e0d5837",
+    "output": "Hello from Go."
+  },
+  "nativeConsumerImages": [],
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:4b3f1997c650b04760c0715a8ce39e1c4f6c04b4736fcac9ffe25ac99a5d438b"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:661fd90db5277219f39d15986f3b4a250eb7dd19671ee59401c8aaedbaf9839d"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:32:00.550Z"
+}

@@ -1,0 +1,84 @@
+{
+  "recipe": "python-package",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "7ebd8f0edbba902bdf83788cca4742462238007ca41c4fd5eb3e448ceac0c257",
+    "recipe_tree": "6a430d3eeb8cc7807ce611bfadd85564b899e2ba"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "python",
+      "-m",
+      "venv",
+      "consumer"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "<project>\\consumer\\Scripts\\python.exe",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "<project>\\dist\\project\\artifacts\\wheels-0.1.0\\oyzu_example_greeting-0.1.0-py3-none-any.whl"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "<project>\\consumer\\Scripts\\python.exe",
+      "-I",
+      "-c",
+      "import greeting; print(greeting.hello())"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:d39111103480ad8763010007046c35b7a6b66bce7543f23d3440ff27fd0f2078",
+    "output": "Hello from Python."
+  },
+  "nativeConsumerImages": [],
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:32:18.914Z"
+}

@@ -1,0 +1,63 @@
+{
+  "recipe": "maven-application",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "7d33d3b1f51bf35c7752318340d1facf4a078c776a50b64f5d8bdc79bbe3fa1b",
+    "recipe_tree": "e32ac3cb8613f02c96481047472f64e1456ebe2b"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "java",
+      "-cp",
+      "<project>\\dist\\project\\artifacts\\hello-0.1.0.jar",
+      "example.Hello"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:d8a2f4ca46b05013b74411641b4d755b53cc52ffcfe1676be14b03a04c5b9ddd",
+    "output": "Hello from Maven."
+  },
+  "nativeConsumerImages": [],
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:32:24.267Z"
+}

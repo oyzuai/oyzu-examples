@@ -1,0 +1,132 @@
+{
+  "recipe": "dotnet-library",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "20a7d31a4ce09a7d4aabe0332c2725a39ee68674e73594a5103315293fce1c3e",
+    "recipe_tree": "1af397f54ce0675e1fc59055bcfcfc7e11682482"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "recorded-in-bundle",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/dotnet:10.0.401",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "dotnet",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
+      "--mount",
+      "type=bind,source=<project>\\consumer,target=/consumer",
+      "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2",
+      "restore",
+      "/consumer/Consumer.csproj",
+      "--source",
+      "/input",
+      "--packages",
+      "/consumer/packages"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/dotnet:10.0.401",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "dotnet",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
+      "--mount",
+      "type=bind,source=<project>\\consumer,target=/consumer",
+      "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2",
+      "run",
+      "--project",
+      "/consumer/Consumer.csproj",
+      "--no-restore"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:f31e741da6903a9156d15acc56f8b936f1dcbceff068e3b9f46ed5d3da6c2e88",
+    "output": "Hello from .NET."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/dotnet:10.0.401",
+      "digest": "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2"
+    },
+    {
+      "image": "oyzu-toolchain/dotnet:10.0.401",
+      "digest": "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2"
+    }
+  ],
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:33:55.451Z"
+}

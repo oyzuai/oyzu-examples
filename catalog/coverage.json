@@ -49,6 +49,51 @@
       "id": "helm-chart",
       "path": "builds/helm/configmap",
       "kind": "recipe"
+    },
+    {
+      "id": "node-pnpm",
+      "path": "builds/node/pnpm-application",
+      "kind": "native-project"
+    },
+    {
+      "id": "node-yarn-classic",
+      "path": "builds/node/yarn-classic-application",
+      "kind": "native-project"
+    },
+    {
+      "id": "python-uv",
+      "path": "builds/python/uv-package",
+      "kind": "native-project"
+    },
+    {
+      "id": "python-poetry",
+      "path": "builds/python/poetry-package",
+      "kind": "native-project"
+    },
+    {
+      "id": "polyglot-service",
+      "path": "reference-apps/polyglot-service",
+      "kind": "reference-application"
+    },
+    {
+      "id": "developer-tool",
+      "path": "reference-apps/developer-tool",
+      "kind": "reference-application"
+    },
+    {
+      "id": "publication-multiple",
+      "path": "publishing/multiple-destinations",
+      "kind": "publication"
+    },
+    {
+      "id": "tasks-and-hooks",
+      "path": "workflows/tasks-and-hooks",
+      "kind": "workflow"
+    },
+    {
+      "id": "static-deployment",
+      "path": "deployment/local-static",
+      "kind": "external-tool-task"
     }
   ],
   "gaps": [
@@ -177,24 +222,6 @@
       "nextProof": "Build local modules linked through go.work and run each delivered command after changing the shared library."
     },
     {
-      "id": "rust-workspace",
-      "title": "Compose a Rust workspace",
-      "ecosystems": [
-        "rust"
-      ],
-      "capabilities": [
-        "build",
-        "workspaces",
-        "generated-sources"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The first-build binary does not qualify workspace packaging, features, build scripts or procedural macros.",
-      "nextProof": "Build an application with a path library and procedural macro, consume the output, then change a generator input and observe rebuilding."
-    },
-    {
       "id": "maven-reactor",
       "title": "Build a Maven reactor",
       "ecosystems": [
@@ -300,24 +327,6 @@
       "nextProof": "Package a local library dependency, render the delivered umbrella chart and check the selected values and packaged dependency identity."
     },
     {
-      "id": "tasks-and-hooks",
-      "title": "Use native tasks, groups and hooks",
-      "ecosystems": [
-        "oyzu"
-      ],
-      "capabilities": [
-        "tasks",
-        "hooks",
-        "configuration"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "Native task discovery is distinct from authored hook ordering and qualified group selection.",
-      "nextProof": "Run grouped native tasks, attach a narrow hook, fail a required task and inspect preserved exit/report behavior."
-    },
-    {
       "id": "private-dependencies",
       "title": "Acquire private dependencies without leaking credentials",
       "ecosystems": [
@@ -392,60 +401,6 @@
       "role": "workflow",
       "currentGap": "The successful baselines do not cover all required failure/report scenarios.",
       "nextProof": "Fail a real native test after a successful build and require rejected acceptance, retained failed reports and no successful replacement artifact."
-    },
-    {
-      "id": "oci-publication",
-      "title": "Publish finalized OCI file artifacts",
-      "ecosystems": [
-        "oci"
-      ],
-      "capabilities": [
-        "publish",
-        "retrieve",
-        "retry"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The provider is experimental. This collection still needs a real registry proof with explicit test witnesses, native retrieval, exact identity, matching repeat and conflict checks.",
-      "nextProof": "Use a disposable registry, preexisting signed test evidence and explicit signing keys; retrieve payload/evidence and preserve completed effects on retry."
-    },
-    {
-      "id": "github-publication",
-      "title": "Publish to an existing GitHub Release",
-      "ecosystems": [
-        "github"
-      ],
-      "capabilities": [
-        "publish",
-        "retrieve",
-        "retry"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "A separately provisioned test release and scoped asset credential are required. The adapter does not create/finalize releases or overwrite/delete assets.",
-      "nextProof": "Publish payload and evidence to an authorized test release, retrieve via GitHub, compare bytes, repeat and exercise occupied/partial states."
-    },
-    {
-      "id": "multiple-destinations",
-      "title": "Reconcile several publication destinations",
-      "ecosystems": [
-        "oci",
-        "github"
-      ],
-      "capabilities": [
-        "publish",
-        "retry"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "Distinct artifact selections are supported in scope, but independent destinations are not an atomic transaction.",
-      "nextProof": "Succeed at one authorized destination, fail the next, preserve the first receipt and finish only unfinished effects on retry."
     },
     {
       "id": "npm-publication",
@@ -556,23 +511,6 @@
       "nextProof": "Select a real public integration or explicit external-tool task, deploy an immutable artifact, observe readiness, update and roll back with cleanup."
     },
     {
-      "id": "static-deployment",
-      "title": "Serve a built static website",
-      "ecosystems": [
-        "static-web"
-      ],
-      "capabilities": [
-        "deploy",
-        "verify"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "generic-task",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "A provider-specific example must name its external tool and disposable target; the generic task does not confer native deployment integration.",
-      "nextProof": "Deliver the same built directory, observe served content at the destination and remove the disposable resources."
-    },
-    {
       "id": "machine-deployment",
       "title": "Activate a service on a disposable machine",
       "ecosystems": [
@@ -657,45 +595,6 @@
       "role": "workflow",
       "currentGap": "Public example execution needs an approved downloadable CLI and checksum until a public engine release exists.",
       "nextProof": "Configure a public approved binary, verify its checksum, run affected recipes on PRs and retain exact non-secret records."
-    },
-    {
-      "id": "polyglot-reference",
-      "title": "Build a small polyglot service application",
-      "ecosystems": [
-        "go",
-        "node",
-        "docker",
-        "helm"
-      ],
-      "capabilities": [
-        "reference-application",
-        "composition"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The independent baselines do not yet demonstrate a complete polyglot application with consumer-owned artifact relationships.",
-      "nextProof": "Combine a service, frontend and shared package, materialize image/chart inputs, verify delivered behavior and link back to focused recipes."
-    },
-    {
-      "id": "developer-tool-reference",
-      "title": "Release a small developer tool",
-      "ecosystems": [
-        "rust",
-        "github",
-        "oci"
-      ],
-      "capabilities": [
-        "reference-application",
-        "publish"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The first-build binary is not a complete signed/retrieved developer-tool release flow.",
-      "nextProof": "Build a tool with a library, run tests, inspect required evidence, publish to authorized targets, retrieve and run the same finalized bytes."
     },
     {
       "id": "assess-make",

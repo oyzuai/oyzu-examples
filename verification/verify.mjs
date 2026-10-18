@@ -4,7 +4,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import {spawnSync} from 'node:child_process';
+import {spawn, spawnSync} from 'node:child_process';
+import net from 'node:net';
 import {fileURLToPath} from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,8 +25,8 @@ export function recipeDigest(repo, commit, recipe) {
   }).join(''));
 }
 
-const consumers = new Set(['first-build', 'node-application', 'go-command', 'python-package', 'maven-application', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart']);
-function verifyNative(id, cli, output) {
+const consumers = new Set(['first-build', 'node-application', 'go-command', 'python-package', 'maven-application', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment']);
+async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
   if (!recipe || !consumers.has(id)) throw Error('No admitted native consumer check for recipe: ' + id);
   const commit = run('git', ['rev-parse', 'HEAD'], root);
@@ -70,14 +71,15 @@ function verifyNative(id, cli, output) {
       fs.writeFileSync(name, source.stdout, {mode: match[1] === '100755' ? 0o755 : 0o644});
     }
     const capturedGradle = id === 'gradle-application' && process.platform === 'win32';
-    if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !capturedGradle) invoke(['install', '--frozen']);
+    const captured = capturedGradle || id === 'node-pnpm';
+    if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !captured) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
-    const full = ['first-build', 'node-application', 'go-command'].includes(id);
-    invoke(full ? ['build', '--full'] : capturedGradle ? ['build', '--isolated'] : ['build']);
+    const full = ['first-build', 'node-application', 'go-command', 'tasks-and-hooks'].includes(id);
+    invoke(full ? ['build', '--full'] : captured ? ['build', '--isolated'] : ['build']);
     invoke(['inspect', 'dist']);
     const manifest = JSON.parse(fs.readFileSync(path.join(scratch, 'dist', 'manifest.json'), 'utf8'));
     if (manifest.status !== 'succeeded' || !manifest.artifacts.length) throw Error('Expected a successful delivered artifact');
-    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : manifest.artifacts[0];
+    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : manifest.artifacts[0];
     if (!artifact) throw Error('Expected native primary artifact missing');
     const executable = path.resolve(scratch, 'dist', artifact.path);
     if (!executable.startsWith(path.join(scratch, 'dist') + path.sep)) throw Error('Artifact leaves bundle');
@@ -87,9 +89,9 @@ function verifyNative(id, cli, output) {
       commands.push(['<delivered executable>', ...args]);
       actual = run(executable, args, scratch);
       expected = id === 'first-build' ? 'Hello, developer! Built with Oyzu.' : 'Hello from Go.';
-    } else if (id === 'node-application') {
+    } else if (id === 'node-application' || id === 'node-pnpm' || id === 'tasks-and-hooks') {
       actual = invoke(['exec', '--', 'node', path.join(executable, 'index.cjs')]);
-      expected = 'Hello from Node.';
+      expected = id === 'tasks-and-hooks' ? 'Hello from tasks: local.' : 'Hello from Node.';
       if (!fs.existsSync(path.join(executable, 'LICENSE'))) throw Error('Delivered application license missing');
     } else if (['maven-application', 'gradle-application', 'ant-application'].includes(id)) {
       if (capturedGradle || id === 'ant-application') {
@@ -117,12 +119,15 @@ function verifyNative(id, cli, output) {
       const reference = index.manifests[0].annotations?.['io.containerd.image.name'];
       if (!reference || !/^sha256:[a-f0-9]{64}$/.test(image.config?.digest)) throw Error('OCI image identity missing');
       const previous = native('docker', ['image', 'inspect', reference, '--format', '{{.Id}}'], true);
-      if (previous.status === 0 && previous.text !== image.config.digest) throw Error('Native consumer would overwrite an unrelated image tag');
+      const expectedIdentities = [image.config.digest, index.manifests[0].digest];
+      if (previous.status === 0 && !expectedIdentities.includes(previous.text)) throw Error('Native consumer would overwrite an unrelated image tag');
       native('docker', ['load', '--input', executable]);
+      const loaded = native('docker', ['image', 'inspect', reference, '--format', '{{.Id}}']).text;
+      if (!expectedIdentities.includes(loaded)) throw Error('Loaded image identity differs from delivered OCI archive');
       const name = 'oyzu-examples-' + crypto.randomBytes(6).toString('hex');
       let created = false;
       try {
-        native('docker', ['create', '--name', name, image.config.digest, '/message.txt']);
+        native('docker', ['create', '--name', name, loaded, '/message.txt']);
         created = true;
         native('docker', ['cp', name + ':/message.txt', path.join(scratch, 'message.received')]);
         actual = fs.readFileSync(path.join(scratch, 'message.received'), 'utf8').trim();
@@ -131,6 +136,48 @@ function verifyNative(id, cli, output) {
         if (previous.status !== 0) native('docker', ['image', 'rm', reference]);
       }
       expected = 'Hello from the image.';
+    } else if (id === 'polyglot-service' || id === 'static-deployment') {
+      if (id === 'polyglot-service' && !manifest.artifacts.some(item => item.target === 'web' && item.kind === 'directory')) throw Error('Frontend producer artifact missing');
+      const reservation = net.createServer();
+      await new Promise(resolve => reservation.listen(0, '127.0.0.1', resolve));
+      const port = reservation.address().port;
+      await new Promise(resolve => reservation.close(resolve));
+      const server = id === 'static-deployment'
+        ? spawn(cli, ['--root',scratch,'-C',scratch,'run','serve'],{cwd:scratch,stdio:'ignore',env:{...process.env,SITE_DIR:executable,PORT:String(port)}})
+        : spawn(executable, ['--listen', '127.0.0.1:' + port], {cwd: scratch, stdio:'ignore'});
+      const closed = new Promise(resolve => {server.once('exit',resolve); server.once('error',resolve);});
+      commands.push(id === 'static-deployment' ? ['oyzu','run','serve','with SITE_DIR=<delivered directory> and PORT=<ephemeral-port>'] : ['<delivered service>', '--listen', '127.0.0.1:<ephemeral-port>']);
+      try {
+        let response;
+        for (let attempt=0; attempt<60; attempt++) {
+          try {response=await fetch('http://127.0.0.1:'+port+'/'); if(response.ok) break;} catch {}
+          await new Promise(resolve=>setTimeout(resolve,50));
+        }
+        if (!response?.ok) throw Error('Delivered service did not respond');
+        const text=await response.text();
+        if(id==='static-deployment') {
+          if(text!==fs.readFileSync(path.join(executable,'index.html'),'utf8') || !text.includes('Served from the selected artifact.')) throw Error('Served bytes differ from selected static artifact');
+          actual='Selected static artifact observed over HTTP';
+        } else {
+          if(!text.includes('Delivery works.')) throw Error('Delivered service did not serve embedded frontend');
+          const api=await fetch('http://127.0.0.1:'+port+'/api/hello');
+          if (!api.ok || (await api.json()).message !== 'Hello from the delivered service.') throw Error('Delivered service API failed');
+          actual='Delivered frontend and API observed over HTTP';
+        }
+        expected=actual;
+      } finally {server.kill(); await closed;}
+    } else if (id === 'developer-tool') {
+      if (run(executable,[],scratch)!=='Release channel: stable') throw Error('Workspace consumer returned wrong generated channel');
+      invoke(['build']);
+      const repeated=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      if (repeated.artifacts[0].digest!==artifact.digest) throw Error('Unchanged workspace produced a different artifact');
+      fs.writeFileSync(path.join(scratch,'channel.txt'),'preview\n');
+      invoke(['build']); invoke(['inspect','dist']);
+      const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      if (rebuilt.artifacts[0].digest===artifact.digest) throw Error('Generator input change did not change artifact');
+      actual=run(path.join(scratch,'dist',rebuilt.artifacts[0].path),[],scratch);
+      expected='Release channel: preview';
+      commands.push(['<delivered tool>', 'observed stable, unchanged repeat, then preview after channel.txt change']);
     } else if (id === 'dotnet-library') {
       const packages = artifact.kind === 'directory' ? fs.readdirSync(executable).filter(name => name.endsWith('.nupkg')) : [path.basename(executable)];
       if (packages.length !== 1 || !/^[a-zA-Z0-9.+-]+$/.test(artifact.version)) throw Error('Expected one versioned NuGet package');
@@ -159,6 +206,10 @@ function verifyNative(id, cli, output) {
     fs.mkdirSync(path.dirname(output), {recursive: true});
     fs.writeFileSync(output, JSON.stringify(record, null, 2) + '\n');
     console.log('Verified committed ' + id + ' recipe and delivered artifact consumer.');
+  } catch (error) {
+    const record={recipe:id,subject:{commit,recipe_sha256:recipeDigest(root,commit,recipe),recipe_tree:run('git',['rev-parse',commit+':'+recipe],root)},oyzu:{version:run(cli,['--version'],scratch),binary_sha256:sha256(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},execution:'attempted-native-build',commands,result:'failed',diagnostic:{summary:error.message.split('\n')[0].replaceAll(scratch,'<project>').replaceAll(root,'<collection>'),code:error.message.match(/\b(?:TOOL|BUILD|CONFIG|COMMAND)_[A-Z_]+\b/)?.[0]??'CONSUMER_OR_PREREQUISITE_FAILURE'},limits:['This failed attempt does not qualify the recipe or its host/executor/target'],recordedAt:new Date().toISOString()};
+    fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(record,null,2)+'\n');
+    throw error;
   } finally {
     if (!path.resolve(scratch).startsWith(path.resolve(os.tmpdir()) + path.sep)) throw Error('Verification cleanup leaves temporary storage');
     fs.rmSync(scratch, {recursive: true, force: true});
@@ -169,6 +220,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   try {
     const [id, cli, output] = process.argv.slice(2);
     if (!consumers.has(id) || !cli || !path.isAbsolute(cli) || !output) throw Error('Usage: node verification/verify.mjs <recipe-id> <absolute-oyzu-path> <record-path>');
-    verifyNative(id, cli, path.resolve(output));
+    await verifyNative(id, cli, path.resolve(output));
   } catch (error) {console.error(error.message); process.exitCode = 1;}
 }

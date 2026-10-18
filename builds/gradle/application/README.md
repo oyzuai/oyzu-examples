@@ -27,7 +27,7 @@ secret belongs in committed configuration.
 
 ## Native configuration
 
-Gradle owns the application plugin and main class. Tool selection stays in the normal configuration. There is no generated wrapper or separate Oyzu workflow language.
+Gradle's conventional Java plugin produces the JAR. The consumer explicitly selects the main class. Tool selection stays in the normal configuration. There is no generated wrapper or separate Oyzu workflow language. The application plugin's distribution tasks currently hit a metadata collector failure on the provisioned Gradle 8 executor; this baseline avoids those optional distributions rather than claiming they passed.
 
 <!-- example-source: project/build.gradle -->
 

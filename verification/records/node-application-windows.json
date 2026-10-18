@@ -1,0 +1,71 @@
+{
+  "recipe": "node-application",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "e2c5d399aacc8efb8acadae5fc130c04d53210b277f38574da0b81bf808f6c97",
+    "recipe_tree": "310187452b59cd4f5bfbce587c945b08aee33f18"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0\\index.cjs"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:ecd1655366b68834ff40affaac247fe92dfae8fbfa642db8ca2f78d949ff1e89",
+    "output": "Hello from Node."
+  },
+  "nativeConsumerImages": [],
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:48481d32d24e683b29c49e63ecaa5ea16ccd7bda01cfc8d7fbf536fc78b962a4"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:80551f69f04176b9cda601b4a0d825c5dd8b3e86e087dc1b97c753a88b589fd9"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:31:56.217Z"
+}

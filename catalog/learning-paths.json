@@ -27,9 +27,7 @@
       "outcome": "Build, inspect evidence, publish, retrieve and retry safely",
       "steps": [
         "first-build",
-        "oci-publication",
-        "github-publication",
-        "multiple-destinations"
+        "publication-multiple"
       ]
     },
     {
@@ -38,10 +36,10 @@
       "outcome": "Connect workspaces, generators, artifacts and selected deployment mechanisms",
       "steps": [
         "go-workspace",
-        "rust-workspace",
+        "developer-tool",
         "image-chart-composition",
         "kubernetes-deployment",
-        "polyglot-reference"
+        "polyglot-service"
       ]
     }
   ]

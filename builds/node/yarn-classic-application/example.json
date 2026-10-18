@@ -1,0 +1,28 @@
+{
+  "id": "node-yarn-classic",
+  "slug": "node-yarn-classic",
+  "title": "Build the same application with Yarn Classic",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "node"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "prerequisites": [
+    "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
+  ],
+  "profiles": [
+    "see-recipe"
+  ],
+  "verification": [],
+  "traceability": [
+    "EX-007",
+    "EX-018",
+    "EX-050"
+  ],
+  "currentGap": "Candidate native-manager recipe awaiting its own captured build and downstream consumer record."
+}

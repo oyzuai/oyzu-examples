@@ -16,7 +16,7 @@ Inspect a plan, build, inspect outputs and run native tests.
 Preserve native conventions and add only necessary exceptions.
 
 1. [Your first build](../getting-started/first-build/README.md)
-2. [Use native tasks, groups and hooks](#tasks-and-hooks)
+2. [Order native tasks and build hooks](../workflows/tasks-and-hooks/README.md)
 3. [Build a pnpm workspace](#pnpm-workspace)
 4. [Acquire private dependencies without leaking credentials](#private-dependencies)
 
@@ -25,19 +25,17 @@ Preserve native conventions and add only necessary exceptions.
 Build, inspect evidence, publish, retrieve and retry safely.
 
 1. [Your first build](../getting-started/first-build/README.md)
-2. [Publish finalized OCI file artifacts](#oci-publication)
-3. [Publish to an existing GitHub Release](#github-publication)
-4. [Reconcile several publication destinations](#multiple-destinations)
+2. [Publish finalized files to OCI and GitHub](../publishing/multiple-destinations/README.md)
 
 ## Coordinate a larger system
 
 Connect workspaces, generators, artifacts and selected deployment mechanisms.
 
 1. [Connect Go workspace modules](#go-workspace)
-2. [Compose a Rust workspace](#rust-workspace)
+2. [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md)
 3. [Connect an image and Helm chart](#image-chart-composition)
 4. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
-5. [Build a small polyglot service application](#polyglot-reference)
+5. [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md)
 
 ## Native baselines
 
@@ -53,6 +51,15 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Package an SDK-style .NET library](../builds/dotnet/library/README.md) | implemented-partial | blocked |
 | [Build a minimal Docker file image](../builds/docker/file-image/README.md) | implemented-partial | executable |
 | [Package a minimal Helm chart](../builds/helm/configmap/README.md) | implemented-partial | executable |
+| [Build the same application with pnpm](../builds/node/pnpm-application/README.md) | implemented-partial | blocked |
+| [Build the same application with Yarn Classic](../builds/node/yarn-classic-application/README.md) | implemented-partial | blocked |
+| [Build a package with uv](../builds/python/uv-package/README.md) | implemented-partial | blocked |
+| [Build a package with Poetry](../builds/python/poetry-package/README.md) | implemented-partial | blocked |
+| [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md) | implemented-partial | blocked |
+| [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md) | implemented-partial | blocked |
+| [Publish finalized files to OCI and GitHub](../publishing/multiple-destinations/README.md) | implemented-partial | experimental |
+| [Order native tasks and build hooks](../workflows/tasks-and-hooks/README.md) | implemented-partial | blocked |
+| [Serve the selected static artifact locally](../deployment/local-static/README.md) | generic-task | blocked |
 
 ## Gaps and assessments
 
@@ -115,14 +122,6 @@ The single-command baseline does not qualify go.work relationships or several ex
 
 Next proof: Build local modules linked through go.work and run each delivered command after changing the shared library.
 
-### rust-workspace
-
-**Compose a Rust workspace**. Product support: implemented-partial; recipe readiness: planned.
-
-The first-build binary does not qualify workspace packaging, features, build scripts or procedural macros.
-
-Next proof: Build an application with a path library and procedural macro, consume the output, then change a generator input and observe rebuilding.
-
 ### maven-reactor
 
 **Build a Maven reactor**. Product support: implemented-partial; recipe readiness: planned.
@@ -171,14 +170,6 @@ The basic chart has no dependency or umbrella-chart proof.
 
 Next proof: Package a local library dependency, render the delivered umbrella chart and check the selected values and packaged dependency identity.
 
-### tasks-and-hooks
-
-**Use native tasks, groups and hooks**. Product support: implemented-partial; recipe readiness: planned.
-
-Native task discovery is distinct from authored hook ordering and qualified group selection.
-
-Next proof: Run grouped native tasks, attach a narrow hook, fail a required task and inspect preserved exit/report behavior.
-
 ### private-dependencies
 
 **Acquire private dependencies without leaking credentials**. Product support: implemented-partial; recipe readiness: planned.
@@ -210,30 +201,6 @@ Next proof: Exercise selected supported host/target pairs and record independent
 The successful baselines do not cover all required failure/report scenarios.
 
 Next proof: Fail a real native test after a successful build and require rejected acceptance, retained failed reports and no successful replacement artifact.
-
-### oci-publication
-
-**Publish finalized OCI file artifacts**. Product support: implemented-partial; recipe readiness: planned.
-
-The provider is experimental. This collection still needs a real registry proof with explicit test witnesses, native retrieval, exact identity, matching repeat and conflict checks.
-
-Next proof: Use a disposable registry, preexisting signed test evidence and explicit signing keys; retrieve payload/evidence and preserve completed effects on retry.
-
-### github-publication
-
-**Publish to an existing GitHub Release**. Product support: implemented-partial; recipe readiness: planned.
-
-A separately provisioned test release and scoped asset credential are required. The adapter does not create/finalize releases or overwrite/delete assets.
-
-Next proof: Publish payload and evidence to an authorized test release, retrieve via GitHub, compare bytes, repeat and exercise occupied/partial states.
-
-### multiple-destinations
-
-**Reconcile several publication destinations**. Product support: implemented-partial; recipe readiness: planned.
-
-Distinct artifact selections are supported in scope, but independent destinations are not an atomic transaction.
-
-Next proof: Succeed at one authorized destination, fail the next, preserve the first receipt and finish only unfinished effects on retry.
 
 ### npm-publication
 
@@ -283,14 +250,6 @@ The public deployment-kind contract is draft and is not implemented by a kind SD
 
 Next proof: Select a real public integration or explicit external-tool task, deploy an immutable artifact, observe readiness, update and roll back with cleanup.
 
-### static-deployment
-
-**Serve a built static website**. Product support: generic-task; recipe readiness: planned.
-
-A provider-specific example must name its external tool and disposable target; the generic task does not confer native deployment integration.
-
-Next proof: Deliver the same built directory, observe served content at the destination and remove the disposable resources.
-
 ### machine-deployment
 
 **Activate a service on a disposable machine**. Product support: planned; recipe readiness: planned.
@@ -330,22 +289,6 @@ Next proof: Promote one existing immutable artifact through selected environment
 Public example execution needs an approved downloadable CLI and checksum until a public engine release exists.
 
 Next proof: Configure a public approved binary, verify its checksum, run affected recipes on PRs and retain exact non-secret records.
-
-### polyglot-reference
-
-**Build a small polyglot service application**. Product support: implemented-partial; recipe readiness: planned.
-
-The independent baselines do not yet demonstrate a complete polyglot application with consumer-owned artifact relationships.
-
-Next proof: Combine a service, frontend and shared package, materialize image/chart inputs, verify delivered behavior and link back to focused recipes.
-
-### developer-tool-reference
-
-**Release a small developer tool**. Product support: implemented-partial; recipe readiness: planned.
-
-The first-build binary is not a complete signed/retrieved developer-tool release flow.
-
-Next proof: Build a tool with a library, run tests, inspect required evidence, publish to authorized targets, retrieve and run the same finalized bytes.
 
 ### assess-make
 

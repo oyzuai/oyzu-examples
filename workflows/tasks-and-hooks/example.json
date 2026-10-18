@@ -1,0 +1,25 @@
+{
+  "id": "tasks-and-hooks",
+  "slug": "tasks-and-hooks",
+  "title": "Order native tasks and build hooks",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node"
+  ],
+  "capabilities": [
+    "tasks",
+    "hooks",
+    "configuration",
+    "reports"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "prerequisites": [
+    "Selected Node/npm tools; see the recipe for local execution inputs"
+  ],
+  "profiles": [
+    "local"
+  ],
+  "verification": [],
+  "traceability": []
+}

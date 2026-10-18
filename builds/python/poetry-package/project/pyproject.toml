@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oyzu-example-greeting"
+version = "0.1.0"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.poetry]
+packages = [{ include = "greeting", from = "src" }]

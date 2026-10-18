@@ -1,0 +1,26 @@
+{
+  "id": "polyglot-service",
+  "slug": "polyglot-service",
+  "title": "Serve a built frontend from a Go service",
+  "difficulty": "advanced",
+  "ecosystems": [
+    "node",
+    "go"
+  ],
+  "capabilities": [
+    "build",
+    "composition",
+    "artifacts",
+    "consumer"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "prerequisites": [
+    "See the canonical recipe for native tools and execution limits"
+  ],
+  "profiles": [
+    "local"
+  ],
+  "verification": [],
+  "traceability": []
+}

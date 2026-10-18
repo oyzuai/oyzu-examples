@@ -1,0 +1,87 @@
+{
+  "recipe": "helm-chart",
+  "subject": {
+    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
+    "recipe_sha256": "e81de8d8878989ef718cd7b36b9f854fb458ad2de6f3c8264639cf502c88e8b6",
+    "recipe_tree": "f26ac95c58534d8189970ad317259cf8d76b7d07"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
+    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "recorded-in-bundle",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/helm:3.22.0",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "helm",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:03cc5c4d41035e123c00311f8c50fb8fcd6fe7a87ced1512839a0e00b45ca07e",
+      "template",
+      "hello",
+      "/input/greeting-0.1.0-dev.gce5abb16b76f.tgz"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:b5f3f360f3a986b573f51b07b0f035628532faed295fd79452cfe95f70e379b8",
+    "output": "---\n# Source: greeting/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: hello-greeting\ndata:\n  message: \"Hello from Helm.\""
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/helm:3.22.0",
+      "digest": "sha256:03cc5c4d41035e123c00311f8c50fb8fcd6fe7a87ced1512839a0e00b45ca07e"
+    }
+  ],
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T04:32:44.251Z"
+}

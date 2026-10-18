@@ -1,0 +1,24 @@
+{
+  "id": "static-deployment",
+  "slug": "static-deployment",
+  "title": "Serve the selected static artifact locally",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node"
+  ],
+  "capabilities": [
+    "deploy",
+    "tasks",
+    "artifact-selection"
+  ],
+  "productSupport": "generic-task",
+  "maturity": "blocked",
+  "prerequisites": [
+    "Selected Node/npm tools; see the recipe for local execution inputs"
+  ],
+  "profiles": [
+    "local"
+  ],
+  "verification": [],
+  "traceability": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "publication-multiple",
+  "slug": "publication-multiple",
+  "title": "Publish finalized files to OCI and GitHub",
+  "difficulty": "advanced",
+  "ecosystems": [
+    "maven",
+    "oci",
+    "github"
+  ],
+  "capabilities": [
+    "publish",
+    "evidence",
+    "retry",
+    "consumer"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "prerequisites": [
+    "A current publisher-capable Oyzu binary, native Maven tools, disposable registries and a separately provisioned GitHub test release"
+  ],
+  "profiles": [
+    "standalone"
+  ],
+  "verification": [
+    "verification/records/publication-windows.json"
+  ],
+  "traceability": []
+}
