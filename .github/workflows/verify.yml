@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: '22'
       - run: node verification/catalog.mjs
-      - run: node --test verification/affected.test.mjs
+      - run: node --test verification/*.test.mjs
       - id: affected
         env:
           EXAMPLES_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}

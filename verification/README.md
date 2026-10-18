@@ -34,12 +34,7 @@ releases exercise all admitted native consumers. Captured executor and live
 publication/deployment checks remain separately attributable; an omitted family
 is not reported as verified. Current image prerequisites and blockers are in the
 recipe metadata and coverage inventory.
-The two-package pnpm workspace now has a native lock and an archive-only
-consumer check in the provided-executor lane. Its Windows attempt passed tool
-preparation and version projection, then failed captured preparation with
-`Unsupported reparse point type` (Oyzu tracking issue 636). The consumer did not
-run; its record is unsuccessful and the recipe remains blocked. The prior
-single-package pnpm proof does not qualify workspace delivery.
+The two-package pnpm workspace passed its Windows-controlled captured build and independent offline archive consumer using the separately identified CLI fix in Oyzu PR 637. The record checks both package archives, exact projected dependency versions, regular installed directories, licenses and application-to-library behavior, with per-member test and coverage reports. The earlier unsuccessful Windows record remains historical evidence; broad Windows link or cross-host support is not claimed.
 The hosted matrix admits only host-native recipes. In particular, npm package
 and Go workspace proofs need their documented provisioned executor images and
 run in `Provided executor examples`. Changed recipes requiring external
@@ -47,7 +42,7 @@ prerequisites are listed as `requiredExternalRecipes`; they block automatic docs
 notification even if unrelated native checks pass. A first-build baseline never
 substitutes for an affected captured or live recipe. Shared verifier changes
 retain all those obligations. Native failures still upload their exact-subject
-records for inspection. Run `node --test verification/affected.test.mjs` to check
+records for inspection. Run `node --test verification/*.test.mjs` to check
 selection, notification gates and failure-record retention.
 Updates under `verification/records/` require the owning recipe's check according
 to its metadata; a new native proof record does not require unrelated executors.

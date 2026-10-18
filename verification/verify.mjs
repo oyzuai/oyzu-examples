@@ -40,6 +40,13 @@ export function copyCommittedProject(repo, commit, recipe, destination) {
   }
 }
 
+// A sandbox record means captured execution, including daemonless and future
+// backends. Absence qualifies the host only for a requested native lane.
+export function executionProfile(actions, target, requestedCaptured) {
+  const relevant=actions.filter(action=>action.target===target);
+  if(relevant.some(action=>action.sandbox)) return 'captured';
+  return relevant.length && !requestedCaptured ? 'native-host' : 'recorded-in-bundle';
+}
 const consumers = new Set(['pnpm-workspace', 'first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'python-uv', 'python-poetry', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'node-yarn-classic', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
@@ -64,7 +71,7 @@ async function verifyNative(id, cli, output) {
   const native = (name, args, allowMissing = false) => {
     commands.push(['oyzu', '--root', '<collection>', 'exec', '--', name, ...args.map(value => value.replaceAll(scratch, '<project>'))]);
     const result = spawnSync(cli, ['--root', root, 'exec', '--', findExecutable(name), ...args], {cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024});
-    if (result.status !== 0 && !allowMissing) throw Error('Native consumer ' + name + ' failed: ' + result.stderr);
+    if (result.status !== 0 && !allowMissing) throw Error('Native consumer ' + name + ' failed (' + result.status + '): ' + (result.stderr || result.stdout || result.error?.message || 'No diagnostic output'));
     return {status: result.status, text: result.stdout.trim()};
   };
   const containers = [];
@@ -358,8 +365,7 @@ async function verifyNative(id, cli, output) {
     }
     if (actual !== expected) throw Error('Delivered artifact consumer returned unexpected output');
     if (full && !manifest.reports.some(report => report.kind === 'junit' || /junit/i.test(JSON.stringify(report)))) throw Error('Native test report missing');
-    const backends=deliveredManifest.actions.filter(action=>action.target===deliveredArtifact.target).map(action=>action.sandbox?.backend).filter(Boolean);
-    const execution = backends.length ? (backends.every(backend=>backend==='docker')?'captured':backends.every(backend=>backend!=='docker')?'native-host':'mixed') : (captured?'captured':'recorded-in-bundle');
+    const execution = executionProfile(deliveredManifest.actions, deliveredArtifact.target, captured);
     const deliveredTarget=deliveredManifest.targets.find(item=>item.id===deliveredArtifact.target);
     if(!deliveredTarget) throw Error('Delivered consumer target is missing from its producing manifest');
     const record = {
