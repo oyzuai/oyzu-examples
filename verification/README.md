@@ -61,11 +61,16 @@ actionably. Local verification uses an already installed CLI.
 ## Documentation update permissions
 
 A successful relevant main verification sends an examples-verified repository
-dispatch to oyzuai/oyzu. Configure OYZU_EXAMPLES_DISPATCH_TOKEN with only the
-receiving repository's required dispatch permission, preferably a scoped GitHub
-App installation token. The examples repository's ordinary default token is
-not assumed to have cross-repository write access. Do not copy the site's deploy
-credential here. The receiving workflow validates the exact commit and successful
+dispatch to oyzuai/oyzu. Configure OYZU_EXAMPLES_DISPATCH_APP_CLIENT_ID (variable)
+and OYZU_EXAMPLES_DISPATCH_APP_PRIVATE_KEY (secret) for a dedicated dispatch App
+installed only on Oyzu. GitHub requires contents write for repository dispatch;
+the minted token requests only that permission. Do not share the receiving
+updater App's key or give this App pull requests authority. Each run mints and
+then revokes its token with the immutable-pinned GitHub action. Installation
+tokens expire after an hour; never store one as a permanent repository secret.
+The examples repository's ordinary default token is not assumed to have
+cross-repository write access. Do not copy the site's deploy credential here.
+The receiving workflow reads public checks anonymously, validates the exact commit and successful
 native checks, updates a single bot-owned draft PR and lets the existing docs
 workflow validate/render it. It never pushes website output.
 

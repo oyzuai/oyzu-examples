@@ -93,11 +93,20 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.native.result == 'success'
     runs-on: ubuntu-24.04
     steps:
+      - name: Mint a repository-scoped dispatch token for this run
+        id: dispatch-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
+        with:
+          client-id: ${{ vars.OYZU_EXAMPLES_DISPATCH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.OYZU_EXAMPLES_DISPATCH_APP_PRIVATE_KEY }}
+          owner: oyzuai
+          repositories: oyzu
+          permission-contents: write
       - name: Request a reviewable pin update after verified native changes
         env:
-          GH_TOKEN: ${{ secrets.OYZU_EXAMPLES_DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ steps.dispatch-token.outputs.token }}
           EXAMPLES_COMMIT: ${{ github.sha }}
           EXAMPLES_RECIPES: ${{ needs.catalog.outputs.recipes }}
         run: |
-          test -n "$GH_TOKEN" || { echo '::error::Configure OYZU_EXAMPLES_DISPATCH_TOKEN with scoped dispatch access to oyzuai/oyzu'; exit 1; }
+          test -n "$GH_TOKEN" || { echo '::error::Configure the separate dispatch App client ID and private key for oyzuai/oyzu'; exit 1; }
           jq -n --arg commit "$EXAMPLES_COMMIT" --argjson recipes "$EXAMPLES_RECIPES" '{event_type:"examples-verified",client_payload:{commit:$commit,recipes:$recipes}}' | gh api repos/oyzuai/oyzu/dispatches --input -
