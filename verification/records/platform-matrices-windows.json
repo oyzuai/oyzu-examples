@@ -1,9 +1,9 @@
 {
   "recipe": "platform-matrices",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
-    "recipe_sha256": "dad71b079111897f5274d8fcfc207706eb9d410b0b0d96226f93f5d3eae3362a",
-    "recipe_tree": "d2d31e562f23853667b4d98620b1b870f14531a6"
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "6c975f8200fab9df92bff48f53154e537383f9d8df297d0510aebe99ceddb986",
+    "recipe_tree": "09e0f5504d7894e1bff756bc55e8d7c3d05e0072"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
@@ -57,5 +57,5 @@
   "limits": [
     "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T06:23:06.021Z"
+  "recordedAt": "2026-10-18T06:26:06.558Z"
 }

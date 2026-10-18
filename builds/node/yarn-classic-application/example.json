@@ -14,15 +14,17 @@
   "productSupport": "implemented-partial",
   "maturity": "blocked",
   "prerequisites": [
-    "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
+    "Selected Node and Yarn Classic tools, a compatible captured executor and Docker; current normal tool preparation is blocked before execution."
   ],
-  "verification": [],
+  "verification": [
+    "verification/records/node-yarn-classic-windows.json"
+  ],
   "traceability": [
     "EX-007",
     "EX-018",
     "EX-050"
   ],
-  "currentGap": "The current pin command refuses the yarn request with TOOL_ALIAS_UNSUPPORTED. The native Yarn lock exists, but it is not proof of an Oyzu build.",
+  "currentGap": "The current build/pin preparation refuses the yarn request with TOOL_ALIAS_UNSUPPORTED. The native Yarn Classic lock exists, but it is not proof of an Oyzu build.",
   "executionProfiles": [
     "captured-candidate"
   ]

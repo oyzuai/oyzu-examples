@@ -1,8 +1,9 @@
 # Oyzu examples
 
 Self-contained native projects and canonical recipes for standalone Oyzu use.
-Implementation is in progress for oyzuai/oyzu#611. Nothing here requires a
-platform account. Planned capabilities must not be presented as working recipes.
+The collection for oyzuai/oyzu#611 includes 25 native project candidates, four
+learning paths and an assessment inventory. Nothing here requires a platform
+account. Planned capabilities must not be presented as working recipes.
 
 The maintainer selected Apache-2.0 for this collection on 2026-10-17.
 See [LICENSE](LICENSE) and [contribution guidance](CONTRIBUTING.md).

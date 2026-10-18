@@ -1,9 +1,9 @@
 {
   "recipe": "dotnet-library",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
-    "recipe_sha256": "564e90cb239442c0a9bd81f6a727951f5f563c05ff02aac8a12079b39680a740",
-    "recipe_tree": "22583549c2eb66818d6d03539cf2f85afbec460d"
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "44f35f2bb18a16fb6fc15eb0ed56f26e18a4ba9f68132f532ab20b1db2a1bdb0",
+    "recipe_tree": "6998123d3fa731343bc95a4d4f5e905f290bc922"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
@@ -34,5 +34,5 @@
   "limits": [
     "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T06:22:38.209Z"
+  "recordedAt": "2026-10-18T06:25:50.436Z"
 }

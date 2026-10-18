@@ -4,7 +4,7 @@ Use the native poetry project and lock to build the same small original applicat
 
 ## Prerequisites
 
-Use an Oyzu binary supporting this adapter and an explicitly provisioned `oyzu-toolchain/poetry:2.5.1-python3.12` executor with a supported Docker engine. The selected tool requirements remain in oyzu.toml. The image is an external prerequisite, not downloaded or silently replaced by this collection. Initial native dependency preparation needs network access. Yarn here means Classic only.
+Use an Oyzu binary supporting this adapter and an explicitly provisioned `oyzu-toolchain/poetry:2.5.1-python3.12` executor with a supported Docker engine. The selected tool requirements remain in oyzu.toml. The image is an external prerequisite, not downloaded or silently replaced by this collection. Initial native dependency preparation needs network access.
 
 ## Build and consume
 

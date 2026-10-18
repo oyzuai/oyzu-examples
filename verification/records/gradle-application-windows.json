@@ -1,9 +1,9 @@
 {
   "recipe": "gradle-application",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
-    "recipe_sha256": "9f19b6db1bae5f7937bff33a925c3964fc94ba09752345e7853a9f4e95209cab",
-    "recipe_tree": "c5d5b217b70fd41226d3612a4b22b6f11864567e"
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "35f520036190885a598baa6c1d215f9e08b8d48358060a679707e8d0c8d1f88c",
+    "recipe_tree": "93926106205ead71613afb2c0bd28181ba1ac68b"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
@@ -35,5 +35,5 @@
   "limits": [
     "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T06:22:40.390Z"
+  "recordedAt": "2026-10-18T06:25:48.626Z"
 }

@@ -16,11 +16,13 @@
   "prerequisites": [
     "Oyzu can acquire the selected CPython 3.13 line. Initial preparation needs access to the native build-backend packages. This package has no runtime dependencies."
   ],
-  "verification": [],
+  "verification": [
+    "verification/records/python-poetry-windows.json"
+  ],
   "traceability": [
     "EX-013"
   ],
-  "currentGap": "The current pin command refuses the poetry request with TOOL_ALIAS_UNSUPPORTED. Native Poetry lock generation passed; the Oyzu flow remains blocked.",
+  "currentGap": "The current build/pin preparation refuses the poetry request with TOOL_ALIAS_UNSUPPORTED. Native Poetry lock generation passed; the Oyzu flow remains blocked.",
   "executionProfiles": [
     "captured-candidate"
   ]

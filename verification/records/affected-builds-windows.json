@@ -1,0 +1,133 @@
+{
+  "recipe": "affected-builds",
+  "subject": {
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "08ec809eee94589fbfd6429bedaa3f026904e77b9c5ac097ab18506bb33283cd",
+    "recipe_tree": "b66511eab4011a2d879de8c0dcbf841ddfbe4449"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "git",
+      "init; add copied source; commit local comparison baseline"
+    ],
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\api\\artifacts\\application-0.1.0\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\web\\artifacts\\application-0.1.0\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--affected",
+      "HEAD",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--affected",
+      "HEAD",
+      "--full",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--affected",
+      "HEAD",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\api\\artifacts\\application-0.1.0\\index.cjs"
+    ]
+  ],
+  "observations": [
+    "Unchanged Git baseline yielded an empty bundle; editing API source/test selected API only and its delivered consumer observed the edit"
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:ad5f6cad3f5518dfd8fb16d85ba0fed9e7bb083065da897cd6ca71721030f0ec",
+    "output": "Updated api."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:9f52e964cba0e2a3a1472f6df90a46758e3710708dad07c331d55075fc98042c"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:80551f69f04176b9cda601b4a0d825c5dd8b3e86e087dc1b97c753a88b589fd9"
+    },
+    {
+      "kind": "test",
+      "digest": "sha256:103f9939b00b6682e5df9e4120bc4812625e4f56592ce0da0ad923ea4218c20a"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:80551f69f04176b9cda601b4a0d825c5dd8b3e86e087dc1b97c753a88b589fd9"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:27:44.055Z"
+}

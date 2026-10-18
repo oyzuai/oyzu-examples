@@ -40,7 +40,7 @@ export function copyCommittedProject(repo, commit, recipe, destination) {
   }
 }
 
-const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
+const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'python-uv', 'python-poetry', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'node-yarn-classic', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
   if (!recipe || !consumers.has(id)) throw Error('No admitted native consumer check for recipe: ' + id);
@@ -114,7 +114,7 @@ async function verifyNative(id, cli, output) {
       commands.push(['<delivered executable>', ...args]);
       actual = run(executable, args, scratch);
       expected = id === 'first-build' ? 'Hello, developer! Built with Oyzu.' : 'Hello from Go.';
-    } else if (id === 'node-application' || id === 'node-pnpm' || id === 'tasks-and-hooks' || id === 'incremental-builds') {
+    } else if (id === 'node-application' || id === 'node-pnpm' || id === 'node-yarn-classic' || id === 'tasks-and-hooks' || id === 'incremental-builds') {
       actual = invoke(['exec', '--', 'node', path.join(executable, 'index.cjs')]);
       expected = id === 'tasks-and-hooks' ? 'Hello from tasks: local.' : 'Hello from Node.';
       if (!fs.existsSync(path.join(executable, 'LICENSE'))) throw Error('Delivered application license missing');
@@ -156,7 +156,7 @@ async function verifyNative(id, cli, output) {
       invoke(['build','--affected','HEAD','--full','--plan']);invoke(['build','--affected','HEAD','--full']);invoke(['inspect','dist']);
       const changed=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const selection=changed.extensions?.['oyzu.dev/selection'];
-      if(changed.artifacts.length!==1 || changed.artifacts[0].target!=='api' || changed.actions.some(item=>item.target!=='api') || selection?.mode!=='affected' || !selection.excluded.includes('web')) throw Error('Edited API did not select only its own native work and exclude web');
+      if(changed.artifacts.length!==1 || changed.artifacts[0].target!=='api' || changed.actions.some(item=>item.target!=='api') || selection?.mode!=='affected' || !selection.excluded.some(item=>item.target==='web')) throw Error('Edited API did not select only its own native work and exclude web');
       actual=invoke(['exec','--','node',path.join(scratch,'dist',changed.artifacts[0].path,'index.cjs')]);expected='Updated api.';
       observations.push('Unchanged Git baseline yielded an empty bundle; editing API source/test selected API only and its delivered consumer observed the edit');
     } else if (id === 'npm-package') {
@@ -211,7 +211,7 @@ async function verifyNative(id, cli, output) {
         actual = container(image, 'java', ['type=bind,source=' + path.dirname(executable) + ',target=/input,readonly'], ['-cp', '/input/' + path.basename(executable), 'example.Hello']);
       } else actual = invoke(['exec', '--', 'java', '-cp', executable, 'example.Hello']);
       expected = {'maven-application': 'Hello from Maven.', 'gradle-application': 'Hello from Gradle.', 'ant-application': 'Hello from Ant.'}[id];
-    } else if (id === 'python-package') {
+    } else if (id === 'python-package' || id === 'python-uv' || id === 'python-poetry') {
       const wheels = artifact.kind === 'directory' ? fs.readdirSync(executable).filter(name => name.endsWith('.whl')).map(name => path.join(executable, name)) : [executable];
       if (wheels.length !== 1) throw Error('Expected one delivered Python wheel');
       invoke(['exec', '--', 'python', '-m', 'venv', 'consumer']);
