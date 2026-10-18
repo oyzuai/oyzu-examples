@@ -124,27 +124,14 @@
       "id": "affected-builds",
       "path": "workflows/affected-builds",
       "kind": "workflow"
+    },
+    {
+      "id": "pnpm-workspace",
+      "path": "builds/node/pnpm-workspace",
+      "kind": "workflow"
     }
   ],
   "gaps": [
-    {
-      "id": "pnpm-workspace",
-      "title": "Build a pnpm workspace",
-      "ecosystems": [
-        "node",
-        "pnpm"
-      ],
-      "capabilities": [
-        "build",
-        "workspaces"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "Current pnpm support has bounded native lock and acquisition constraints; this collection has no qualified workspace recipe.",
-      "nextProof": "Generate the real native lock, build two related packages and consume their delivered archives without workspace source links."
-    },
     {
       "id": "yarn-classic-workspace",
       "title": "Build a Yarn Classic workspace",

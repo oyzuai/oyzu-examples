@@ -1,0 +1,30 @@
+{
+  "id": "pnpm-workspace",
+  "slug": "pnpm-workspace",
+  "title": "Deliver two related pnpm workspace packages",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "pnpm"
+  ],
+  "capabilities": [
+    "build",
+    "workspaces",
+    "artifacts",
+    "consume"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "prerequisites": [
+    "An existing pnpm 10.11.0 and Node 22 captured executor, Docker and normal Oyzu tool preparation. No registry runtime dependencies."
+  ],
+  "verification": [
+    "verification/records/pnpm-workspace-windows.json"
+  ],
+  "traceability": [
+    "EX-020"
+  ],
+  "executionProfiles": [
+    "captured-candidate"
+  ]
+}

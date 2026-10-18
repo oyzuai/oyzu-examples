@@ -7,7 +7,7 @@ on:
         description: 'Requires an existing dedicated runner with the recipe executor images provisioned'
         required: true
         type: choice
-        options: [npm-package, go-workspace, tasks-and-hooks, incremental-builds, platform-matrices, node-pnpm, docker-file-image, helm-chart, dotnet-library, gradle-application, ant-application, static-deployment]
+        options: [npm-package, go-workspace, tasks-and-hooks, incremental-builds, platform-matrices, node-pnpm, pnpm-workspace, docker-file-image, helm-chart, dotnet-library, gradle-application, ant-application, static-deployment]
 
 permissions:
   contents: read

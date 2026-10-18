@@ -40,7 +40,7 @@ export function copyCommittedProject(repo, commit, recipe, destination) {
   }
 }
 
-const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'python-uv', 'python-poetry', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'node-yarn-classic', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
+const consumers = new Set(['pnpm-workspace', 'first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'python-uv', 'python-poetry', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'node-yarn-classic', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
   if (!recipe || !consumers.has(id)) throw Error('No admitted native consumer check for recipe: ' + id);
@@ -89,10 +89,10 @@ async function verifyNative(id, cli, output) {
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
     fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
     process.env.OYZU_USER_CONFIG=userConfig;
-    const captured = capturedGradle || ['node-pnpm','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
+    const captured = capturedGradle || ['node-pnpm','pnpm-workspace','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && (!captured || id==='npm-package' || id==='go-workspace')) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
-    const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
+    const full = ['first-build', 'node-application', 'npm-package', 'pnpm-workspace', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
     if(goImage) containers.push({purpose:'Provided Go build executor',image:goImage,digest:native('docker',['image','inspect',goImage,'--format','{{.Id}}']).text});
     build([...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);
@@ -167,6 +167,29 @@ async function verifyNative(id, cli, output) {
       invoke(['exec','--','npm','install','--prefix',consumer,'--ignore-scripts','--no-audit','--no-fund','--offline',executable]);
       actual=invoke(['exec','--','node','-e',`console.log(require(${JSON.stringify(path.join(consumer,'node_modules/oyzu-example-greeting'))}).hello('developer'))`]);
       expected='Hello, developer, from the delivered package.';
+    } else if (id === 'pnpm-workspace') {
+      const archives=manifest.artifacts.filter(item=>item.path.endsWith('.tgz'));
+      if(archives.length!==2 || manifest.artifacts.length!==2) throw Error('Both native workspace archives are required');
+      const consumer=fs.mkdtempSync(path.join(os.tmpdir(),'oyzu-workspace-consumer-'));
+      try {
+        fs.writeFileSync(path.join(consumer,'package.json'),'{"private":true}\n');
+        invoke(['exec','--','npm','install','--prefix',consumer,'--ignore-scripts','--no-audit','--no-fund','--offline',...archives.map(item=>path.join(scratch,'dist',item.path))]);
+        const installed=name=>path.join(consumer,'node_modules',name);
+        for(const name of ['oyzu-example-workspace-library','oyzu-example-workspace-app']) {
+          if(fs.lstatSync(installed(name)).isSymbolicLink() || !fs.existsSync(path.join(installed(name),'LICENSE'))) throw Error('Consumer needs installed package bytes and licenses, not workspace links');
+        }
+        const library=JSON.parse(fs.readFileSync(path.join(installed('oyzu-example-workspace-library'),'package.json')));
+        const app=JSON.parse(fs.readFileSync(path.join(installed('oyzu-example-workspace-app'),'package.json')));
+        if(app.dependencies?.[library.name]!==library.version || !archives.some(item=>item.version===library.version)) throw Error('Delivered local dependency does not bind the delivered library version');
+        // A separate working directory plus only archive-installed packages keeps
+        // the authored workspace out of Node's module resolution path.
+        commands.push(['oyzu','exec','--','node','<archive-only consumer>']);
+        actual=run(cli,['--root',scratch,'exec','--','node','-e',`console.log(require(${JSON.stringify(installed('oyzu-example-workspace-app'))}).greet('developer'))`],consumer);
+        expected='Hello, developer, from the delivered workspace.';
+        observations.push('Two delivered archives installed offline outside the source tree; exact projected library version, regular package directories, licenses and application-to-library behavior passed');
+      } finally {
+        fs.rmSync(consumer,{recursive:true,force:true});
+      }
     } else if (id === 'go-workspace') {
       if(!fs.existsSync(path.join(scratch,'go.work'))) throw Error('Native workspace source missing');
       if(consumeGo(artifact)!=='Hello from the workspace library.') throw Error('Workspace consumer did not use its local library');

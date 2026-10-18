@@ -1,7 +1,7 @@
 # Oyzu examples
 
 Self-contained native projects and canonical recipes for standalone Oyzu use.
-The collection for oyzuai/oyzu#611 includes 25 native project candidates, four
+The collection for oyzuai/oyzu#611 includes 26 native project candidates, four
 learning paths and an assessment inventory. Nothing here requires a platform
 account. Planned capabilities must not be presented as working recipes.
 

@@ -33,14 +33,15 @@ Build, inspect evidence, publish, retrieve and retry safely.
 
 Connect workspaces, generators, artifacts and selected deployment mechanisms.
 
-1. [Build related Go workspace modules](../builds/go/workspace/README.md)
-2. [Build and consume a Maven reactor](../builds/maven/reactor/README.md)
-3. [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md)
-4. [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md)
-5. [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md)
-6. [Serve the selected static artifact locally](../deployment/local-static/README.md)
-7. [Connect an image and Helm chart](#image-chart-composition)
-8. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
+1. [Deliver two related pnpm workspace packages](../builds/node/pnpm-workspace/README.md)
+2. [Build related Go workspace modules](../builds/go/workspace/README.md)
+3. [Build and consume a Maven reactor](../builds/maven/reactor/README.md)
+4. [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md)
+5. [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md)
+6. [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md)
+7. [Serve the selected static artifact locally](../deployment/local-static/README.md)
+8. [Connect an image and Helm chart](#image-chart-composition)
+9. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
 
 ## Native baselines
 
@@ -71,19 +72,12 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md) | implemented-partial | experimental |
 | [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md) | implemented-partial | blocked |
 | [Build only targets changed from a Git baseline](../workflows/affected-builds/README.md) | implemented-partial | experimental |
+| [Deliver two related pnpm workspace packages](../builds/node/pnpm-workspace/README.md) | implemented-partial | experimental |
 
 ## Gaps and assessments
 
 No runnable project or Run action is supplied for these entries. Product support
 and missing example qualification remain separate facts.
-
-### pnpm-workspace
-
-**Build a pnpm workspace**. Product support: implemented-partial; recipe readiness: planned.
-
-Current pnpm support has bounded native lock and acquisition constraints; this collection has no qualified workspace recipe.
-
-Next proof: Generate the real native lock, build two related packages and consume their delivered archives without workspace source links.
 
 ### yarn-classic-workspace
 

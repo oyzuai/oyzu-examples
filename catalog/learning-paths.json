@@ -37,6 +37,7 @@
       "title": "Coordinate a larger system",
       "outcome": "Connect workspaces, generators, artifacts and selected deployment mechanisms",
       "steps": [
+        "pnpm-workspace",
         "go-workspace",
         "maven-reactor",
         "developer-tool",
