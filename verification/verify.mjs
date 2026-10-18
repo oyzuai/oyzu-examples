@@ -68,7 +68,7 @@ async function verifyNative(id, cli, output) {
     return {status: result.status, text: result.stdout.trim()};
   };
   const containers = [];
-  const goImage=['go-command','go-workspace','polyglot-service'].includes(id)?process.env.EXAMPLES_GO_IMAGE:undefined;
+  const goImage=id==='go-workspace'?process.env.EXAMPLES_GO_IMAGE:undefined;
   const build=options=>invoke(['build',...options,...(goImage?['--image','go='+goImage]:[])]);
   const container = (image, entrypoint, mounts, args) => {
     const identity = native('docker', ['image', 'inspect', image, '--format', '{{.Id}}']).text;

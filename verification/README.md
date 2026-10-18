@@ -24,7 +24,7 @@ releases exercise all admitted native consumers. Captured executor and live
 publication/deployment checks remain separately attributable; an omitted family
 is not reported as verified. Current image prerequisites and blockers are in the
 recipe metadata and coverage inventory.
-For Go proofs, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
+For the Go workspace proof, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
 compatible Go executor through Oyzu's ordinary `--image go=...` option. The
 verifier records that reference, immutable image identity and actual command;
 it does not install a compiler or treat a stale default image as compatible.

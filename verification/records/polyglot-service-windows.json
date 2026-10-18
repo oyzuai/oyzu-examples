@@ -1,7 +1,7 @@
 {
   "recipe": "polyglot-service",
   "subject": {
-    "commit": "b2dabd02b49e5c5fb01608409fa8b61a14111e47",
+    "commit": "31d814f2cb90d50cc881f923a3819f208c4b8758",
     "recipe_sha256": "c3bc984e4a4fbdf933f1023d88275e7a07706ed465937307d3d28b68267c15b5",
     "recipe_tree": "5951539f21f59f5ed609c184d9f68e112c625a89"
   },
@@ -13,7 +13,11 @@
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "attempted-native-build",
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
   "commands": [
     [
       "oyzu",
@@ -27,31 +31,31 @@
     ],
     [
       "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "image",
-      "inspect",
-      "oyzu-evidence/go-source-current:6428-01a14731",
-      "--format",
-      "{{.Id}}"
+      "build"
     ],
     [
       "oyzu",
-      "build",
-      "--image",
-      "go=oyzu-evidence/go-source-current:6428-01a14731"
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered service>",
+      "--listen",
+      "127.0.0.1:<ephemeral-port>"
     ]
   ],
-  "result": "failed",
-  "diagnostic": {
-    "summary": "oyzu.exe build --image go=oyzu-evidence/go-source-current:6428-01a14731 failed (1):",
-    "code": "BUILD_FAILED"
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:2d08448c1023f50b9a3daadf613b5b1b9fd49ed06a7fae8c4ce80d21b26f117f",
+    "output": "Delivered frontend and API observed over HTTP"
   },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
   "limits": [
-    "This failed attempt does not qualify the recipe or its host/executor/target"
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:19:06.005Z"
+  "recordedAt": "2026-10-18T06:44:23.704Z"
 }
