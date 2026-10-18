@@ -1,0 +1,68 @@
+{
+  "recipe": "gradle-application",
+  "subject": {
+    "commit": "a9d2082c2bbc6317cfb4e55121fbad60834721c3",
+    "recipe_sha256": "53d324b9e45cebe81e47d0bd5e43a2c54369fdde17b68058288db3a847f2118d",
+    "recipe_tree": "27a235e87f5c2df1b33e4fb5d02965ecb4e3e6db"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "native-host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "java",
+      "-cp",
+      "<project>\\dist\\project\\artifacts\\hello-0.1.0.jar",
+      "example.Hello"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:05b526b89df4dc1444b8b089324ba4db9c3ce15e4be8d570898101d0cda522c4",
+    "sourceTree": "sha256:cec618305be18ed5b2f0a9052e11d2eb052de883f94a3abbcda4d88711637f83",
+    "output": "Hello from Gradle."
+  },
+  "nativeConsumerImages": [],
+  "buildTools": [],
+  "dependencyManagers": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:49:01.733Z"
+}

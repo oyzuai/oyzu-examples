@@ -1,0 +1,158 @@
+{
+  "recipe": "dotnet-library",
+  "subject": {
+    "commit": "18e9e9eca460b9dc027954276481980f6ba052dc",
+    "recipe_sha256": "1a7e56bcccbd176d51c0aabc19c9c9dcac409d4c7ec91771be4b8b3b38eedb9b",
+    "recipe_tree": "16be18d9a880c57f300e889046ddf66c57277bd7"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/dotnet:10.0.401",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "dotnet",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
+      "--mount",
+      "type=bind,source=<project>\\consumer,target=/consumer",
+      "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf",
+      "restore",
+      "/consumer/Consumer.csproj",
+      "--source",
+      "/input",
+      "--packages",
+      "/consumer/packages"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/dotnet:10.0.401",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "dotnet",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
+      "--mount",
+      "type=bind,source=<project>\\consumer,target=/consumer",
+      "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf",
+      "run",
+      "--project",
+      "/consumer/Consumer.csproj",
+      "--no-restore"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:088f2ea02b834eee34d8ac6111d21574e86da6f88358992c255e535aa36c7f18",
+    "sourceTree": "sha256:6007f3f223d168737361fdcf713c23cf5fb38158c304a8f665f354c0bf9bce6b",
+    "output": "Hello from .NET."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/dotnet:10.0.401",
+      "digest": "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf"
+    },
+    {
+      "image": "oyzu-toolchain/dotnet:10.0.401",
+      "digest": "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf"
+    }
+  ],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/dotnet:10.0.401",
+      "digest": "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "dotnet",
+      "version": "10.0.401",
+      "digest": "sha256:e57cf42670d2e355f08e663d7793a53a52cc6f59a45a5a02871c38203e0e4fdf",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:44:56.639Z"
+}

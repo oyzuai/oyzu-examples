@@ -1,0 +1,122 @@
+{
+  "recipe": "pnpm-workspace",
+  "subject": {
+    "commit": "18e9e9eca460b9dc027954276481980f6ba052dc",
+    "recipe_sha256": "d715b5d307ad8c2f49f930b0616c59fed3e540eb0746edf07f096393de75eb76",
+    "recipe_tree": "1381e6e54093e35258419b77c2897bce8e01e54c"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.5ce93ecea23e (debug; x86_64-pc-windows-msvc; build 1792334191)",
+    "binary_sha256": "554b26729f3aaaeb871598708eaa670b53b3d6bf94b2311923dca246b5530d43"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<project>",
+      "exec",
+      "--",
+      "npm",
+      "install",
+      "--prefix",
+      "<consumer>",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--offline",
+      "<project>\\dist\\project\\artifacts\\oyzu-example-workspace-library-0.1.0-dev.g03b1de786357.tgz",
+      "<project>\\dist\\project\\artifacts\\oyzu-example-workspace-app-0.1.0-dev.g03b1de786357.tgz"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<project>",
+      "exec",
+      "--",
+      "node",
+      "-e",
+      "console.log(require(\"<consumer>\\\\node_modules\\\\oyzu-example-workspace-app\").greet('developer'))"
+    ]
+  ],
+  "observations": [
+    "Two delivered archives installed offline outside the source tree; exact projected library version, regular package directories, licenses and application-to-library behavior passed"
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:6472da8faebd29dc29f4c1afc5e27a4c1329b154baae622144f9486ce80ba9a1",
+    "sourceTree": "sha256:5380e49a8a891ade1ad0cd813c687fd00c18376f75fb405a746351806d8bdff1",
+    "output": "Hello, developer, from the delivered workspace."
+  },
+  "nativeConsumerImages": [],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/node:pnpm10.11.0-node22",
+      "digest": "sha256:4a0ae5a7f0ff8fb1434118a8e20fb70be114f94f0dcbf87db0cc47fc7a2ffad7",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "pnpm",
+      "version": "10.11.0",
+      "digest": "sha256:4a0ae5a7f0ff8fb1434118a8e20fb70be114f94f0dcbf87db0cc47fc7a2ffad7",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:3d480523eb44d3cbe13ae326263d50631f44d3afb123e4a0ce3b5d36d3f1c8f6"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:946c23d22c8082a283b77560067f83ee4a7dc36c77a4c77f808b9605c870b38c"
+    },
+    {
+      "kind": "test",
+      "digest": "sha256:2cb4a929393ba34c172c1fcd1644ee6168f127a62b24f7494e70cd41c416871c"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:b26005e7a44d32208d111c5c48d44bb6143348930a01414d1eea7dee2d9af59e"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:44:57.217Z"
+}

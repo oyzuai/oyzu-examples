@@ -1,0 +1,73 @@
+{
+  "recipe": "python-poetry",
+  "subject": {
+    "commit": "18e9e9eca460b9dc027954276481980f6ba052dc",
+    "recipe_sha256": "72e93d3fe2db2f47b9fd90c1a1d66f443899f57fb7c3e5671a7d064278461d7e",
+    "recipe_tree": "8450e4fa88aa4f6a7037a756a40219f1ac45017c"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "python",
+      "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe",
+      "--version"
+    ]
+  ],
+  "observations": [],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "Native consumer docker failed: ",
+    "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T14:46:34.124Z"
+}

@@ -1,0 +1,150 @@
+{
+  "recipe": "python-poetry",
+  "subject": {
+    "commit": "a9d2082c2bbc6317cfb4e55121fbad60834721c3",
+    "recipe_sha256": "72e93d3fe2db2f47b9fd90c1a1d66f443899f57fb7c3e5671a7d064278461d7e",
+    "recipe_tree": "8450e4fa88aa4f6a7037a756a40219f1ac45017c"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "python",
+      "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe",
+      "--version"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "python",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe",
+      "-I",
+      "-c",
+      "import pathlib,subprocess,sys,tempfile,venv; root=pathlib.Path(tempfile.mkdtemp())/\"consumer\"; venv.create(root,with_pip=True); python=str(root/\"bin/python\"); subprocess.run([python,\"-m\",\"pip\",\"install\",\"--no-index\",\"--no-deps\",\"/input/oyzu_example_greeting-0.1.0.dev0+g23b84658bac6-py3-none-any.whl\"],check=True,stdout=sys.stderr); subprocess.run([python,\"-I\",\"-c\",\"import greeting; print(greeting.hello())\"],check=True)"
+    ]
+  ],
+  "observations": [
+    "Independent delivered-wheel consumer interpreter: Python 3.15.0",
+    "Only delivered wheel bytes mounted; network disabled; no Python tool-lock handoff or host-runtime qualification claimed"
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:bb5945bba2a3ca39b372b1cae01321838a50151c418920dda41e60094198f900",
+    "sourceTree": "sha256:37df4e4b8ba763b2721537274dd4e2b65befcf2fcc0fd6a73a33fe6520fd2b6a",
+    "output": "Hello from Python."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "digest": "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe"
+    },
+    {
+      "image": "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "digest": "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe"
+    }
+  ],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/poetry:2.5.1-python3.12",
+      "digest": "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "poetry",
+      "version": "2.5.1",
+      "digest": "sha256:19806d705a408d4d78c66284c057d4c09a9aa0aa32d2889189ceee50046264fe",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux",
+        "runtime": "3.15.0"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:48:07.146Z"
+}
