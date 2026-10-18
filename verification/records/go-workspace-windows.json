@@ -1,9 +1,9 @@
 {
   "recipe": "go-workspace",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
-    "recipe_sha256": "fc41da6f6e98ec11fc864774b6c718dffb02eca9a8a51afad57f8def5312f24a",
-    "recipe_tree": "a90fa4a23dc4cd6fd350f0e5b2910ed60a965151"
+    "commit": "43b7b0211469199ba73c9fcfa00ebaa0d31436e9",
+    "recipe_sha256": "608dba8dc05fbdb910ac5244a58910832aea7c3679aa06e45efca4119ca8a56d",
+    "recipe_tree": "9ef47079d6986fe3b648521d2d89cebad266cf6c"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
@@ -174,5 +174,5 @@
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:21:27.931Z"
+  "recordedAt": "2026-10-18T06:32:15.336Z"
 }
