@@ -1,0 +1,28 @@
+{
+  "id": "maven-application",
+  "slug": "maven-application",
+  "title": "Build a single-module Maven application",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "maven",
+    "java"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Oyzu acquires the declared JDK 21 and Maven 3.9 line. Native plugin dependencies need initial Maven Central access. No platform account is needed."
+  ],
+  "verification": [
+    "verification/records/maven-application-windows.json"
+  ],
+  "traceability": [
+    "EX-023"
+  ],
+  "executionProfiles": [
+    "native-host"
+  ]
+}

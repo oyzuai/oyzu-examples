@@ -1,0 +1,38 @@
+{
+  "recipe": "dotnet-library",
+  "subject": {
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "44f35f2bb18a16fb6fc15eb0ed56f26e18a4ba9f68132f532ab20b1db2a1bdb0",
+    "recipe_tree": "6998123d3fa731343bc95a4d4f5e905f290bc922"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ]
+  ],
+  "observations": [],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build failed (1):",
+    "code": "BUILD_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T06:25:50.436Z"
+}

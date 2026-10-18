@@ -1,0 +1,27 @@
+{
+  "id": "helm-chart",
+  "slug": "helm-chart",
+  "title": "Package a minimal Helm chart",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "helm"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Use the current documented Helm executor and provisioned Helm release. No Kubernetes cluster or account is needed for packaging and template rendering. This does not verify a deployment."
+  ],
+  "verification": [
+    "verification/records/helm-chart-windows.json"
+  ],
+  "traceability": [
+    "EX-028"
+  ],
+  "executionProfiles": [
+    "captured"
+  ]
+}

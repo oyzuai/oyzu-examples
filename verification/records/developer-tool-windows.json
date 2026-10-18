@@ -1,0 +1,74 @@
+{
+  "recipe": "developer-tool",
+  "subject": {
+    "commit": "6bc1de21d11fbc0321e5d44e83af0fdc56e71239",
+    "recipe_sha256": "26af4e0e2468c6755ddb29300b2df7e929359ed0df77d2f9591e52ae72949bd1",
+    "recipe_tree": "e6bfcc22b5a59c61efed63ef95e9f51be5cceedc"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered tool>",
+      "observed stable, unchanged repeat, then preview after channel.txt change"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:9a10a3803cc6487e471eb1b77e6501f3822de1d6182f2652ff6c6bd016b1411e",
+    "sourceTree": "sha256:1fb6c24e46a21348fcaf3a0df14be4f18ac4650271b7aaa593c5592d629bdf3d",
+    "output": "Release channel: preview"
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T07:24:27.610Z"
+}

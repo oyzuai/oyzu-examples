@@ -1,0 +1,28 @@
+{
+  "id": "tasks-and-hooks",
+  "slug": "tasks-and-hooks",
+  "title": "Order native tasks and build hooks",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "npm"
+  ],
+  "capabilities": [
+    "tasks",
+    "hooks",
+    "configuration",
+    "reports"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "prerequisites": [
+    "Selected Node/npm tools; see the recipe for local execution inputs"
+  ],
+  "verification": [
+    "verification/records/tasks-and-hooks-windows.json"
+  ],
+  "traceability": [],
+  "executionProfiles": [
+    "captured"
+  ]
+}

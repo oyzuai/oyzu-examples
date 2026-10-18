@@ -1,0 +1,91 @@
+{
+  "recipe": "helm-chart",
+  "subject": {
+    "commit": "77bf9a7dfd9c56a470cd1a73daef2e9cfaec28ef",
+    "recipe_sha256": "f735a0aa9fd554f303236eef4ab6ab2d38effcaf495aac0ea003f745c9a5bc11",
+    "recipe_tree": "cdbd58cffefd197dc4ac54df63da40461a748bee"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/helm:3.22.0",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "helm",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:68f1a0e9ec650995de9f43ca68df232803becb0fbb72a2a8e41633d4b223df85",
+      "template",
+      "hello",
+      "/input/greeting-0.1.0-dev.gce5abb16b76f.tgz"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:b5f3f360f3a986b573f51b07b0f035628532faed295fd79452cfe95f70e379b8",
+    "sourceTree": "sha256:5cf836ecba04220c7e0d14f483fd502a3c259205235722032b7b47bf8f275647",
+    "output": "---\n# Source: greeting/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: hello-greeting\ndata:\n  message: \"Hello from Helm.\""
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/helm:3.22.0",
+      "digest": "sha256:68f1a0e9ec650995de9f43ca68df232803becb0fbb72a2a8e41633d4b223df85"
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T07:28:04.781Z"
+}

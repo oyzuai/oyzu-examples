@@ -1,0 +1,203 @@
+format = 1
+environment = []
+tool = []
+
+[[resolved_environment]]
+required_capabilities = []
+request_digest = "sha256:43f653a7adc5526e2df494dd391984c6f669ff7bd1cd413c18e5c2ce602cb9f9"
+roots = ["sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714", "sha256:17cf471dbef432681d52ca8991971548f6362112c857ace9344aa2665edaa089", "sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64", "sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac", "sha256:a70c2c55208a3d00e81c2208971bd09b34a5aec83541711a8b89d8b9e69caffd", "sha256:bc879993492543d89de90192182c550df6f293c2e899abbb878106eb987367ee", "sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a", "sha256:ddcad25ed76292ea9067bb06b00b406e5917ec2f00d687f6c95357ccc0d5cbcd"]
+
+[resolved_environment.requests]
+"oyzu:gradle" = "9.8"
+"oyzu:java" = "21"
+
+[resolved_environment.native_constraints]
+"oyzu:java" = ["gradle-java-level:>=21.0.0"]
+
+[[resolved_environment]]
+required_capabilities = []
+request_digest = "sha256:523dcaf72ba247f7219456aa706b11e3b403a953908ec6156906f8764436a11d"
+roots = ["sha256:07be809edd61022cf17f3be994f844e5ae22a8c272aab23ef7d7cb2fde234a37", "sha256:0c9a10eb7ce9a5597f2a12945c1568fd1a4b8f793788dbbf94785d4388d2d1d3", "sha256:3bc202072063ecc056d2272b2ea691f6e9f08860492f3cf04b2fc19ec22e22c3", "sha256:6a332608f2473bb1281a37b6d3351fea6a44f61d28247edbd49057bd70230e50", "sha256:7d385f642f6ccd405b913cc92f11fae9ca476c9d36fd8527b0ca7bf01e983065", "sha256:8a03f15a890582b32ad5ad4320bb73dc5d01bea29079c8d23d877d687f14e5d1", "sha256:e4a01f9bb410b7e871cfc507ef8c19afb3ba72f071c652c0769fe20f6996a6b0", "sha256:ff5acba83f332b648fdc7234f789fdae0182dd8943f588e22461b0b4c27f5f1e"]
+
+[resolved_environment.requests]
+"oyzu:gradle" = "8.14.3"
+"oyzu:java" = "17"
+
+[resolved_environment.native_constraints]
+"oyzu:java" = ["gradle-java-level:>=17.0.0"]
+
+[resolution."sha256:07be809edd61022cf17f3be994f844e5ae22a8c272aab23ef7d7cb2fde234a37"]
+tool = "oyzu:gradle"
+version = "8.14.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:07be809edd61022cf17f3be994f844e5ae22a8c272aab23ef7d7cb2fde234a37".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip"
+digest = "sha256:bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531"
+
+[resolution."sha256:0c9a10eb7ce9a5597f2a12945c1568fd1a4b8f793788dbbf94785d4388d2d1d3"]
+tool = "oyzu:java"
+version = "17.0.20"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:0c9a10eb7ce9a5597f2a12945c1568fd1a4b8f793788dbbf94785d4388d2d1d3".inputs.archive]
+url = "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1+1/OpenJDK17U-jdk_aarch64_linux_hotspot_17.0.20.1_1.tar.gz"
+digest = "sha256:457b57af8f9c93ec39080bb8c764f559dc8c89a6da1a39d718a400b7890d3e41"
+
+[resolution."sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:3623232f33a9c3baadf304480b2535f9a3cba8a58d42ecbb438ba267315d9998"
+
+[resolution."sha256:17cf471dbef432681d52ca8991971548f6362112c857ace9344aa2665edaa089"]
+tool = "oyzu:gradle"
+version = "9.8.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:17cf471dbef432681d52ca8991971548f6362112c857ace9344aa2665edaa089".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-9.8.1-bin.zip"
+digest = "sha256:dce76f55f8e251a3a1f130eb120f30b3d271de2b76c9b0729d316b5a1b6dc01f"
+
+[resolution."sha256:3bc202072063ecc056d2272b2ea691f6e9f08860492f3cf04b2fc19ec22e22c3"]
+tool = "oyzu:gradle"
+version = "8.14.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:3bc202072063ecc056d2272b2ea691f6e9f08860492f3cf04b2fc19ec22e22c3".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip"
+digest = "sha256:bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531"
+
+[resolution."sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94"
+
+[resolution."sha256:6a332608f2473bb1281a37b6d3351fea6a44f61d28247edbd49057bd70230e50"]
+tool = "oyzu:java"
+version = "17.0.20"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:6a332608f2473bb1281a37b6d3351fea6a44f61d28247edbd49057bd70230e50".inputs.archive]
+url = "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1+1/OpenJDK17U-jdk_x64_windows_hotspot_17.0.20.1_1.zip"
+digest = "sha256:e53a79c3c3d86865bd7e787903884331068e71321714ffd44f145785affc7cb0"
+
+[resolution."sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_x64_windows_hotspot_21.0.12.1_1.zip"
+digest = "sha256:f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e"
+
+[resolution."sha256:7d385f642f6ccd405b913cc92f11fae9ca476c9d36fd8527b0ca7bf01e983065"]
+tool = "oyzu:java"
+version = "17.0.20"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:7d385f642f6ccd405b913cc92f11fae9ca476c9d36fd8527b0ca7bf01e983065".inputs.archive]
+url = "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.20.1_1.tar.gz"
+digest = "sha256:3808d1d15e3ec6bd5b84057fb5d84c33d8a1536a258146bcea2e603fc726e08e"
+
+[resolution."sha256:8a03f15a890582b32ad5ad4320bb73dc5d01bea29079c8d23d877d687f14e5d1"]
+tool = "oyzu:gradle"
+version = "8.14.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:8a03f15a890582b32ad5ad4320bb73dc5d01bea29079c8d23d877d687f14e5d1".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip"
+digest = "sha256:bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531"
+
+[resolution."sha256:a70c2c55208a3d00e81c2208971bd09b34a5aec83541711a8b89d8b9e69caffd"]
+tool = "oyzu:gradle"
+version = "9.8.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:a70c2c55208a3d00e81c2208971bd09b34a5aec83541711a8b89d8b9e69caffd".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-9.8.1-bin.zip"
+digest = "sha256:dce76f55f8e251a3a1f130eb120f30b3d271de2b76c9b0729d316b5a1b6dc01f"
+
+[resolution."sha256:bc879993492543d89de90192182c550df6f293c2e899abbb878106eb987367ee"]
+tool = "oyzu:gradle"
+version = "9.8.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:bc879993492543d89de90192182c550df6f293c2e899abbb878106eb987367ee".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-9.8.1-bin.zip"
+digest = "sha256:dce76f55f8e251a3a1f130eb120f30b3d271de2b76c9b0729d316b5a1b6dc01f"
+
+[resolution."sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:23e37e026f12f3e706f18938ff611db3032d075b09d0879a25d06718c773e223"
+
+[resolution."sha256:ddcad25ed76292ea9067bb06b00b406e5917ec2f00d687f6c95357ccc0d5cbcd"]
+tool = "oyzu:gradle"
+version = "9.8.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:ddcad25ed76292ea9067bb06b00b406e5917ec2f00d687f6c95357ccc0d5cbcd".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-9.8.1-bin.zip"
+digest = "sha256:dce76f55f8e251a3a1f130eb120f30b3d271de2b76c9b0729d316b5a1b6dc01f"
+
+[resolution."sha256:e4a01f9bb410b7e871cfc507ef8c19afb3ba72f071c652c0769fe20f6996a6b0"]
+tool = "oyzu:gradle"
+version = "8.14.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:e4a01f9bb410b7e871cfc507ef8c19afb3ba72f071c652c0769fe20f6996a6b0".inputs.archive]
+url = "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip"
+digest = "sha256:bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531"
+
+[resolution."sha256:ff5acba83f332b648fdc7234f789fdae0182dd8943f588e22461b0b4c27f5f1e"]
+tool = "oyzu:java"
+version = "17.0.20"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:ff5acba83f332b648fdc7234f789fdae0182dd8943f588e22461b0b4c27f5f1e".inputs.archive]
+url = "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.20.1+1/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.20.1_1.tar.gz"
+digest = "sha256:196d13ba5f10414bef7f6a05a9b3f00edacb18ebacef2b99485db9e2ee18f0e8"

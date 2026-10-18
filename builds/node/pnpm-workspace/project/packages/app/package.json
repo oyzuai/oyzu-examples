@@ -1,0 +1,13 @@
+{
+  "name": "oyzu-example-workspace-app",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "index.cjs",
+  "files": ["index.cjs", "LICENSE"],
+  "dependencies": {"oyzu-example-workspace-library": "workspace:*"},
+  "scripts": {
+    "test": "node --test",
+    "lint": "node --check index.cjs",
+    "format-check": "node check-format.mjs"
+  }
+}

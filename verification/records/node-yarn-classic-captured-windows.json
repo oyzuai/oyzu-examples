@@ -1,0 +1,92 @@
+{
+  "recipe": "node-yarn-classic",
+  "subject": {
+    "commit": "a9d2082c2bbc6317cfb4e55121fbad60834721c3",
+    "recipe_sha256": "bf901b5275fe307a644f59fb224fcb0bc338d807a3ee1e5bcfe310c884e437f3",
+    "recipe_tree": "42bf631143eb40b208bafe816a7daeafacc7b230"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.gb5ab76f94c7f\\index.cjs"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:ecd1655366b68834ff40affaac247fe92dfae8fbfa642db8ca2f78d949ff1e89",
+    "sourceTree": "sha256:4e78d3ad0a446c54f53e26f3cb829b39be4d614e719e1df4f535c2117ef3e048",
+    "output": "Hello from Node."
+  },
+  "nativeConsumerImages": [],
+  "buildTools": [
+    {
+      "id": "greeting",
+      "version": "oyzu-toolchain/node:yarn1.22.22-node22",
+      "digest": "sha256:3b3c9faf985288c5139fbc982ecc04d6bb9b0f2f37d143de46bcc6aad45af570",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "yarn",
+      "version": "1.22.22",
+      "digest": "sha256:3b3c9faf985288c5139fbc982ecc04d6bb9b0f2f37d143de46bcc6aad45af570",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:f869243a74330bf4cf10a6fe0239971ca4e94bff9225bdcbe2c5fbade205671d"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:4313933e4b82779ee998b5c25560148440e67bd198a1ed65996b8469c1459dd4"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:48:21.400Z"
+}

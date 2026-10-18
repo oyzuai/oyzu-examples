@@ -1,0 +1,27 @@
+{
+  "id": "static-deployment",
+  "slug": "static-deployment",
+  "title": "Serve the selected static artifact locally",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "npm"
+  ],
+  "capabilities": [
+    "deploy",
+    "tasks",
+    "artifact-selection"
+  ],
+  "productSupport": "generic-task",
+  "maturity": "experimental",
+  "prerequisites": [
+    "Selected Node/npm tools; see the recipe for local execution inputs"
+  ],
+  "verification": [
+    "verification/records/static-deployment-windows.json"
+  ],
+  "traceability": [],
+  "executionProfiles": [
+    "external-tool-task"
+  ]
+}

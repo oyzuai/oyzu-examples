@@ -1,0 +1,93 @@
+{
+  "recipe": "tasks-and-hooks",
+  "subject": {
+    "commit": "7caff1412f14e093d4e719b9f991d2435aba5ff7",
+    "recipe_sha256": "974dfe7093e5014e0356967d6b1bba49dfced3f0f6142e1d20ea1369506fb417",
+    "recipe_tree": "7011ca5904a7de011530b55793fdbc77d892e0d5"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.gfd925f6662a4\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "--profile",
+      "preview",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.gd1782c81735c\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "--profile",
+      "invalid",
+      "build",
+      "--isolated",
+      "--full",
+      "--json"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:c11edfbf91d855aa82aba7809ad6775b132e2f604fa74bb27ef2901637e2d17e",
+    "output": "Hello from tasks: local."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:efe8f802f649328a15910ff90932608a80fc80774a5042d4fd0952a9c3b47679"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:85732061f4d2c089c1e2ce7763464fe7fedf7c76b50cbe4042be3e7e82439722"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:11:06.194Z",
+  "profileEvidence": "The recorded build explicitly selected --isolated; this annotation clarifies that already observed execution."
+}

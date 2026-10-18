@@ -1,0 +1,31 @@
+{
+  "id": "node-yarn-classic",
+  "slug": "node-yarn-classic",
+  "title": "Build the same application with Yarn Classic",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "node",
+    "yarn-classic"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Selected Node 22.23.3, native packageManager yarn@1.22.22, Docker and the explicitly provisioned compatible Yarn Classic executor; Yarn remains an executor prerequisite, not a managed tool."
+  ],
+  "verification": [
+    "verification/records/node-yarn-classic-windows.json",
+    "verification/records/node-yarn-classic-captured-windows.json"
+  ],
+  "traceability": [
+    "EX-007",
+    "EX-018",
+    "EX-050"
+  ],
+  "executionProfiles": [
+    "captured"
+  ]
+}

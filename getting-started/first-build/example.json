@@ -1,0 +1,29 @@
+{
+  "id": "first-build",
+  "slug": "first-build",
+  "title": "Your first build",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "rust",
+    "cargo"
+  ],
+  "capabilities": [
+    "build",
+    "tools",
+    "artifacts",
+    "tests"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Oyzu installation",
+    "Rust selected by project configuration"
+  ],
+  "verification": [
+    "verification/records/first-build-windows.json"
+  ],
+  "traceability": [],
+  "executionProfiles": [
+    "native-host"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "paths": [
+    {
+      "id": "first-hour",
+      "title": "Your first hour",
+      "outcome": "Inspect a plan, build, inspect outputs and run native tests",
+      "steps": [
+        "first-build",
+        "node-application",
+        "go-command"
+      ]
+    },
+    {
+      "id": "adopt-existing",
+      "title": "Adopt an existing project",
+      "outcome": "Preserve native conventions and add only necessary exceptions",
+      "steps": [
+        "first-build",
+        "tasks-and-hooks",
+        "npm-package",
+        "incremental-builds",
+        "affected-builds",
+        "private-dependencies"
+      ]
+    },
+    {
+      "id": "deliver-release",
+      "title": "Deliver a release",
+      "outcome": "Build, inspect evidence, publish, retrieve and retry safely",
+      "steps": [
+        "first-build",
+        "publication-multiple"
+      ]
+    },
+    {
+      "id": "larger-system",
+      "title": "Coordinate a larger system",
+      "outcome": "Connect workspaces, generators, artifacts and selected deployment mechanisms",
+      "steps": [
+        "pnpm-workspace",
+        "go-workspace",
+        "maven-reactor",
+        "developer-tool",
+        "platform-matrices",
+        "polyglot-service",
+        "static-deployment",
+        "image-chart-composition",
+        "kubernetes-deployment"
+      ]
+    }
+  ]
+}

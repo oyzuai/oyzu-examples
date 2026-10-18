@@ -1,0 +1,10 @@
+builds:
+  web:
+    uses: node/app
+    path: web
+  service:
+    uses: go/app
+    path: service
+    materialize:
+      - from: web
+        to: site

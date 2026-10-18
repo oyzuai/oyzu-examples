@@ -1,0 +1,29 @@
+{
+  "id": "ant-application",
+  "slug": "ant-application",
+  "title": "Package a conventional Ant application",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "ant",
+    "java"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "The captured Ant builder needs its documented provisioned native Java/Ant executor. Ant acquisition is not supplied by adding an invented tool provider. See the current Ant reference before running."
+  ],
+  "verification": [
+    "verification/records/ant-application-windows.json",
+    "verification/records/ant-application-captured-windows.json"
+  ],
+  "traceability": [
+    "EX-025"
+  ],
+  "executionProfiles": [
+    "captured"
+  ]
+}

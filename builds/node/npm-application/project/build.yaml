@@ -1,0 +1,3 @@
+builds:
+  greeting:
+    uses: node/app

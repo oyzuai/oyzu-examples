@@ -1,0 +1,30 @@
+{
+  "id": "affected-builds",
+  "slug": "affected-builds",
+  "title": "Build only targets changed from a Git baseline",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "npm"
+  ],
+  "capabilities": [
+    "build",
+    "affected",
+    "selection",
+    "tests"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "native-host"
+  ],
+  "prerequisites": [
+    "Selected Node/npm tools and a local Git baseline"
+  ],
+  "verification": [
+    "verification/records/affected-builds-windows.json"
+  ],
+  "traceability": [
+    "EX-033"
+  ]
+}

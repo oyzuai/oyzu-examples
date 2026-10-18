@@ -1,0 +1,181 @@
+{
+  "recipe": "go-workspace",
+  "subject": {
+    "commit": "6bc1de21d11fbc0321e5d44e83af0fdc56e71239",
+    "recipe_sha256": "890ae12db4a20fcafedb42775321526440074bbd029494e882e2cf18183a68cc",
+    "recipe_tree": "adc841daa3f0c14436e05176b58978c33e0e19e5"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-evidence/go-source-current:6428-01a14731",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full",
+      "--image",
+      "go=oyzu-evidence/go-source-current:6428-01a14731"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-evidence/go-source-current:6428-01a14731",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "/input/project-0.0.0-dev.ge909c16734d0",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:fd204508b9c3ecf94f881a948ec1a60dbb229e0158a3437cdcaeb17b41116831"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full",
+      "--image",
+      "go=oyzu-evidence/go-source-current:6428-01a14731"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-evidence/go-source-current:6428-01a14731",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "/input/project-0.0.0-dev.g79a3f1e7d8cf",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:fd204508b9c3ecf94f881a948ec1a60dbb229e0158a3437cdcaeb17b41116831"
+    ]
+  ],
+  "observations": [
+    "Native go.work build and delivered consumer used the contained shared module",
+    "Changed shared implementation and its test expectation; rebuilt delivered consumer observed the changed library"
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:8a127b8b77c18721851720d4618e10a88f22c872367e46cc7150fa433016c4c2",
+    "sourceTree": "sha256:d200aa0bd6a65eb1e6a0da722ef7866373f6b91ce141ef9039e634c80cbf9e2a",
+    "output": "Updated workspace library."
+  },
+  "nativeConsumerImages": [
+    {
+      "purpose": "Provided Go build executor",
+      "image": "oyzu-evidence/go-source-current:6428-01a14731",
+      "digest": "sha256:fd204508b9c3ecf94f881a948ec1a60dbb229e0158a3437cdcaeb17b41116831"
+    },
+    {
+      "image": "oyzu-evidence/go-source-current:6428-01a14731",
+      "digest": "sha256:fd204508b9c3ecf94f881a948ec1a60dbb229e0158a3437cdcaeb17b41116831"
+    },
+    {
+      "image": "oyzu-evidence/go-source-current:6428-01a14731",
+      "digest": "sha256:fd204508b9c3ecf94f881a948ec1a60dbb229e0158a3437cdcaeb17b41116831"
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:3c6c9cfd3e54a402cf20fdcc633e9377c69da4e8a2f650599ae1efa7a1f213b7"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:17caecb77341056fb36dc9ee4ca121ebe667f0061b0bccf350b21405346ddae1"
+    },
+    {
+      "kind": "test",
+      "digest": "sha256:45e19047da90750c3f5e2cb35c8500077e5da15a584e903557b4c5961027d041"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:90c374b8bd3bd2ef4d167e1b72857be09c2ec76d1eddf01a51398eaf18ca1c1a"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T07:25:31.048Z"
+}

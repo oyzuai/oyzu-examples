@@ -1,0 +1,30 @@
+{
+  "id": "node-pnpm",
+  "slug": "node-pnpm",
+  "title": "Build the same application with pnpm",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "node",
+    "pnpm"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "prerequisites": [
+    "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
+  ],
+  "verification": [
+    "verification/records/node-pnpm-windows.json"
+  ],
+  "traceability": [
+    "EX-007",
+    "EX-018",
+    "EX-050"
+  ],
+  "executionProfiles": [
+    "captured"
+  ]
+}

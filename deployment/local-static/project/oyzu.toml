@@ -1,0 +1,6 @@
+[tools]
+node = "22.23.3"
+npm = "11.11.0"
+
+[tasks.serve]
+argv = ["node", "serve.mjs"]

@@ -1,0 +1,104 @@
+format = 1
+environment = []
+tool = []
+
+[[resolved_environment]]
+required_capabilities = []
+request_digest = "sha256:ef873ba57bb2bcb065c752bed2372b31a4e8cc026b16b7228df0cc33040277e8"
+roots = ["sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426", "sha256:0c5ee42483c3a09e92360e4b8866a7ab83cb07bd5f0cc5da0c7d27335b9308ed", "sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e", "sha256:89a9b2cce9ad8415165e312c9527647bec1d58160fd573a5541f51b0b295dde1", "sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345", "sha256:d5ef12fd39f570bdd0c3ce1c4867cd6b6b9c6e1418d48f13cddae7ceecc0ebb7", "sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c", "sha256:f9d975b569f5228931cb63fca4eaa544369dd0db25f36f4f959fe5066ab7ec87"]
+
+[resolved_environment.requests]
+"oyzu:node" = "22.23.3"
+"oyzu:pnpm" = "10.11.0"
+
+[resolved_environment.native_constraints]
+"oyzu:node" = ["npm-semver:>=22"]
+"oyzu:pnpm" = ["package-manager:10.11.0"]
+
+[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426"]
+tool = "oyzu:node"
+version = "22.23.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-arm64.tar.gz"
+digest = "sha256:5ced2d48d1d7198739b7f86804de0171aefb6823b684b12341d3321afc3cb0b2"
+
+[resolution."sha256:0c5ee42483c3a09e92360e4b8866a7ab83cb07bd5f0cc5da0c7d27335b9308ed"]
+tool = "oyzu:pnpm"
+version = "10.11.0"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:0c5ee42483c3a09e92360e4b8866a7ab83cb07bd5f0cc5da0c7d27335b9308ed".inputs.archive]
+url = "https://registry.npmjs.org/@pnpm/linux-arm64/-/linux-arm64-10.11.0.tgz"
+digest = "sha256:ed5a3acfcf4581880813da589b860da7d6b72d9c9784c2961591ced428c3763d"
+
+[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e"]
+tool = "oyzu:node"
+version = "22.23.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-darwin-arm64.tar.gz"
+digest = "sha256:23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53"
+
+[resolution."sha256:89a9b2cce9ad8415165e312c9527647bec1d58160fd573a5541f51b0b295dde1"]
+tool = "oyzu:pnpm"
+version = "10.11.0"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:89a9b2cce9ad8415165e312c9527647bec1d58160fd573a5541f51b0b295dde1".inputs.archive]
+url = "https://registry.npmjs.org/@pnpm/macos-arm64/-/macos-arm64-10.11.0.tgz"
+digest = "sha256:bdb069cef242480b05584c6ffa140cb631fe33b1f7be1334ac2a7a739af930d9"
+
+[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345"]
+tool = "oyzu:node"
+version = "22.23.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-x64.tar.gz"
+digest = "sha256:1084aa36196bba4c3a5e69a1ee388a6e4ff729dad09445fbcd434b28fe3c24af"
+
+[resolution."sha256:d5ef12fd39f570bdd0c3ce1c4867cd6b6b9c6e1418d48f13cddae7ceecc0ebb7"]
+tool = "oyzu:pnpm"
+version = "10.11.0"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:d5ef12fd39f570bdd0c3ce1c4867cd6b6b9c6e1418d48f13cddae7ceecc0ebb7".inputs.archive]
+url = "https://registry.npmjs.org/@pnpm/win-x64/-/win-x64-10.11.0.tgz"
+digest = "sha256:652097d9885063f81682a47578315cd32ec326f73fef30755cc6fec9bbb8f0f3"
+
+[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c"]
+tool = "oyzu:node"
+version = "22.23.3"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-win-x64.zip"
+digest = "sha256:2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71"
+
+[resolution."sha256:f9d975b569f5228931cb63fca4eaa544369dd0db25f36f4f959fe5066ab7ec87"]
+tool = "oyzu:pnpm"
+version = "10.11.0"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:f9d975b569f5228931cb63fca4eaa544369dd0db25f36f4f959fe5066ab7ec87".inputs.archive]
+url = "https://registry.npmjs.org/@pnpm/linux-x64/-/linux-x64-10.11.0.tgz"
+digest = "sha256:704e9a2570c98d29e8a26906e570729797b75fb659e051e02627af84ef3708ea"

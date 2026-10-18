@@ -1,0 +1,150 @@
+{
+  "recipe": "python-uv",
+  "subject": {
+    "commit": "18e9e9eca460b9dc027954276481980f6ba052dc",
+    "recipe_sha256": "7e865e372d27f2ed165411f8e750af85d32585469caa52412072dd1edcb7f2a3",
+    "recipe_tree": "4ad1ea26ee159c453235af7712e1fcc169f3da3a"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/uv:0.12.21-python3.12",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "python",
+      "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a",
+      "--version"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/uv:0.12.21-python3.12",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "python",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a",
+      "-I",
+      "-c",
+      "import pathlib,subprocess,sys,tempfile,venv; root=pathlib.Path(tempfile.mkdtemp())/\"consumer\"; venv.create(root,with_pip=True); python=str(root/\"bin/python\"); subprocess.run([python,\"-m\",\"pip\",\"install\",\"--no-index\",\"--no-deps\",\"/input/oyzu_example_greeting-0.1.0.dev0+gb51d13d4b8f2-py3-none-any.whl\"],check=True,stdout=sys.stderr); subprocess.run([python,\"-I\",\"-c\",\"import greeting; print(greeting.hello())\"],check=True)"
+    ]
+  ],
+  "observations": [
+    "Independent delivered-wheel consumer interpreter: Python 3.12.14",
+    "Only delivered wheel bytes mounted; network disabled; no Python tool-lock handoff or host-runtime qualification claimed"
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:d358683ac48319fd8674d7b8e5d35c378c6072bcd0d0fddcba30ad22c9129a10",
+    "sourceTree": "sha256:cd5ae8f892f7497df1106a4d69a49b5853342cb15357f7078574611768e96a42",
+    "output": "Hello from Python."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/uv:0.12.21-python3.12",
+      "digest": "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a"
+    },
+    {
+      "image": "oyzu-toolchain/uv:0.12.21-python3.12",
+      "digest": "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a"
+    }
+  ],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/uv:0.12.21-python3.12",
+      "digest": "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "uv",
+      "version": "0.12.21",
+      "digest": "sha256:23c571dbbfe34ea84eab93ae55af38c214f5ade3dd38f9dc6c0217b23d25a07a",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux",
+        "runtime": "3.12.14"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:46:00.001Z"
+}

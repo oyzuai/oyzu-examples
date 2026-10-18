@@ -1,0 +1,12 @@
+<project name="hello" default="jar">
+  <target name="compile">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src" destdir="build/classes" includeantruntime="false" release="17"/>
+  </target>
+  <target name="jar" depends="compile">
+    <mkdir dir="dist"/>
+    <jar destfile="dist/hello.jar" basedir="build/classes">
+      <fileset dir="." includes="LICENSE"/>
+    </jar>
+  </target>
+</project>

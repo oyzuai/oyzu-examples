@@ -1,0 +1,303 @@
+format = 1
+environment = []
+tool = []
+
+[[resolved_environment]]
+required_capabilities = ["oyzu:rust:cargo", "oyzu:rust:clippy", "oyzu:rust:llvm-tools-preview", "oyzu:rust:rustc", "oyzu:rust:rustfmt"]
+request_digest = "sha256:f5df7051c236bf8135137d529dfe45dee79a82368041f8ea923fe979f0678525"
+roots = ["sha256:0910e404e41449189822350ef11ad5eef3369c786683c434839253921079028d", "sha256:0a4d3db1ce69436723b2353b46858ac7b94ef7ce70d6862011d3a4195cc74a54", "sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0", "sha256:2e6757f701824b499c9e69efabfa3a81bfb3b76bcc4fb6c23e4013af35eee54f", "sha256:2faff7ee8b09854e9916bde231cfae576673f35df9d26030082b0ba18232fdc6", "sha256:3da54397537b70cfca75adf9d4c2ffc7b451a7e96e20a10d4b4ed9d00239ce2e", "sha256:441673be61888a210a43b4e38657cf5fb34f275a958fe9aab35b6d55d2fa3a65", "sha256:482fb0eea7feae5f659d9225d5149620c17477a1a9f7ce788920d0edddf6a16e", "sha256:4839d149a640c71ef514627e863718e0b4653933a0f9374c7f1bd6a885aeed89", "sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5", "sha256:6447c7af6e4fd8cc73458618dc5b59da8a0636ef9d58df9e8a8df4e10467c915", "sha256:a694df30037708db8b136026b4c4aaa5bee40936f00530f687f932b919ac6314", "sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046", "sha256:d7fdbf25e7acd0665fc7cee00a46c5f7207b39ab080d03dbee41dc39150c0456", "sha256:eeb21b8302728a305fd951444cf1baedecfcd0fcf302c2364e18039cdf3f4609", "sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e"]
+
+[resolved_environment.requests]
+"cargo:cargo-llvm-cov" = "0.9.1"
+"cargo:cargo-nextest" = "0.9.146"
+"oyzu:rust" = "1.99.1"
+
+[resolved_environment.native_constraints]
+
+[resolution."sha256:0910e404e41449189822350ef11ad5eef3369c786683c434839253921079028d"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:0910e404e41449189822350ef11ad5eef3369c786683c434839253921079028d".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-aarch64-unknown-linux-gnu.tar.gz"
+digest = "sha256:b2e33d7c72de7ade0ff7b3a948ac37516b24f8a836b7a8870c1f634a94be9de9"
+
+[resolution."sha256:0a4d3db1ce69436723b2353b46858ac7b94ef7ce70d6862011d3a4195cc74a54"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:0a4d3db1ce69436723b2353b46858ac7b94ef7ce70d6862011d3a4195cc74a54".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-aarch64-apple-darwin.tar.gz"
+digest = "sha256:7e821a6c90c0884f79f759f5d9be50799ade67bb82515186d922f26032ef43b8"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0"]
+tool = "oyzu:rust"
+version = "1.99.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = ["cargo", "clippy", "llvm-tools-preview", "rust-std@x86_64-unknown-linux-gnu", "rustc", "rustfmt"]
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.cargo]
+url = "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:53f3521949404d595efb06a55c12c5658d4ed1c75566f33d3d514eaebe70bd8a"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.channel-manifest]
+url = "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml"
+digest = "sha256:fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.clippy]
+url = "https://static.rust-lang.org/dist/2026-10-15/clippy-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:458339712a058e52cc4522ff9ef8b59cd1ea1340312216cd94194c464a3f6dc5"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.llvm-tools-preview]
+url = "https://static.rust-lang.org/dist/2026-10-15/llvm-tools-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:8429c5117debfb45c22cf2f97712ef00e0e94976c96cf92f661974a458ca7e84"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs."rust-std@x86_64-unknown-linux-gnu"]
+url = "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:109b074225bf5b9ea3820890876bfdf4ed161adbfaf94b2b4b5984c85ee5d958"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.rustc]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:2ff05ff9c08a90861e7f6e4065b40a8b87463b4576186fd613871c3e37f2091f"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.rustfmt]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-x86_64-unknown-linux-gnu.tar.xz"
+digest = "sha256:e3b36c4c7ec3486c059d8067ff48787676612007123aad7a4e8ec12c48ee9ba2"
+
+[resolution."sha256:116b5e12952a05e1b0775f11cf350c5883b5292f3faee49d20c055efc48251b0".inputs.rustup-init]
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/x86_64-unknown-linux-gnu/rustup-init"
+digest = "sha256:dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71"
+
+[resolution."sha256:2e6757f701824b499c9e69efabfa3a81bfb3b76bcc4fb6c23e4013af35eee54f"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/arm64/msvc"
+components = []
+
+[resolution."sha256:2e6757f701824b499c9e69efabfa3a81bfb3b76bcc4fb6c23e4013af35eee54f".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-aarch64-pc-windows-msvc.tar.gz"
+digest = "sha256:a827e57b93feab3d81ceb24c0602a1b778d6be72231ca83adaec909c1af0f7ef"
+
+[resolution."sha256:2faff7ee8b09854e9916bde231cfae576673f35df9d26030082b0ba18232fdc6"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:2faff7ee8b09854e9916bde231cfae576673f35df9d26030082b0ba18232fdc6".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-pc-windows-msvc.tar.gz"
+digest = "sha256:809b01f2c94d031ab6cf5f4d4a4f477c8f51b69c96ab3cb2fe4db7ecb222d0d3"
+
+[resolution."sha256:3da54397537b70cfca75adf9d4c2ffc7b451a7e96e20a10d4b4ed9d00239ce2e"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/amd64/native"
+components = []
+
+[resolution."sha256:3da54397537b70cfca75adf9d4c2ffc7b451a7e96e20a10d4b4ed9d00239ce2e".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-x86_64-apple-darwin.tar.gz"
+digest = "sha256:ddf949b82a63017441ea76aa068bdd7e2dde8055f47cd3ef736fdbbd633bc33e"
+
+[resolution."sha256:441673be61888a210a43b4e38657cf5fb34f275a958fe9aab35b6d55d2fa3a65"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/arm64/msvc"
+components = []
+
+[resolution."sha256:441673be61888a210a43b4e38657cf5fb34f275a958fe9aab35b6d55d2fa3a65".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-aarch64-pc-windows-msvc.tar.gz"
+digest = "sha256:c94029615d05072af35429d9d66e0f83ba59886bb4e13163a191134e5f0ad47c"
+
+[resolution."sha256:482fb0eea7feae5f659d9225d5149620c17477a1a9f7ce788920d0edddf6a16e"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:482fb0eea7feae5f659d9225d5149620c17477a1a9f7ce788920d0edddf6a16e".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-x86_64-unknown-linux-gnu.tar.gz"
+digest = "sha256:682c21b777c333e96fd532e114d3a5a894e0729ab88d94c0a9f20f8419695428"
+
+[resolution."sha256:4839d149a640c71ef514627e863718e0b4653933a0f9374c7f1bd6a885aeed89"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:4839d149a640c71ef514627e863718e0b4653933a0f9374c7f1bd6a885aeed89".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-x86_64-pc-windows-msvc.tar.gz"
+digest = "sha256:15eefd5b90fcdd4006b727c6e710d70a61aff509fcd7bb37f9c2a35c4f024948"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5"]
+tool = "oyzu:rust"
+version = "1.99.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = ["cargo", "clippy", "llvm-tools-preview", "rust-std@aarch64-apple-darwin", "rustc", "rustfmt"]
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.cargo]
+url = "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:685e563d94db1f003ffa5f5831439eec02569b9950b69867953c8213269c1eaf"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.channel-manifest]
+url = "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml"
+digest = "sha256:fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.clippy]
+url = "https://static.rust-lang.org/dist/2026-10-15/clippy-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:c463f31831196702fc544900a0dc4c1837905327507fbec751fe46e59ca098bf"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.llvm-tools-preview]
+url = "https://static.rust-lang.org/dist/2026-10-15/llvm-tools-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:b348db9d79666aee4b5e2ff4269029fffd16815cbd47f47018cd0b06e4f815f5"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs."rust-std@aarch64-apple-darwin"]
+url = "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:fe79d6ab5a0321de26463999d8c112b8ad3eafbcbcf822d66a2300b45dde1031"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.rustc]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:23948a0a9c162fd2952defb3fb0462c44e8fcfd1a4ab8a274a1e1bdb2cf810a3"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.rustfmt]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-aarch64-apple-darwin.tar.xz"
+digest = "sha256:8b80dda570f140ee9ced8799294e812bba847a025f185bae4cba85a2ba235570"
+
+[resolution."sha256:543144444642f0c16f0ed8ccfbc08650de00493c44e35f992ccdf7f7545c03a5".inputs.rustup-init]
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/aarch64-apple-darwin/rustup-init"
+digest = "sha256:ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a"
+
+[resolution."sha256:6447c7af6e4fd8cc73458618dc5b59da8a0636ef9d58df9e8a8df4e10467c915"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:6447c7af6e4fd8cc73458618dc5b59da8a0636ef9d58df9e8a8df4e10467c915".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-x86_64-unknown-linux-gnu.tar.gz"
+digest = "sha256:b3f68e625481fed9b16444174f3fa5ebcdbde4a1878803a35eabe2dcefcdc41a"
+
+[resolution."sha256:a694df30037708db8b136026b4c4aaa5bee40936f00530f687f932b919ac6314"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/amd64/native"
+components = []
+
+[resolution."sha256:a694df30037708db8b136026b4c4aaa5bee40936f00530f687f932b919ac6314".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-universal-apple-darwin.tar.gz"
+digest = "sha256:39785160b3c2f6ed9a765049cf4fa79f3b39aa02eb7598a5a0e2a1a0b9ffb9a8"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046"]
+tool = "oyzu:rust"
+version = "1.99.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = ["cargo", "clippy", "llvm-tools-preview", "rust-std@aarch64-unknown-linux-gnu", "rustc", "rustfmt"]
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.cargo]
+url = "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:5156832e0c1254e9b49a79edabdc6d4c35f32f8fc1cf3ca700f268ff96087ab0"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.channel-manifest]
+url = "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml"
+digest = "sha256:fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.clippy]
+url = "https://static.rust-lang.org/dist/2026-10-15/clippy-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:3bea76c26dcf30c176c0a8a8cc283eb59fabd754e24a68b4ca0701e5f3245f6b"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.llvm-tools-preview]
+url = "https://static.rust-lang.org/dist/2026-10-15/llvm-tools-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:cd1818058908c1c4e99bd2843fe103df255157454e16186ec9cc3b5b5823b39c"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs."rust-std@aarch64-unknown-linux-gnu"]
+url = "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:e25668477083d6a9ddb87b9beb9c00742225f38233ccb4bfba3afa7a07427f52"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.rustc]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:acdcdfe09ae1f103aa9a2b7f88903a9588bc2e99288af10e6fbf5514e2e49f25"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.rustfmt]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-aarch64-unknown-linux-gnu.tar.xz"
+digest = "sha256:26b3200b1461921415927abf7fe410202a6eda2db3e419abde59e0abfcd93fc2"
+
+[resolution."sha256:c1a3d376f4326a4f134330f01858dfd7aa1579184986c7ab876609c53ca0d046".inputs.rustup-init]
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/aarch64-unknown-linux-gnu/rustup-init"
+digest = "sha256:15f6e4ce9f583b929c996c91562bad6d4454f3281de858b02cdfdef615fac433"
+
+[resolution."sha256:d7fdbf25e7acd0665fc7cee00a46c5f7207b39ab080d03dbee41dc39150c0456"]
+tool = "cargo:cargo-llvm-cov"
+version = "0.9.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:d7fdbf25e7acd0665fc7cee00a46c5f7207b39ab080d03dbee41dc39150c0456".inputs.archive]
+url = "https://github.com/taiki-e/cargo-llvm-cov/releases/download/v0.9.1/cargo-llvm-cov-aarch64-unknown-linux-gnu.tar.gz"
+digest = "sha256:abf5f13c1520f8756d2192bfaaeadb0208f5b7eaa8cadc15bf847befa42b7360"
+
+[resolution."sha256:eeb21b8302728a305fd951444cf1baedecfcd0fcf302c2364e18039cdf3f4609"]
+tool = "cargo:cargo-nextest"
+version = "0.9.146"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:eeb21b8302728a305fd951444cf1baedecfcd0fcf302c2364e18039cdf3f4609".inputs.archive]
+url = "https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-0.9.146/cargo-nextest-0.9.146-universal-apple-darwin.tar.gz"
+digest = "sha256:39785160b3c2f6ed9a765049cf4fa79f3b39aa02eb7598a5a0e2a1a0b9ffb9a8"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e"]
+tool = "oyzu:rust"
+version = "1.99.1"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = ["cargo", "clippy", "llvm-tools-preview", "rust-std@x86_64-pc-windows-msvc", "rustc", "rustfmt"]
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.cargo]
+url = "https://static.rust-lang.org/dist/2026-10-15/cargo-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:4adb46c3707dee790682f7769d86983841148111695f561c843c33daa2af0c9b"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.channel-manifest]
+url = "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml"
+digest = "sha256:fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.clippy]
+url = "https://static.rust-lang.org/dist/2026-10-15/clippy-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:eb20d3f60731450acecd7c6b108bec2eb4abd18321b383e6663a3f072fe9c0b3"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.llvm-tools-preview]
+url = "https://static.rust-lang.org/dist/2026-10-15/llvm-tools-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:61b0ce740983240f48ceab73b6a1306a6c25bd7c92dc8135e47e8401b16d9b32"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs."rust-std@x86_64-pc-windows-msvc"]
+url = "https://static.rust-lang.org/dist/2026-10-15/rust-std-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:4fe09430ded40b8b3092b49f0a651178eb1f8154ef4d1f1a73f2a3595b2d956f"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.rustc]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustc-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:7da83c2af1f209606b0160f25174d2867c7c7b73667c32c9e5fbcef4f5f45348"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.rustfmt]
+url = "https://static.rust-lang.org/dist/2026-10-15/rustfmt-1.99.1-x86_64-pc-windows-msvc.tar.xz"
+digest = "sha256:1a4d309df5ecacbefe5798c092a03f9d00aa9e1cbc65673c4ace1367c7a25989"
+
+[resolution."sha256:fd43b5b056f5883dce2797fb1f5287cbb10245b16d7422d6f152c9f442dfbb2e".inputs.rustup-init]
+url = "https://static.rust-lang.org/rustup/archive/1.29.1/x86_64-pc-windows-msvc/rustup-init.exe"
+digest = "sha256:6f4bef66261261fcb43131be8720bab817d403a09edec7455c371974b90bdb7e"

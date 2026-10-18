@@ -1,0 +1,28 @@
+{
+  "id": "incremental-builds",
+  "slug": "incremental-builds",
+  "title": "Observe cache reuse and source invalidation",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "npm"
+  ],
+  "capabilities": [
+    "build",
+    "cache",
+    "incremental",
+    "reports"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "captured"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/incremental-builds-windows.json"
+  ],
+  "traceability": []
+}

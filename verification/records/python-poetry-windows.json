@@ -1,0 +1,38 @@
+{
+  "recipe": "python-poetry",
+  "subject": {
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "8a16a1cd8953d88bfb9374bbd6988ea5cf85df9c332293d4e62f869bedef0912",
+    "recipe_tree": "d897de6a1d667ad2bea12e3d9484d6a4578c7fef"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ]
+  ],
+  "observations": [],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build failed (1):",
+    "code": "BUILD_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T06:28:30.405Z"
+}

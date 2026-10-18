@@ -1,0 +1,113 @@
+{
+  "recipe": "ant-application",
+  "subject": {
+    "commit": "18e9e9eca460b9dc027954276481980f6ba052dc",
+    "recipe_sha256": "6e86b28a2d628f9d48e79ba6bdf58441800514c19409f7acf2f647b7caf925f2",
+    "recipe_tree": "c97cb52f6803501a1fdd7b83f7020d3cbcf93776"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/ant:1.10.18-jdk17",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "java",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:8eec0d0af4df7c553e938dd1f5af423c073d1f5a23bb9a63f2af23c6b0162360",
+      "-cp",
+      "/input/hello-0.0.0-dev.gc899df5d0c95.jar",
+      "example.Hello"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:5ad562daf66c2b3b454fed2bdb54c826c4288f0e4ffc24ae86f93c4c8e261e18",
+    "sourceTree": "sha256:e19b4c794576fcf855f890ed37199800afc3b5359026342b4c33ae6f2eb60756",
+    "output": "Hello from Ant."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/ant:1.10.18-jdk17",
+      "digest": "sha256:8eec0d0af4df7c553e938dd1f5af423c073d1f5a23bb9a63f2af23c6b0162360"
+    }
+  ],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/ant:1.10.18-jdk17",
+      "digest": "sha256:8eec0d0af4df7c553e938dd1f5af423c073d1f5a23bb9a63f2af23c6b0162360",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "ant",
+      "version": "1.10.18",
+      "digest": "sha256:8eec0d0af4df7c553e938dd1f5af423c073d1f5a23bb9a63f2af23c6b0162360",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:44:05.219Z"
+}

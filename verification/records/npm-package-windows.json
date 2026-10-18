@@ -1,0 +1,90 @@
+{
+  "recipe": "npm-package",
+  "subject": {
+    "commit": "6bc1de21d11fbc0321e5d44e83af0fdc56e71239",
+    "recipe_sha256": "aa24eefe83885dcfa8b19e80a688e2914658b5cd30fc2f23b9a5b93e22a124b5",
+    "recipe_tree": "e7ec0ce0ea033c85b5a696f34d205be506a503cd"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "npm",
+      "install",
+      "--prefix",
+      "<project>\\consumer",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--offline",
+      "<project>\\dist\\project\\artifacts\\oyzu-example-greeting-0.1.0-dev.gf41c449b28ed.tgz"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "-e",
+      "console.log(require(\"C:\\\\Users\\\\micah\\\\AppData\\\\Local\\\\Temp\\\\oyzu-example-npm-package-BI8ItJ\\\\consumer\\\\node_modules\\\\oyzu-example-greeting\").hello('developer'))"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:c5edefd7df287e088b12c410f222d7cbf100a601e0c59e00e2e8f740c33350b9",
+    "sourceTree": "sha256:15bd2fa5500d331c4ede80fc59aeb4b05edea83875fb5b1e0abc9975b9c71836",
+    "output": "Hello, developer, from the delivered package."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:3221b3ed2d12d79a66ef6e8a60cd91d4aa08522ef3e69c22055d685a39bf168d"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:6d68853f6122cec855d1194f48395226cee4a9ec186356b2f64be980109f611f"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T07:24:26.873Z"
+}

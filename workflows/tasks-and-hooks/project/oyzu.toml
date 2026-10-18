@@ -1,0 +1,20 @@
+[tools]
+node = "22.23.3"
+npm = "11.11.0"
+
+[env]
+GREETING_MODE = "local"
+
+[profiles.preview.env]
+GREETING_MODE = "preview"
+
+[tasks."greeting:verify_input"]
+argv = ["node", "tasks.mjs", "verify"]
+
+[tasks."greeting:pre_build"]
+argv = ["node", "tasks.mjs", "prepare"]
+depends_on = ["greeting:verify_input"]
+outputs = ["generated.json"]
+
+[tasks."greeting:post_build"]
+argv = ["node", "tasks.mjs", "check"]

@@ -1,0 +1,31 @@
+{
+  "id": "gradle-application",
+  "slug": "gradle-application",
+  "title": "Build a native Gradle application",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "gradle",
+    "java"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Oyzu-managed Gradle 8.14.3 and Java 17 for the native host baseline; a compatible explicitly provisioned executor and Docker for the separate captured lane."
+  ],
+  "verification": [
+    "verification/records/gradle-application-windows.json",
+    "verification/records/gradle-application-native-windows.json",
+    "verification/records/gradle-application-captured-windows.json"
+  ],
+  "traceability": [
+    "EX-024"
+  ],
+  "executionProfiles": [
+    "captured",
+    "native-host"
+  ]
+}

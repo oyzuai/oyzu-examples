@@ -1,0 +1,86 @@
+{
+  "recipe": "python-package",
+  "subject": {
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "777acef79c01e5f3668098bd5774cf58b1c2e7b7d78e01e6b4fecf178bfc8cd3",
+    "recipe_tree": "be4fa1adb8a5c29eaf9972062a211329859673bc"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "python",
+      "-m",
+      "venv",
+      "consumer"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "<project>\\consumer\\Scripts\\python.exe",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "<project>\\dist\\project\\artifacts\\wheels-0.1.0\\oyzu_example_greeting-0.1.0-py3-none-any.whl"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "<project>\\consumer\\Scripts\\python.exe",
+      "-I",
+      "-c",
+      "import greeting; print(greeting.hello())"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:17f2231d90b0b83179f78962b444bb3442f8c926ef5b02e98aa58af00097bdda",
+    "output": "Hello from Python."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:20:48.138Z"
+}

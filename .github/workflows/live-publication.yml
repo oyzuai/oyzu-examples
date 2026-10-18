@@ -1,0 +1,61 @@
+name: Live publication examples
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_tag:
+        description: 'Separately provisioned examples-proof- test prerelease in this repository'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publication:
+    if: github.repository == 'oyzuai/oyzu-examples'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: write # Assets only in this repository's explicitly selected test release.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Acquire the configured public Oyzu release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OYZU_RELEASE_TAG: ${{ vars.OYZU_RELEASE_TAG }}
+          OYZU_RELEASE_ASSET: ${{ vars.OYZU_RELEASE_ASSET }}
+          OYZU_RELEASE_SHA256: ${{ vars.OYZU_RELEASE_SHA256 }}
+          OYZU_RELEASE_EXECUTABLE: ${{ vars.OYZU_RELEASE_EXECUTABLE }}
+        run: node verification/install-cli.mjs
+      - name: Provision disposable Distribution registries separately from publication
+        run: |
+          mkdir -p .oyzu
+          "$OYZU_CLI" exec -- docker run -d --name examples-proof-611-first-registry -p 127.0.0.1:26111:5000 registry@sha256:6c5666b861f3505b116bb9aa9b25175e71210414bd010d92035ff64018f9457e >> .oyzu/publication-containers.txt
+          "$OYZU_CLI" exec -- docker create --name examples-proof-611-retry-registry -p 127.0.0.1:26112:5000 registry@sha256:6c5666b861f3505b116bb9aa9b25175e71210414bd010d92035ff64018f9457e >> .oyzu/publication-containers.txt
+      - name: Publish, retrieve, consume, reconcile, recover and refuse conflicts
+        env:
+          EXAMPLES_GITHUB_TOKEN: ${{ github.token }}
+          EXAMPLES_TEST_TAG: ${{ inputs.test_tag }}
+        run: |
+          export EXAMPLES_DOCKER_CLI="$(command -v docker)"
+          node verification/publication.mjs "$OYZU_CLI" "$PWD/publishing/multiple-destinations/project" http://127.0.0.1:26111 "$GITHUB_REPOSITORY" "$EXAMPLES_TEST_TAG" .oyzu/verification/publication.json
+      - name: Remove only the containers this job provisioned
+        if: always()
+        run: |
+          if [ -f .oyzu/publication-containers.txt ]; then
+            while read -r container_id; do
+              if [[ "$container_id" =~ ^[a-f0-9]{64}$ ]]; then "$OYZU_CLI" exec -- docker rm -f "$container_id"; fi
+            done < .oyzu/publication-containers.txt
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: live-publication
+          path: .oyzu/verification/*.json

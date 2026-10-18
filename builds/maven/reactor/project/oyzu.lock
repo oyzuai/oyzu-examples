@@ -1,0 +1,103 @@
+format = 1
+environment = []
+tool = []
+
+[[resolved_environment]]
+required_capabilities = []
+request_digest = "sha256:2612d82af6b499d37a35e45f6b8334bf34d30baf5d5094c5176cba5dfa5d6a35"
+roots = ["sha256:06794e1d88784568d10d0c8c16c2d8fd62233247b37c77cabdddd539fa3b5e83", "sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714", "sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64", "sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac", "sha256:b501ff7049f7c9b03a45a64a89a8588d29df657a1f5090adc00e70ad047da603", "sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a", "sha256:f1a980353666d4f79a80f0f62660cee561e553f85d5f5ef36460115bd16f84a6", "sha256:fd23915194a80e865429bd37c4461ed3f8fb7724e30df313e67da48695759978"]
+
+[resolved_environment.requests]
+"oyzu:java" = "21"
+"oyzu:maven" = "3.9"
+
+[resolved_environment.native_constraints]
+"oyzu:java" = ["maven-property:>=21.0.0"]
+
+[resolution."sha256:06794e1d88784568d10d0c8c16c2d8fd62233247b37c77cabdddd539fa3b5e83"]
+tool = "oyzu:maven"
+version = "3.9.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:06794e1d88784568d10d0c8c16c2d8fd62233247b37c77cabdddd539fa3b5e83".inputs.archive]
+url = "https://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz"
+digest = "sha256:80ffca22aed9e8b9713a232f3394fd81d7f20322df75efdb2b047dbd3e3a23bb"
+
+[resolution."sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:0d9a9fb1c0ff459d3e691e0b118d96447b2639933bacd978aea515794a0b0714".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:3623232f33a9c3baadf304480b2535f9a3cba8a58d42ecbb438ba267315d9998"
+
+[resolution."sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:4160d3ec47f27a870af1b7d16fc5902d4da160ec1edea99c0e3144669e13aa64".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94"
+
+[resolution."sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:7cda13e83c52b9acb9fba715bb45c3d8516b14d841188f289af8b2d23e1eddac".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_x64_windows_hotspot_21.0.12.1_1.zip"
+digest = "sha256:f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e"
+
+[resolution."sha256:b501ff7049f7c9b03a45a64a89a8588d29df657a1f5090adc00e70ad047da603"]
+tool = "oyzu:maven"
+version = "3.9.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:b501ff7049f7c9b03a45a64a89a8588d29df657a1f5090adc00e70ad047da603".inputs.archive]
+url = "https://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz"
+digest = "sha256:80ffca22aed9e8b9713a232f3394fd81d7f20322df75efdb2b047dbd3e3a23bb"
+
+[resolution."sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a"]
+tool = "oyzu:java"
+version = "21.0.12"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:bdf66a9092fa3c4ec7e0146cce83fae6bca04de3cc1eb8a8ec8b6ad89c4c610a".inputs.archive]
+url = "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1+1/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.12.1_1.tar.gz"
+digest = "sha256:23e37e026f12f3e706f18938ff611db3032d075b09d0879a25d06718c773e223"
+
+[resolution."sha256:f1a980353666d4f79a80f0f62660cee561e553f85d5f5ef36460115bd16f84a6"]
+tool = "oyzu:maven"
+version = "3.9.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:f1a980353666d4f79a80f0f62660cee561e553f85d5f5ef36460115bd16f84a6".inputs.archive]
+url = "https://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz"
+digest = "sha256:80ffca22aed9e8b9713a232f3394fd81d7f20322df75efdb2b047dbd3e3a23bb"
+
+[resolution."sha256:fd23915194a80e865429bd37c4461ed3f8fb7724e30df313e67da48695759978"]
+tool = "oyzu:maven"
+version = "3.9.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:fd23915194a80e865429bd37c4461ed3f8fb7724e30df313e67da48695759978".inputs.archive]
+url = "https://archive.apache.org/dist/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz"
+digest = "sha256:80ffca22aed9e8b9713a232f3394fd81d7f20322df75efdb2b047dbd3e3a23bb"

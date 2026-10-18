@@ -1,0 +1,27 @@
+{
+  "id": "go-workspace",
+  "slug": "go-workspace",
+  "title": "Build related Go workspace modules",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "go"
+  ],
+  "capabilities": [
+    "build",
+    "workspaces",
+    "consume",
+    "generated-sources"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "captured"
+  ],
+  "prerequisites": [
+    "Provision Docker and the compatible captured executor named in the recipe; install its declared tools for development and downstream consumption."
+  ],
+  "verification": [
+    "verification/records/go-workspace-windows.json"
+  ],
+  "traceability": []
+}

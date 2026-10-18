@@ -1,0 +1,29 @@
+{
+  "id": "python-uv",
+  "slug": "python-uv",
+  "title": "Build a package with uv",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "python",
+    "uv"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Docker and the explicitly provisioned uv 0.12.21 / CPython 3.12 executor. Native requires-python owns compatibility; no managed uv or locked Python handoff is claimed. Initial build-backend acquisition needs network; the wheel has no runtime dependencies."
+  ],
+  "verification": [
+    "verification/records/python-uv-windows.json",
+    "verification/records/python-uv-captured-windows.json"
+  ],
+  "traceability": [
+    "EX-013"
+  ],
+  "executionProfiles": [
+    "captured"
+  ]
+}

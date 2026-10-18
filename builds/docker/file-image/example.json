@@ -1,0 +1,27 @@
+{
+  "id": "docker-file-image",
+  "slug": "docker-file-image",
+  "title": "Build a minimal Docker file image",
+  "difficulty": "beginner",
+  "ecosystems": [
+    "docker"
+  ],
+  "capabilities": [
+    "build",
+    "artifacts"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "executable",
+  "prerequisites": [
+    "Use the current Docker/BuildKit captured executor and a running engine. This image has no base-image download or executable application. Image construction does not establish image publication or a deployed service."
+  ],
+  "verification": [
+    "verification/records/docker-file-image-windows.json"
+  ],
+  "traceability": [
+    "EX-026"
+  ],
+  "executionProfiles": [
+    "native-host"
+  ]
+}

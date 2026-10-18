@@ -1,0 +1,61 @@
+{
+  "recipe": "platform-matrices",
+  "subject": {
+    "commit": "4a622004e47fabcff923e38f430e55cdfe253f78",
+    "recipe_sha256": "6c975f8200fab9df92bff48f53154e537383f9d8df297d0510aebe99ceddb986",
+    "recipe_tree": "09e0f5504d7894e1bff756bc55e8d7c3d05e0072"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered host executable>",
+      "developer"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--all-platforms",
+      "--full"
+    ]
+  ],
+  "observations": [
+    "Declared Rust matrix selected the native host for the ordinary full build; delivered executable passed"
+  ],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build --all-platforms --full failed (1):",
+    "code": "BUILD_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T06:26:06.558Z"
+}

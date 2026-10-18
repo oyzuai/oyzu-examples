@@ -1,0 +1,113 @@
+{
+  "recipe": "gradle-application",
+  "subject": {
+    "commit": "a9d2082c2bbc6317cfb4e55121fbad60834721c3",
+    "recipe_sha256": "53d324b9e45cebe81e47d0bd5e43a2c54369fdde17b68058288db3a847f2118d",
+    "recipe_tree": "27a235e87f5c2df1b33e4fb5d02965ecb4e3e6db"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "captured",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-toolchain/gradle:8.14.3-jdk17",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--entrypoint",
+      "java",
+      "--mount",
+      "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
+      "sha256:0d1ab6269729f920e14ab905b41f81c21a8164773cdaed5d0da4bdbe6f47879a",
+      "-cp",
+      "/input/hello-0.1.0-dev.g82aae3affe58.jar",
+      "example.Hello"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:725592096789230c2096f14bd207e713ef03339d6fcf0cddadddad0ffe890651",
+    "sourceTree": "sha256:eac44809226b0d3dc81508e9aece2231ad4fb9afc4eeaa211babc0fb941d2124",
+    "output": "Hello from Gradle."
+  },
+  "nativeConsumerImages": [
+    {
+      "image": "oyzu-toolchain/gradle:8.14.3-jdk17",
+      "digest": "sha256:0d1ab6269729f920e14ab905b41f81c21a8164773cdaed5d0da4bdbe6f47879a"
+    }
+  ],
+  "buildTools": [
+    {
+      "id": "project",
+      "version": "oyzu-toolchain/gradle:8.14.3-jdk17",
+      "digest": "sha256:0d1ab6269729f920e14ab905b41f81c21a8164773cdaed5d0da4bdbe6f47879a",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "dependencyManagers": [
+    {
+      "id": "gradle",
+      "version": "8.14.3",
+      "digest": "sha256:0d1ab6269729f920e14ab905b41f81c21a8164773cdaed5d0da4bdbe6f47879a",
+      "platform": {
+        "arch": "amd64",
+        "os": "linux"
+      }
+    }
+  ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T14:50:19.765Z"
+}

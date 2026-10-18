@@ -1,0 +1,13 @@
+.oyzu/
+**/target/
+**/dist/
+**/node_modules/
+**/__pycache__/
+**/.venv/
+**/.gradle/
+.env
+.env.*
+!.env.example
+oyzu.local.toml
+.oyzu-config-edit.lock
+.oyzu-tool-lock-edit.lock

@@ -1,0 +1,58 @@
+format = 1
+environment = []
+tool = []
+
+[[resolved_environment]]
+required_capabilities = []
+request_digest = "sha256:52ed0f8db36e2bc8221f7cf94cd71f5d2e65fabbbef532b5e106500376cb491f"
+roots = ["sha256:5231c4782a0934837f5c7ae4dfabb1c1780cf719732e8a52a5c2f884158c895c", "sha256:86a61e2dc0f22f08c4fdaa67aa36dc0e4765b45655095c50cb467008a0972864", "sha256:9083dadae13e85b1b16988c19db704dd096be55a4e47a760d43ab7d048ff5e25", "sha256:92028348e173e4dfa265f6bedc5d7af5fad03177d3997c3faac7a390a48bcfab"]
+
+[resolved_environment.requests]
+"oyzu:python" = "3.13"
+
+[resolved_environment.native_constraints]
+"oyzu:python" = ["pep440:>=3.13.0"]
+
+[resolution."sha256:5231c4782a0934837f5c7ae4dfabb1c1780cf719732e8a52a5c2f884158c895c"]
+tool = "oyzu:python"
+version = "3.13.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:5231c4782a0934837f5c7ae4dfabb1c1780cf719732e8a52a5c2f884158c895c".inputs.archive]
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16+20261009-aarch64-unknown-linux-gnu-install_only.tar.gz"
+digest = "sha256:397ca401f416c3c99330a6be16d735d0cbeaf53e82070b80395b2fb4a8891f34"
+
+[resolution."sha256:86a61e2dc0f22f08c4fdaa67aa36dc0e4765b45655095c50cb467008a0972864"]
+tool = "oyzu:python"
+version = "3.13.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "windows/amd64/msvc"
+components = []
+
+[resolution."sha256:86a61e2dc0f22f08c4fdaa67aa36dc0e4765b45655095c50cb467008a0972864".inputs.archive]
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16+20261009-x86_64-pc-windows-msvc-install_only.tar.gz"
+digest = "sha256:286285f159bc711e4f0d89bd3d01993d3a321b84bd6593bd66dc816c23609388"
+
+[resolution."sha256:9083dadae13e85b1b16988c19db704dd096be55a4e47a760d43ab7d048ff5e25"]
+tool = "oyzu:python"
+version = "3.13.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:9083dadae13e85b1b16988c19db704dd096be55a4e47a760d43ab7d048ff5e25".inputs.archive]
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16+20261009-x86_64-unknown-linux-gnu-install_only.tar.gz"
+digest = "sha256:1cca1041f693f110a2e0d16417090b8996258c7a121e90eeab66c2f40ea407f2"
+
+[resolution."sha256:92028348e173e4dfa265f6bedc5d7af5fad03177d3997c3faac7a390a48bcfab"]
+tool = "oyzu:python"
+version = "3.13.16"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "darwin/arm64/native"
+components = []
+
+[resolution."sha256:92028348e173e4dfa265f6bedc5d7af5fad03177d3997c3faac7a390a48bcfab".inputs.archive]
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20261009/cpython-3.13.16+20261009-aarch64-apple-darwin-install_only.tar.gz"
+digest = "sha256:3338fcd572a670ec45ac9ef75480b95595ea9b6b5dd320952fcf5df185089941"

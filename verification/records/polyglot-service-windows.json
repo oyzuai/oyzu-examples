@@ -1,0 +1,61 @@
+{
+  "recipe": "polyglot-service",
+  "subject": {
+    "commit": "31d814f2cb90d50cc881f923a3819f208c4b8758",
+    "recipe_sha256": "c3bc984e4a4fbdf933f1023d88275e7a07706ed465937307d3d28b68267c15b5",
+    "recipe_tree": "5951539f21f59f5ed609c184d9f68e112c625a89"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered service>",
+      "--listen",
+      "127.0.0.1:<ephemeral-port>"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:2d08448c1023f50b9a3daadf613b5b1b9fd49ed06a7fae8c4ce80d21b26f117f",
+    "output": "Delivered frontend and API observed over HTTP"
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:44:23.704Z"
+}

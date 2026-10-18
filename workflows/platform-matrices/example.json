@@ -1,0 +1,29 @@
+{
+  "id": "platform-matrices",
+  "slug": "platform-matrices",
+  "title": "Separate host execution from artifact platforms",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "rust",
+    "cargo"
+  ],
+  "capabilities": [
+    "build",
+    "platforms",
+    "matrix"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "blocked",
+  "executionProfiles": [
+    "native-host",
+    "captured"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/platform-matrices-windows.json"
+  ],
+  "traceability": [],
+  "currentGap": "The native Rust host lane passed. The full matrix is unqualified: its executor is absent and restoring locked Linux Rust from a Windows controller is unfinished. Image provisioning alone does not close this product gap; use a supported locked-worker handoff before the separate full proof."
+}

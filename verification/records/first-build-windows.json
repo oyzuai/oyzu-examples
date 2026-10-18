@@ -1,0 +1,70 @@
+{
+  "recipe": "first-build",
+  "subject": {
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "193f66ec277579a1e1a7c2989ddd841c44f52f759e34b0176e7d35a21969a216",
+    "recipe_tree": "e9e8ad3e4fe938811c53c283c5652a206cf095f7"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "<delivered executable>",
+      "developer"
+    ]
+  ],
+  "observations": [],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:d34193c0467a4af69be2b7495c3986ed567d3077202bd07be5676910bd6d9460",
+    "output": "Hello, developer! Built with Oyzu."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:a14f2a68d04d314c392f6b16301e44fc652c8782714163d5f8e5275ded56fe31"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:39506b94c382e05d2e67ca2217f1857d0b46423b8232a19d9c4fbf3ff740a70f"
+    }
+  ],
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:19:49.979Z"
+}
