@@ -1,0 +1,64 @@
+{
+  "recipe": "maven-reactor",
+  "subject": {
+    "commit": "7caff1412f14e093d4e719b9f991d2435aba5ff7",
+    "recipe_sha256": "f551ba208aae175bcaa6b881b7d792c2b3541e55d98fb8a22d944aa4513b4b19",
+    "recipe_tree": "9ac6477ab3ff12a7d1fff0c723d29ebe55dfd4a9"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "java",
+      "-cp",
+      "<project>\\dist\\project\\artifacts\\greeting-library-0.1.0.jar;<project>\\dist\\project\\artifacts\\greeting-app-0.1.0.jar",
+      "example.Hello"
+    ]
+  ],
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:0acc65bc228b625d4c865ada002a0e955e5b9a13284b34a5acab7f729cc1bb0c",
+    "output": "Hello from the reactor library."
+  },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
+  "limits": [
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:13:55.598Z"
+}

@@ -1,13 +1,13 @@
 {
   "recipe": "first-build",
   "subject": {
-    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
-    "recipe_sha256": "ecd91c4c70123ecb30fda029f34d2ac9a9e6e4803e8687eca36c0525106c4977",
-    "recipe_tree": "cb3fe9e72686311654ee3820d9b100a08659cce2"
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "193f66ec277579a1e1a7c2989ddd841c44f52f759e34b0176e7d35a21969a216",
+    "recipe_tree": "e9e8ad3e4fe938811c53c283c5652a206cf095f7"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -44,9 +44,10 @@
       "developer"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:d46507f4a68fc3cb8ee31fd93c156bd6e2e7bb97dcd34ef20bf30bd8f58c29d7",
+    "digest": "sha256:d34193c0467a4af69be2b7495c3986ed567d3077202bd07be5676910bd6d9460",
     "output": "Hello, developer! Built with Oyzu."
   },
   "nativeConsumerImages": [],
@@ -54,16 +55,16 @@
   "reports": [
     {
       "kind": "test",
-      "digest": "sha256:6d8fb92618717de15e94b3e7cc71e5e4d7483ef6d7bee150e5b947310a2908b8"
+      "digest": "sha256:a14f2a68d04d314c392f6b16301e44fc652c8782714163d5f8e5275ded56fe31"
     },
     {
       "kind": "coverage",
-      "digest": "sha256:046bb3436df682b3121a49706dd6b25a9e03dc064ab883c6a06f3e33085593ae"
+      "digest": "sha256:39506b94c382e05d2e67ca2217f1857d0b46423b8232a19d9c4fbf3ff740a70f"
     }
   ],
   "limits": [
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:28:55.384Z"
+  "recordedAt": "2026-10-18T06:19:49.979Z"
 }

@@ -13,7 +13,7 @@
     "matrix"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "experimental",
+  "maturity": "blocked",
   "executionProfiles": [
     "native-host",
     "captured"
@@ -24,5 +24,6 @@
   "verification": [
     "verification/records/platform-matrices-windows.json"
   ],
-  "traceability": []
+  "traceability": [],
+  "currentGap": "The native Rust host lane passed. The complete declared matrix is blocked by the absent rust-cross:v1 executor and remains separately unqualified."
 }

@@ -1,23 +1,19 @@
 {
   "recipe": "polyglot-service",
   "subject": {
-    "commit": "0d52fc397c8d4cc4c6ad402852de55d59f6fed38",
-    "recipe_sha256": "0a7402fa087cf1bd2ac878f50a398363e3e29eb8d65f2021712304c5348d5a14",
-    "recipe_tree": "890dc359247aa54ae494ad3a7679b29263d6386c"
+    "commit": "b2dabd02b49e5c5fb01608409fa8b61a14111e47",
+    "recipe_sha256": "c3bc984e4a4fbdf933f1023d88275e7a07706ed465937307d3d28b68267c15b5",
+    "recipe_tree": "5951539f21f59f5ed609c184d9f68e112c625a89"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "host",
-  "target": {
-    "arch": "amd64",
-    "os": "windows"
-  },
+  "execution": "attempted-native-build",
   "commands": [
     [
       "oyzu",
@@ -31,30 +27,31 @@
     ],
     [
       "oyzu",
-      "build"
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-evidence/go-source-current:6428-01a14731",
+      "--format",
+      "{{.Id}}"
     ],
     [
       "oyzu",
-      "inspect",
-      "dist"
-    ],
-    [
-      "<delivered service>",
-      "--listen",
-      "127.0.0.1:<ephemeral-port>"
+      "build",
+      "--image",
+      "go=oyzu-evidence/go-source-current:6428-01a14731"
     ]
   ],
-  "result": "passed",
-  "artifact": {
-    "digest": "sha256:2d08448c1023f50b9a3daadf613b5b1b9fd49ed06a7fae8c4ce80d21b26f117f",
-    "output": "Delivered frontend and API observed over HTTP"
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build --image go=oyzu-evidence/go-source-current:6428-01a14731 failed (1):",
+    "code": "BUILD_FAILED"
   },
-  "nativeConsumerImages": [],
-  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
-  "reports": [],
   "limits": [
-    "Fast build and delivered consumer only; native quality checks not selected",
-    "No live publication or deployment qualification"
+    "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T05:31:49.174Z"
+  "recordedAt": "2026-10-18T06:19:06.005Z"
 }

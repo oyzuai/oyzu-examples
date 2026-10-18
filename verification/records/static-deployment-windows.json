@@ -1,13 +1,13 @@
 {
   "recipe": "static-deployment",
   "subject": {
-    "commit": "0d52fc397c8d4cc4c6ad402852de55d59f6fed38",
-    "recipe_sha256": "3ec19546c7549b60565b5bbedc6486043545fc27977b8847c684263620eac6f7",
-    "recipe_tree": "4183e1585555423ec1c83084e7cab8cc73013e87"
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "d3d697ef0d7cb99f9393aaf1cdedc0fd9eb61fb7f1c051ffee31ac54dc498356",
+    "recipe_tree": "6470bda4a723ff81557526d8f4afcec6481d5e93"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -45,6 +45,7 @@
       "with SITE_DIR=<delivered directory> and PORT=<ephemeral-port>"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
     "digest": "sha256:0439303524333855c54278904a9480c3029decbd152626219f54bc958c5f1219",
@@ -57,5 +58,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:31:28.436Z"
+  "recordedAt": "2026-10-18T06:22:36.488Z"
 }

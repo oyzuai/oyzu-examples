@@ -1,13 +1,13 @@
 {
   "recipe": "node-pnpm",
   "subject": {
-    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
-    "recipe_sha256": "6f41c3489f9a67ef18b050cec32167b8a5abcb9b3ed3db1c26361c9bd5f6ddb8",
-    "recipe_tree": "fd9691d018329ff46f0e97f75c80c046a30a6098"
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "b0a89b9db317b04074f76621eea66853d30a84e8f70678b6de6aaf00cc969d58",
+    "recipe_tree": "5c2d89ee6916cecb4caaddf9d119694b3b0729df"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -42,6 +42,7 @@
       "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.g8cc0b95d52d7\\index.cjs"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
     "digest": "sha256:ecd1655366b68834ff40affaac247fe92dfae8fbfa642db8ca2f78d949ff1e89",
@@ -54,5 +55,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:53:10.302Z"
+  "recordedAt": "2026-10-18T06:22:01.988Z"
 }

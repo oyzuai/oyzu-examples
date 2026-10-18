@@ -1,13 +1,13 @@
 {
   "recipe": "docker-file-image",
   "subject": {
-    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
     "recipe_sha256": "ab859e9419f5c21a3c38f3b9c3256bdfcce557e665970a7049b2daab686274d3",
     "recipe_tree": "59f8874c53d84581a4313f0ca96e1a8edbda36ad"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -101,7 +101,7 @@
       "docker",
       "create",
       "--name",
-      "oyzu-examples-b7ad86cc3251",
+      "oyzu-examples-d1bea297f9bb",
       "sha256:5e9b362c698ab51720d60006ae19d5e7d625aa8f307a69265f3229427cd801f3",
       "/message.txt"
     ],
@@ -113,7 +113,7 @@
       "--",
       "docker",
       "cp",
-      "oyzu-examples-b7ad86cc3251:/message.txt",
+      "oyzu-examples-d1bea297f9bb:/message.txt",
       "<project>\\message.received"
     ],
     [
@@ -124,7 +124,7 @@
       "--",
       "docker",
       "rm",
-      "oyzu-examples-b7ad86cc3251"
+      "oyzu-examples-d1bea297f9bb"
     ],
     [
       "oyzu",
@@ -138,6 +138,7 @@
       "docker.io/oyzu/project:0.0.0-dev.g40ed6860dc98"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
     "digest": "sha256:9c0d63d81a58faaefcaf1651f8fa5fb06ddf2e4a943cf33d707d63e63c6f62c1",
@@ -150,5 +151,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:52:38.848Z"
+  "recordedAt": "2026-10-18T06:21:25.816Z"
 }

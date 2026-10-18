@@ -12,9 +12,9 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "experimental",
+  "maturity": "blocked",
   "prerequisites": [
-    "The documented captured Gradle 8.14.3 / JDK 17 executor is provisioned on the measured machine. Windows host Gradle installation is not qualified here; use captured execution."
+    "Provision the documented Gradle 8.14.3 / JDK 17 captured executor with its compatible compiled worker; the current machine is missing it."
   ],
   "verification": [
     "verification/records/gradle-application-windows.json"
@@ -25,5 +25,6 @@
   "executionProfiles": [
     "captured",
     "native-host-candidate"
-  ]
+  ],
+  "currentGap": "The latest captured Windows attempt is blocked because the required Gradle 8.14.3 / JDK 17 image is absent. Provision the matching SDK and compiled worker first; Windows host installation is not qualified."
 }

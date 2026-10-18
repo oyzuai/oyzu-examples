@@ -1,13 +1,13 @@
 {
   "recipe": "helm-chart",
   "subject": {
-    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
     "recipe_sha256": "f735a0aa9fd554f303236eef4ab6ab2d38effcaf495aac0ea003f745c9a5bc11",
     "recipe_tree": "cdbd58cffefd197dc4ac54df63da40461a748bee"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -67,6 +67,7 @@
       "/input/greeting-0.1.0-dev.gce5abb16b76f.tgz"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
     "digest": "sha256:b5f3f360f3a986b573f51b07b0f035628532faed295fd79452cfe95f70e379b8",
@@ -84,5 +85,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:52:28.474Z"
+  "recordedAt": "2026-10-18T06:21:17.457Z"
 }

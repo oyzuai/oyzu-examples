@@ -1,23 +1,19 @@
 {
   "recipe": "go-command",
   "subject": {
-    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "commit": "b2dabd02b49e5c5fb01608409fa8b61a14111e47",
     "recipe_sha256": "b940a46d2598a7bcfafdf1614f26926a43870159a63a37e1458f5c5aee859c7f",
     "recipe_tree": "f05779b74579552b761f8f70fceb333554ae1e99"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "host",
-  "target": {
-    "arch": "amd64",
-    "os": "windows"
-  },
+  "execution": "attempted-native-build",
   "commands": [
     [
       "oyzu",
@@ -31,8 +27,23 @@
     ],
     [
       "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "oyzu-evidence/go-source-current:6428-01a14731",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
       "build",
-      "--full"
+      "--full",
+      "--image",
+      "go=oyzu-evidence/go-source-current:6428-01a14731"
     ],
     [
       "oyzu",
@@ -43,26 +54,13 @@
       "<delivered executable>"
     ]
   ],
-  "result": "passed",
-  "artifact": {
-    "digest": "sha256:1d6f819873d6684068757dcac86375898bb6e79fd73b1a9a1c3592b91e0d5837",
-    "output": "Hello from Go."
+  "result": "failed",
+  "diagnostic": {
+    "summary": "project-0.0.0-dev.g46a5d17ef9f5  failed (null):",
+    "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
   },
-  "nativeConsumerImages": [],
-  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
-  "reports": [
-    {
-      "kind": "test",
-      "digest": "sha256:4b3f1997c650b04760c0715a8ce39e1c4f6c04b4736fcac9ffe25ac99a5d438b"
-    },
-    {
-      "kind": "coverage",
-      "digest": "sha256:661fd90db5277219f39d15986f3b4a250eb7dd19671ee59401c8aaedbaf9839d"
-    }
-  ],
   "limits": [
-    "Full native checks selected; no other host or cross-compilation qualification",
-    "No live publication or deployment qualification"
+    "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T05:29:36.603Z"
+  "recordedAt": "2026-10-18T06:18:32.118Z"
 }

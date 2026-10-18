@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import {spawnSync} from 'node:child_process';
-const candidates = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'gradle-application', 'polyglot-service', 'developer-tool'];
+const candidates = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'polyglot-service', 'developer-tool', 'affected-builds'];
 const coverage = JSON.parse(fs.readFileSync('catalog/coverage.json'));
 const base = process.env.EXAMPLES_BASE_SHA;
 let files = null;

@@ -1,13 +1,13 @@
 {
   "recipe": "python-package",
   "subject": {
-    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
-    "recipe_sha256": "74e9331a15e8b004c4a0a22f9962b5b97695da406d1aa98e6788fde14a8666f3",
-    "recipe_tree": "f1f50be1ad46ab8cabee6672c9e0bb015c0efb1d"
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "777acef79c01e5f3668098bd5774cf58b1c2e7b7d78e01e6b4fecf178bfc8cd3",
+    "recipe_tree": "be4fa1adb8a5c29eaf9972062a211329859673bc"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -69,9 +69,10 @@
       "import greeting; print(greeting.hello())"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:0b3ba340795a5051f8f619c25889e565ca9bb7cefa1debd628ff5b134152572e",
+    "digest": "sha256:17f2231d90b0b83179f78962b444bb3442f8c926ef5b02e98aa58af00097bdda",
     "output": "Hello from Python."
   },
   "nativeConsumerImages": [],
@@ -81,5 +82,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:30:31.556Z"
+  "recordedAt": "2026-10-18T06:20:48.138Z"
 }

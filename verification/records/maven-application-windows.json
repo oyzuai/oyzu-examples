@@ -1,13 +1,13 @@
 {
   "recipe": "maven-application",
   "subject": {
-    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
-    "recipe_sha256": "4f4086038db979ffab1eb42f5a887e16b0aea09c2b16c8fda44fe5268b7e617d",
-    "recipe_tree": "8aa55c7670a51e5334deb9e4a8c33c5c20f7cf6b"
+    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "recipe_sha256": "63dfa1d9a4b30bd27379ceef2e50bb5701f59c723be2579e48b3d2064269db4d",
+    "recipe_tree": "88eda6dfe43db06c5d814260824295cc3027086d"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
@@ -48,9 +48,10 @@
       "example.Hello"
     ]
   ],
+  "observations": [],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:8b87f261d512849ce640d1ef1179960e60b56aa758ed0c3b5e6e18aa04488de7",
+    "digest": "sha256:5b4f379f36e31a3bd51b20448883d2f35b26b931fb8a448e080b25e24d163186",
     "output": "Hello from Maven."
   },
   "nativeConsumerImages": [],
@@ -60,5 +61,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T05:30:59.201Z"
+  "recordedAt": "2026-10-18T06:21:05.361Z"
 }

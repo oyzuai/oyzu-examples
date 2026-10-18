@@ -1,19 +1,23 @@
 {
   "recipe": "tasks-and-hooks",
   "subject": {
-    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
-    "recipe_sha256": "5c22d660c6d75a51e61c69b6221389ed91db3ae6500986afcde676426095b448",
-    "recipe_tree": "ffa443e9e1852561797fd0198c7da2ac3d3c3d95"
+    "commit": "7caff1412f14e093d4e719b9f991d2435aba5ff7",
+    "recipe_sha256": "974dfe7093e5014e0356967d6b1bba49dfced3f0f6142e1d20ea1369506fb417",
+    "recipe_tree": "7011ca5904a7de011530b55793fdbc77d892e0d5"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
-    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "attempted-native-build",
+  "execution": "recorded-in-bundle",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
   "commands": [
     [
       "oyzu",
@@ -25,15 +29,64 @@
       "build",
       "--isolated",
       "--full"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.gfd925f6662a4\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "--profile",
+      "preview",
+      "build",
+      "--isolated",
+      "--full"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.gd1782c81735c\\index.cjs"
+    ],
+    [
+      "oyzu",
+      "--profile",
+      "invalid",
+      "build",
+      "--isolated",
+      "--full",
+      "--json"
     ]
   ],
-  "result": "failed",
-  "diagnostic": {
-    "summary": "oyzu.exe build --isolated --full failed (1):",
-    "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:c11edfbf91d855aa82aba7809ad6775b132e2f604fa74bb27ef2901637e2d17e",
+    "output": "Hello from tasks: local."
   },
-  "limits": [
-    "This failed attempt does not qualify the recipe or its host/executor/target"
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [
+    {
+      "kind": "test",
+      "digest": "sha256:efe8f802f649328a15910ff90932608a80fc80774a5042d4fd0952a9c3b47679"
+    },
+    {
+      "kind": "coverage",
+      "digest": "sha256:85732061f4d2c089c1e2ce7763464fe7fedf7c76b50cbe4042be3e7e82439722"
+    }
   ],
-  "recordedAt": "2026-10-18T05:53:35.013Z"
+  "limits": [
+    "Full native checks selected; no other host or cross-compilation qualification",
+    "No live publication or deployment qualification"
+  ],
+  "recordedAt": "2026-10-18T06:11:06.194Z"
 }

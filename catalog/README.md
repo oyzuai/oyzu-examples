@@ -19,7 +19,8 @@ Preserve native conventions and add only necessary exceptions.
 2. [Order native tasks and build hooks](../workflows/tasks-and-hooks/README.md)
 3. [Consume a delivered npm package](../builds/node/npm-package/README.md)
 4. [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md)
-5. [Acquire private dependencies without leaking credentials](#private-dependencies)
+5. [Build only targets changed from a Git baseline](../workflows/affected-builds/README.md)
+6. [Acquire private dependencies without leaking credentials](#private-dependencies)
 
 ## Deliver a release
 
@@ -50,9 +51,9 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Build a conventional Go command](../builds/go/command/README.md) | implemented-partial | executable |
 | [Build a Python wheel](../builds/python/pip-package/README.md) | implemented-partial | executable |
 | [Build a single-module Maven application](../builds/maven/application/README.md) | implemented-partial | executable |
-| [Build a native Gradle application](../builds/gradle/application/README.md) | implemented-partial | experimental |
+| [Build a native Gradle application](../builds/gradle/application/README.md) | implemented-partial | blocked |
 | [Package a conventional Ant application](../builds/ant/application/README.md) | implemented-partial | blocked |
-| [Package an SDK-style .NET library](../builds/dotnet/library/README.md) | implemented-partial | experimental |
+| [Package an SDK-style .NET library](../builds/dotnet/library/README.md) | implemented-partial | blocked |
 | [Build a minimal Docker file image](../builds/docker/file-image/README.md) | implemented-partial | executable |
 | [Package a minimal Helm chart](../builds/helm/configmap/README.md) | implemented-partial | executable |
 | [Build the same application with pnpm](../builds/node/pnpm-application/README.md) | implemented-partial | experimental |
@@ -68,7 +69,8 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Build related Go workspace modules](../builds/go/workspace/README.md) | implemented-partial | experimental |
 | [Build and consume a Maven reactor](../builds/maven/reactor/README.md) | implemented-partial | experimental |
 | [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md) | implemented-partial | experimental |
-| [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md) | implemented-partial | experimental |
+| [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md) | implemented-partial | blocked |
+| [Build only targets changed from a Git baseline](../workflows/affected-builds/README.md) | implemented-partial | experimental |
 
 ## Gaps and assessments
 

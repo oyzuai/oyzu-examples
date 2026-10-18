@@ -40,7 +40,7 @@ export function copyCommittedProject(repo, commit, recipe, destination) {
   }
 }
 
-const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices']);
+const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices', 'affected-builds']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
   if (!recipe || !consumers.has(id)) throw Error('No admitted native consumer check for recipe: ' + id);
@@ -79,6 +79,12 @@ async function verifyNative(id, cli, output) {
   };
   try {
     copyCommittedProject(root,commit,recipe,scratch);
+    if(id==='affected-builds') {
+      commands.push(['git','init; add copied source; commit local comparison baseline']);
+      run('git',['-c','core.autocrlf=false','init','--template=','-b','main'],scratch);
+      run('git',['-c','core.autocrlf=false','add','.'],scratch);
+      run('git',['-c','user.name=Examples verification','-c','user.email=examples@example.invalid','-c','commit.gpgsign=false','commit','-m','Copied native example baseline'],scratch);
+    }
     const capturedGradle = id === 'gradle-application' && process.platform === 'win32';
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
     fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
@@ -86,7 +92,7 @@ async function verifyNative(id, cli, output) {
     const captured = capturedGradle || id === 'node-pnpm' || id === 'tasks-and-hooks' || id === 'incremental-builds';
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !captured) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
-    const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices'].includes(id);
+    const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
     if(goImage) containers.push({purpose:'Provided Go build executor',image:goImage,digest:native('docker',['image','inspect',goImage,'--format','{{.Id}}']).text});
     build([...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);
@@ -140,6 +146,19 @@ async function verifyNative(id, cli, output) {
         const fresh=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
         if(fresh.artifacts[0].digest!==changed.artifacts[0].digest || fresh.actions.some(action=>action.reuse)) throw Error('Fresh build disagreed with the changed result or reused work');
       }
+    } else if (id === 'affected-builds') {
+      if(manifest.artifacts.length!==2) throw Error('Both initial application artifacts are required');
+      for(const item of manifest.artifacts) if(invoke(['exec','--','node',path.join(scratch,'dist',item.path,'index.cjs')])!=='Hello from '+item.target+'.') throw Error('Initial application consumer differs');
+      invoke(['build','--affected','HEAD','--full']);invoke(['inspect','dist']);
+      const empty=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      if(empty.status!=='succeeded'||empty.actions.length||empty.artifacts.length) throw Error('Unchanged baseline did not produce an honest empty bundle');
+      for(const name of ['src/index.cjs','test/greeting.test.cjs']){const source=path.join(scratch,'api',name);fs.writeFileSync(source,fs.readFileSync(source,'utf8').replaceAll('Hello from api.','Updated api.'));}
+      invoke(['build','--affected','HEAD','--full','--plan']);invoke(['build','--affected','HEAD','--full']);invoke(['inspect','dist']);
+      const changed=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      const selection=changed.extensions?.['oyzu.dev/selection'];
+      if(changed.artifacts.length!==1 || changed.artifacts[0].target!=='api' || changed.actions.some(item=>item.target!=='api') || selection?.mode!=='affected' || !selection.excluded.includes('web')) throw Error('Edited API did not select only its own native work and exclude web');
+      actual=invoke(['exec','--','node',path.join(scratch,'dist',changed.artifacts[0].path,'index.cjs')]);expected='Updated api.';
+      observations.push('Unchanged Git baseline yielded an empty bundle; editing API source/test selected API only and its delivered consumer observed the edit');
     } else if (id === 'npm-package') {
       const consumer=path.join(scratch,'consumer');fs.mkdirSync(consumer);
       fs.writeFileSync(path.join(consumer,'package.json'),'{"private":true}\n');

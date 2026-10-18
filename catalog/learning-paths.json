@@ -19,6 +19,7 @@
         "tasks-and-hooks",
         "npm-package",
         "incremental-builds",
+        "affected-builds",
         "private-dependencies"
       ]
     },
