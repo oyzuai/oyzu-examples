@@ -4,7 +4,8 @@
   "title": "Separate host execution from artifact platforms",
   "difficulty": "intermediate",
   "ecosystems": [
-    "go"
+    "rust",
+    "cargo"
   ],
   "capabilities": [
     "build",

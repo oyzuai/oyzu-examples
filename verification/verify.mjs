@@ -48,6 +48,7 @@ async function verifyNative(id, cli, output) {
   if (run('git', ['status', '--porcelain', '--', recipe], root)) throw Error('Commit recipe changes before recording verification');
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'oyzu-example-' + id + '-'));
   const commands = [];
+  const observations=[];
   const previousUserConfig=process.env.OYZU_USER_CONFIG;
   const userConfig=path.join(scratch,'.oyzu/verification-user/config.toml');
   const invoke = args => {commands.push(['oyzu', ...args.map(value => value.replaceAll(scratch, '<project>'))]); return run(cli, args, scratch);};
@@ -67,7 +68,7 @@ async function verifyNative(id, cli, output) {
     return {status: result.status, text: result.stdout.trim()};
   };
   const containers = [];
-  const goImage=['go-command','go-workspace','polyglot-service','platform-matrices'].includes(id)?process.env.EXAMPLES_GO_IMAGE:undefined;
+  const goImage=['go-command','go-workspace','polyglot-service'].includes(id)?process.env.EXAMPLES_GO_IMAGE:undefined;
   const build=options=>invoke(['build',...options,...(goImage?['--image','go='+goImage]:[])]);
   const container = (image, entrypoint, mounts, args) => {
     const identity = native('docker', ['image', 'inspect', image, '--format', '{{.Id}}']).text;
@@ -95,6 +96,12 @@ async function verifyNative(id, cli, output) {
     if (!artifact) throw Error('Expected native primary artifact missing');
     const executable = path.resolve(scratch, 'dist', artifact.path);
     if (!executable.startsWith(path.join(scratch, 'dist') + path.sep)) throw Error('Artifact leaves bundle');
+    const consumeGo=item=>{
+      const output=path.join(scratch,'dist',item.path);
+      const target=manifest.targets.find(target=>target.id===item.target);
+      if(target.platform.os==='linux' && process.platform!=='linux') return container(goImage??'oyzu-toolchain/go:1.24-mod0.25.0','/input/'+path.basename(output),['type=bind,source='+path.dirname(output)+',target=/input,readonly'],[]);
+      commands.push(['<delivered workspace executable>']);return run(output,[],scratch);
+    };
     let actual, expected;
     if (id === 'first-build' || id === 'go-command') {
       const args = id === 'first-build' ? ['developer'] : [];
@@ -141,21 +148,25 @@ async function verifyNative(id, cli, output) {
       expected='Hello, developer, from the delivered package.';
     } else if (id === 'go-workspace') {
       if(!fs.existsSync(path.join(scratch,'go.work'))) throw Error('Native workspace source missing');
-      if(run(executable,[],scratch)!=='Hello from the workspace library.') throw Error('Workspace consumer did not use its local library');
+      if(consumeGo(artifact)!=='Hello from the workspace library.') throw Error('Workspace consumer did not use its local library');
+      observations.push('Native go.work build and delivered consumer used the contained shared module');
       const source=path.join(scratch,'shared/greeting.go');fs.writeFileSync(source,fs.readFileSync(source,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
       const test=path.join(scratch,'shared/greeting_test.go');fs.writeFileSync(test,fs.readFileSync(test,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
       build(['--full']);invoke(['inspect','dist']);
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const result=rebuilt.artifacts.find(item=>item.name==='primary');
       if(!result || result.digest===artifact.digest) throw Error('Workspace library change did not reach the executable');
-      actual=run(path.join(scratch,'dist',result.path),[],scratch);expected='Updated workspace library.';
+      actual=consumeGo(result);expected='Updated workspace library.';
+      observations.push('Changed shared implementation and its test expectation; rebuilt delivered consumer observed the changed library');
     } else if (id === 'maven-reactor') {
       const jars=manifest.artifacts.filter(item=>item.path.endsWith('.jar'));
       if(jars.length!==2 || !jars.some(item=>item.path.includes('greeting-app')) || !jars.some(item=>item.path.includes('greeting-library'))) throw Error('Both reactor module artifacts are required');
       actual=invoke(['exec','--','java','-cp',jars.map(item=>path.join(scratch,'dist',item.path)).join(path.delimiter),'example.Hello']);
       expected='Hello from the reactor library.';
     } else if (id === 'platform-matrices') {
-      if(run(executable,[],scratch)!=='Hello from Go.') throw Error('Native host artifact failed');
+      commands.push(['<delivered host executable>','developer']);
+      if(run(executable,['developer'],scratch)!=='Hello, developer! Built with Oyzu.') throw Error('Native host artifact failed');
+      observations.push('Declared Rust matrix selected the native host for the ordinary full build; delivered executable passed');
       build(['--all-platforms','--full']);invoke(['inspect','dist']);
       const matrix=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       const platformOf=target=>typeof target.platform==='string'?target.platform:target.platform.os+'/'+target.platform.arch;
@@ -169,8 +180,9 @@ async function verifyNative(id, cli, output) {
         if(platform==='windows/amd64' && bytes.subarray(0,2).toString()!=='MZ') throw Error('Windows output is not PE');
         if(platform.startsWith('linux/') && (bytes.subarray(0,4).toString('hex')!=='7f454c46' || bytes.readUInt16LE(18)!==(platform.endsWith('/arm64')?183:62))) throw Error('Linux output architecture differs');
         if(platform==='linux/amd64') {
-          const value=container(goImage??'oyzu-toolchain/go:1.24-mod0.25.0','/input/'+path.basename(item.path),['type=bind,source='+path.dirname(path.join(scratch,'dist',item.path))+',target=/input,readonly'],[]);
-          if(value!=='Hello from Go.') throw Error('Linux amd64 delivered output failed');
+          if(!process.env.EXAMPLES_LINUX_CONSUMER_IMAGE) throw Error('Provide EXAMPLES_LINUX_CONSUMER_IMAGE for the independent Linux runtime consumer');
+          const value=container(process.env.EXAMPLES_LINUX_CONSUMER_IMAGE,'/input/'+path.basename(item.path),['type=bind,source='+path.dirname(path.join(scratch,'dist',item.path))+',target=/input,readonly'],[]);
+          if(value!=='Hello, world! Built with Oyzu.') throw Error('Linux amd64 delivered output failed');
         }
       }
       actual='Host executable and Linux amd64 consumer passed; all declared binary headers matched';expected=actual;
@@ -279,7 +291,7 @@ async function verifyNative(id, cli, output) {
       recipe: id, subject: {commit, recipe_sha256: recipeDigest(root, commit, recipe), recipe_tree: run('git', ['rev-parse', commit + ':' + recipe], root)},
       oyzu: {version: run(cli, ['--version'], scratch), binary_sha256: sha256(fs.readFileSync(cli))},
       host: {os: process.platform, arch: process.arch}, execution, target: manifest.targets[0].platform,
-      commands, result: 'passed', artifact: {digest: artifact.digest, output: actual},
+      commands, observations, result: 'passed', artifact: {digest: artifact.digest, output: actual},
       nativeConsumerImages: containers,
       configurationScope:'Copied project and disposable empty user settings; native machine/organization controls retained',
       reports: manifest.reports.map(report => ({kind: report.kind, digest: report.digest})),
@@ -290,7 +302,7 @@ async function verifyNative(id, cli, output) {
     fs.writeFileSync(output, JSON.stringify(record, null, 2) + '\n');
     console.log('Verified committed ' + id + ' recipe and delivered artifact consumer.');
   } catch (error) {
-    const record={recipe:id,subject:{commit,recipe_sha256:recipeDigest(root,commit,recipe),recipe_tree:run('git',['rev-parse',commit+':'+recipe],root)},oyzu:{version:run(cli,['--version'],scratch),binary_sha256:sha256(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},execution:'attempted-native-build',commands,result:'failed',diagnostic:{summary:error.message.split('\n')[0].replaceAll(scratch,'<project>').replaceAll(root,'<collection>'),code:error.message.match(/\b(?:TOOL|BUILD|CONFIG|COMMAND)_[A-Z_]+\b/)?.[0]??'CONSUMER_OR_PREREQUISITE_FAILURE'},limits:['This failed attempt does not qualify the recipe or its host/executor/target'],recordedAt:new Date().toISOString()};
+    const record={recipe:id,subject:{commit,recipe_sha256:recipeDigest(root,commit,recipe),recipe_tree:run('git',['rev-parse',commit+':'+recipe],root)},oyzu:{version:run(cli,['--version'],scratch),binary_sha256:sha256(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},execution:'attempted-native-build',commands,observations,result:'failed',diagnostic:{summary:error.message.split('\n')[0].replaceAll(scratch,'<project>').replaceAll(root,'<collection>'),code:error.message.match(/\b(?:TOOL|BUILD|CONFIG|COMMAND)_[A-Z_]+\b/)?.[0]??'CONSUMER_OR_PREREQUISITE_FAILURE'},limits:['This failed attempt does not qualify the recipe or its host/executor/target'],recordedAt:new Date().toISOString()};
     fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(record,null,2)+'\n');
     throw error;
   } finally {
