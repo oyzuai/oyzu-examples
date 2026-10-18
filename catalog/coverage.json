@@ -1,0 +1,6 @@
+{
+  "recipes": [
+    {"id": "first-build", "path": "getting-started/first-build", "kind": "recipe"}
+  ],
+  "gaps": []
+}
