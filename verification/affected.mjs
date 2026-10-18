@@ -10,8 +10,12 @@ if (base && !/^0+$/.test(base)) {
   if (diff.status !== 0) throw Error('Required comparison commit is unavailable');
   files = diff.stdout.trim().split('\n');
 }
-const common = !files || files.some(name => name.startsWith('verification/') || name.startsWith('.github/workflows/'));
-const affected = coverage.recipes.filter(item => common || files.some(name => name.startsWith(item.path + '/')));
+const common = !files || files.some(name => (name.startsWith('verification/') && !name.startsWith('verification/records/')) || name.startsWith('.github/workflows/'));
+const affected = coverage.recipes.filter(item => {
+  if (common || files.some(name => name.startsWith(item.path + '/'))) return true;
+  const metadata = JSON.parse(fs.readFileSync(item.path + '/example.json'));
+  return files.some(name => metadata.verification?.includes(name));
+});
 const recipes = affected.filter(item => candidates.includes(item.id)).map(item => item.id);
 const requiredExternalRecipes = affected.filter(item => !candidates.includes(item.id)).map(item => item.id);
 // Editorial/catalog changes still verify the first-build baseline before a docs

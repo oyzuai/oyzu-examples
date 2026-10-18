@@ -39,6 +39,8 @@ substitutes for an affected captured or live recipe. Shared verifier changes
 retain all those obligations. Native failures still upload their exact-subject
 records for inspection. Run `node --test verification/affected.test.mjs` to check
 selection, notification gates and failure-record retention.
+Updates under `verification/records/` require the owning recipe's check according
+to its metadata; a new native proof record does not require unrelated executors.
 For the Go workspace proof, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
 compatible Go executor through Oyzu's ordinary `--image go=...` option. The
 verifier records that reference, immutable image identity and actual command;

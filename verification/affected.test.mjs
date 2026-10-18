@@ -30,7 +30,10 @@ function fixture(t) {
   ];
   write('catalog/coverage.json', JSON.stringify({recipes}));
   write('README.md', '# Examples\n');
-  for (const item of recipes) write(item.path + '/project/source', 'original\n');
+  for (const item of recipes) {
+    write(item.path + '/project/source', 'original\n');
+    write(item.path + '/example.json', JSON.stringify({verification: ['verification/records/' + item.id + '.json']}));
+  }
   run('git', ['init', '--template=', '-b', 'main']);
   run('git', ['add', '.']);
   run('git', ['-c', 'user.name=Example test', '-c', 'user.email=test@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-m', 'baseline']);
@@ -78,4 +81,13 @@ test('CI retains failed subject records and gates notification on external proof
   assert.match(workflow, /if: .*needs\.native\.result == 'success' && needs\.catalog\.outputs\.required_external_recipes == '\[\]'/);
   const provided = fs.readFileSync(path.join(source, '../.github/workflows/provided-executors.yml'), 'utf8');
   assert.match(provided, /options: \[npm-package, go-workspace,/);
+});
+
+test('a record update requires its recipe proof without invoking unrelated captured recipes', t => {
+  const {write, select} = fixture(t);
+  write('verification/records/first-build.json', '{"result":"passed"}\n');
+  assert.deepEqual(select().selectedNativeRecipes, ['first-build']);
+  assert.deepEqual(select().requiredExternalRecipes, []);
+  write('verification/records/npm-package.json', '{"result":"failed"}\n');
+  assert.deepEqual(select().requiredExternalRecipes, ['npm-package']);
 });
