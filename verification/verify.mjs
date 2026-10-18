@@ -85,14 +85,14 @@ async function verifyNative(id, cli, output) {
       run('git',['-c','core.autocrlf=false','add','.'],scratch);
       run('git',['-c','user.name=Examples verification','-c','user.email=examples@example.invalid','-c','commit.gpgsign=false','commit','-m','Copied native example baseline'],scratch);
     }
-    const capturedGradle = id === 'gradle-application' && process.platform === 'win32';
+    const capturedGradle = id === 'gradle-application' && process.env.EXAMPLES_GRADLE_CAPTURED === '1';
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
     fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
     process.env.OYZU_USER_CONFIG=userConfig;
-    const captured = capturedGradle || ['node-pnpm','pnpm-workspace','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
+    const captured = capturedGradle || ['node-pnpm','node-yarn-classic','pnpm-workspace','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && (!captured || id==='npm-package' || id==='go-workspace')) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
-    const full = ['first-build', 'node-application', 'npm-package', 'pnpm-workspace', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
+    const full = ['first-build', 'node-application', 'node-yarn-classic', 'npm-package', 'pnpm-workspace', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
     if(goImage) containers.push({purpose:'Provided Go build executor',image:goImage,digest:native('docker',['image','inspect',goImage,'--format','{{.Id}}']).text});
     build([...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);

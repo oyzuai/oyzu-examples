@@ -12,20 +12,20 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "executable",
   "prerequisites": [
-    "Selected Node and Yarn Classic tools, a compatible captured executor and Docker; current normal tool preparation is blocked before execution."
+    "Selected Node 22.23.3, native packageManager yarn@1.22.22, Docker and the explicitly provisioned compatible Yarn Classic executor; Yarn remains an executor prerequisite, not a managed tool."
   ],
   "verification": [
-    "verification/records/node-yarn-classic-windows.json"
+    "verification/records/node-yarn-classic-windows.json",
+    "verification/records/node-yarn-classic-captured-windows.json"
   ],
   "traceability": [
     "EX-007",
     "EX-018",
     "EX-050"
   ],
-  "currentGap": "The current build/pin preparation refuses the yarn request with TOOL_ALIAS_UNSUPPORTED. The native Yarn Classic lock exists, but it is not proof of an Oyzu build.",
   "executionProfiles": [
-    "captured-candidate"
+    "captured"
   ]
 }

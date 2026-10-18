@@ -52,13 +52,13 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Build a conventional Go command](../builds/go/command/README.md) | implemented-partial | executable |
 | [Build a Python wheel](../builds/python/pip-package/README.md) | implemented-partial | executable |
 | [Build a single-module Maven application](../builds/maven/application/README.md) | implemented-partial | executable |
-| [Build a native Gradle application](../builds/gradle/application/README.md) | implemented-partial | blocked |
+| [Build a native Gradle application](../builds/gradle/application/README.md) | implemented-partial | executable |
 | [Package a conventional Ant application](../builds/ant/application/README.md) | implemented-partial | blocked |
 | [Package an SDK-style .NET library](../builds/dotnet/library/README.md) | implemented-partial | blocked |
 | [Build a minimal Docker file image](../builds/docker/file-image/README.md) | implemented-partial | executable |
 | [Package a minimal Helm chart](../builds/helm/configmap/README.md) | implemented-partial | executable |
 | [Build the same application with pnpm](../builds/node/pnpm-application/README.md) | implemented-partial | experimental |
-| [Build the same application with Yarn Classic](../builds/node/yarn-classic-application/README.md) | implemented-partial | blocked |
+| [Build the same application with Yarn Classic](../builds/node/yarn-classic-application/README.md) | implemented-partial | executable |
 | [Build a package with uv](../builds/python/uv-package/README.md) | implemented-partial | blocked |
 | [Build a package with Poetry](../builds/python/poetry-package/README.md) | implemented-partial | blocked |
 | [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md) | implemented-partial | experimental |

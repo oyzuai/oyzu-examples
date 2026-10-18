@@ -47,6 +47,11 @@ records for inspection. Run `node --test verification/affected.test.mjs` to chec
 selection, notification gates and failure-record retention.
 Updates under `verification/records/` require the owning recipe's check according
 to its metadata; a new native proof record does not require unrelated executors.
+Gradle's conventional application baseline uses its Oyzu-managed host tools.
+EXAMPLES_GRADLE_CAPTURED=1 explicitly requests the separate provisioned-executor
+lane, as the manual workflow does. Yarn Classic always uses its provided captured
+executor, with its version declared in native package.json and recorded by
+preparation; it is not an admitted managed-tool request.
 For the Go workspace proof, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
 compatible Go executor through Oyzu's ordinary `--image go=...` option. The
 verifier records that reference, immutable image identity and actual command;
