@@ -89,7 +89,7 @@ async function verifyNative(id, cli, output) {
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
     fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
     process.env.OYZU_USER_CONFIG=userConfig;
-    const captured = capturedGradle || ['node-pnpm','tasks-and-hooks','incremental-builds','npm-package','go-workspace'].includes(id);
+    const captured = capturedGradle || ['node-pnpm','tasks-and-hooks','incremental-builds','npm-package','go-workspace','helm-chart'].includes(id);
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && (!captured || id==='npm-package' || id==='go-workspace')) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
     const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices', 'affected-builds'].includes(id);
