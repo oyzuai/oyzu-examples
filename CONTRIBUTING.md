@@ -29,3 +29,9 @@ credentials belong in this collection.
 The Oyzu docs site selects content at an immutable commit. Fix recipe prose here;
 do not maintain a second command list in the website. Respect existing links and
 stable recipe IDs when moving content.
+
+Merge with a merge commit. The repository disables squash and rebase merges so
+documentation pins remain reachable through the default branch's history.
+Never rewrite or discard pinned commits without retaining their original bytes
+and identities in an agreed source archive. A local preparation cache also keeps
+named refs; it is not permission to remove the canonical history.
