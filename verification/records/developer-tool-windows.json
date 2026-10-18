@@ -1,7 +1,7 @@
 {
   "recipe": "developer-tool",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "commit": "6bc1de21d11fbc0321e5d44e83af0fdc56e71239",
     "recipe_sha256": "26af4e0e2468c6755ddb29300b2df7e929359ed0df77d2f9591e52ae72949bd1",
     "recipe_tree": "e6bfcc22b5a59c61efed63ef95e9f51be5cceedc"
   },
@@ -59,7 +59,8 @@
   "observations": [],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:1b30f7d09dafa2591d556acf390d0ad2a8210346f185f7ff447d0c869af199be",
+    "digest": "sha256:9a10a3803cc6487e471eb1b77e6501f3822de1d6182f2652ff6c6bd016b1411e",
+    "sourceTree": "sha256:1fb6c24e46a21348fcaf3a0df14be4f18ac4650271b7aaa593c5592d629bdf3d",
     "output": "Release channel: preview"
   },
   "nativeConsumerImages": [],
@@ -69,5 +70,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:22:25.791Z"
+  "recordedAt": "2026-10-18T07:24:27.610Z"
 }

@@ -11,6 +11,12 @@ artifact. Records identify the exact recipe commit/tree/content digest, CLI
 binary digest, commands, host/execution/target, reports and limits. Raw logs stay
 in ignored local storage or CI logs. A record for changed content is historical,
 not a badge for the new recipe. Failed commands fail the verification process.
+The subject identifies the authored recipe and its documented scenario.
+For scenarios that edit inputs, artifact.digest, artifact.sourceTree, output and
+reports identify the same successful consumer phase, including the edited
+captured source. They do not relabel an initial artifact as the later result.
+An explicitly isolated build is recorded as captured execution; the controller
+host and artifact target remain separate fields.
 The harness selects a disposable empty user configuration through
 OYZU_USER_CONFIG so hidden user preferences do not become project prerequisites.
 Native machine/organization configuration remains binding, and the shared

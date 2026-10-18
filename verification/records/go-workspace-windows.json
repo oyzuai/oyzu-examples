@@ -1,9 +1,9 @@
 {
   "recipe": "go-workspace",
   "subject": {
-    "commit": "43b7b0211469199ba73c9fcfa00ebaa0d31436e9",
-    "recipe_sha256": "608dba8dc05fbdb910ac5244a58910832aea7c3679aa06e45efca4119ca8a56d",
-    "recipe_tree": "9ef47079d6986fe3b648521d2d89cebad266cf6c"
+    "commit": "6bc1de21d11fbc0321e5d44e83af0fdc56e71239",
+    "recipe_sha256": "890ae12db4a20fcafedb42775321526440074bbd029494e882e2cf18183a68cc",
+    "recipe_tree": "adc841daa3f0c14436e05176b58978c33e0e19e5"
   },
   "oyzu": {
     "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
@@ -13,7 +13,7 @@
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "recorded-in-bundle",
+  "execution": "captured",
   "target": {
     "arch": "amd64",
     "os": "linux"
@@ -45,6 +45,7 @@
     [
       "oyzu",
       "build",
+      "--isolated",
       "--full",
       "--image",
       "go=oyzu-evidence/go-source-current:6428-01a14731"
@@ -87,6 +88,7 @@
     [
       "oyzu",
       "build",
+      "--isolated",
       "--full",
       "--image",
       "go=oyzu-evidence/go-source-current:6428-01a14731"
@@ -133,7 +135,8 @@
   ],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:058b16c26395826cf8f59ddd414696a249a9e41524c91bac58bb49c438f3d340",
+    "digest": "sha256:8a127b8b77c18721851720d4618e10a88f22c872367e46cc7150fa433016c4c2",
+    "sourceTree": "sha256:d200aa0bd6a65eb1e6a0da722ef7866373f6b91ce141ef9039e634c80cbf9e2a",
     "output": "Updated workspace library."
   },
   "nativeConsumerImages": [
@@ -167,12 +170,12 @@
     },
     {
       "kind": "coverage",
-      "digest": "sha256:443ae7ddbcbe90a954c57a384294f879b6932745d2929f1abae2aa983f395910"
+      "digest": "sha256:90c374b8bd3bd2ef4d167e1b72857be09c2ec76d1eddf01a51398eaf18ca1c1a"
     }
   ],
   "limits": [
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:32:15.336Z"
+  "recordedAt": "2026-10-18T07:25:31.048Z"
 }

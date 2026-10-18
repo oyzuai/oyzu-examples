@@ -1,7 +1,7 @@
 {
   "recipe": "helm-chart",
   "subject": {
-    "commit": "ad757c9088b32937ffcef9ad7adf842299c63760",
+    "commit": "77bf9a7dfd9c56a470cd1a73daef2e9cfaec28ef",
     "recipe_sha256": "f735a0aa9fd554f303236eef4ab6ab2d38effcaf495aac0ea003f745c9a5bc11",
     "recipe_tree": "cdbd58cffefd197dc4ac54df63da40461a748bee"
   },
@@ -13,7 +13,7 @@
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "recorded-in-bundle",
+  "execution": "captured",
   "target": {
     "arch": "amd64",
     "os": "linux"
@@ -26,7 +26,8 @@
     ],
     [
       "oyzu",
-      "build"
+      "build",
+      "--isolated"
     ],
     [
       "oyzu",
@@ -71,6 +72,7 @@
   "result": "passed",
   "artifact": {
     "digest": "sha256:b5f3f360f3a986b573f51b07b0f035628532faed295fd79452cfe95f70e379b8",
+    "sourceTree": "sha256:5cf836ecba04220c7e0d14f483fd502a3c259205235722032b7b47bf8f275647",
     "output": "---\n# Source: greeting/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: hello-greeting\ndata:\n  message: \"Hello from Helm.\""
   },
   "nativeConsumerImages": [
@@ -85,5 +87,5 @@
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T06:21:17.457Z"
+  "recordedAt": "2026-10-18T07:28:04.781Z"
 }
