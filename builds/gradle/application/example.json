@@ -4,7 +4,8 @@
   "title": "Build a native Gradle application",
   "difficulty": "beginner",
   "ecosystems": [
-    "gradle"
+    "gradle",
+    "java"
   ],
   "capabilities": [
     "build",

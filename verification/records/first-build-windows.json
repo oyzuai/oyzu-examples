@@ -1,13 +1,13 @@
 {
   "recipe": "first-build",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "f3d5732f10f1905ddc13d5c11daa60182d8928811bd8ea1c1ed77b37fd6f4b7d",
-    "recipe_tree": "3bd53f73ec39d307d215cbe3e1028ada45355a6e"
+    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "recipe_sha256": "ecd91c4c70123ecb30fda029f34d2ac9a9e6e4803e8687eca36c0525106c4977",
+    "recipe_tree": "cb3fe9e72686311654ee3820d9b100a08659cce2"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -46,23 +46,24 @@
   ],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:4b1aacb0b9c139ea8bbb7c10c98f4738118f6b34bf75e575515ec25c1a031dd4",
+    "digest": "sha256:d46507f4a68fc3cb8ee31fd93c156bd6e2e7bb97dcd34ef20bf30bd8f58c29d7",
     "output": "Hello, developer! Built with Oyzu."
   },
   "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [
     {
       "kind": "test",
-      "digest": "sha256:25cb6c7ac876b24e60cecdfa60ae0e09d9a1820a2cdee91f779962897c9a677e"
+      "digest": "sha256:6d8fb92618717de15e94b3e7cc71e5e4d7483ef6d7bee150e5b947310a2908b8"
     },
     {
       "kind": "coverage",
-      "digest": "sha256:3632baa15f2f426d025e14434fac5def76bec41ebc3ec19a13021f1b282e1265"
+      "digest": "sha256:046bb3436df682b3121a49706dd6b25a9e03dc064ab883c6a06f3e33085593ae"
     }
   ],
   "limits": [
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:31:50.845Z"
+  "recordedAt": "2026-10-18T05:28:55.384Z"
 }

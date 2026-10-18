@@ -1,13 +1,13 @@
 {
   "recipe": "go-command",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "0f2d15994a957990538f5a04cc76504576285b614804691b2bc25bbb2c668789",
-    "recipe_tree": "39586355b9b164dabfd1ec917019f83ccf72d28c"
+    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "recipe_sha256": "b940a46d2598a7bcfafdf1614f26926a43870159a63a37e1458f5c5aee859c7f",
+    "recipe_tree": "f05779b74579552b761f8f70fceb333554ae1e99"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -49,6 +49,7 @@
     "output": "Hello from Go."
   },
   "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [
     {
       "kind": "test",
@@ -63,5 +64,5 @@
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:32:00.550Z"
+  "recordedAt": "2026-10-18T05:29:36.603Z"
 }

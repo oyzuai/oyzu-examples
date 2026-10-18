@@ -1,0 +1,28 @@
+{
+  "id": "npm-package",
+  "slug": "npm-package",
+  "title": "Consume a delivered npm package",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "node",
+    "npm"
+  ],
+  "capabilities": [
+    "build",
+    "consume",
+    "tests",
+    "reports"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "native-host"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/npm-package-windows.json"
+  ],
+  "traceability": []
+}

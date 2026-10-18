@@ -4,7 +4,8 @@
   "title": "Build a release tool with a native Cargo workspace",
   "difficulty": "advanced",
   "ecosystems": [
-    "rust"
+    "rust",
+    "cargo"
   ],
   "capabilities": [
     "build",

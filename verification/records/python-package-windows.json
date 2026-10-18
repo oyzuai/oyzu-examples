@@ -1,13 +1,13 @@
 {
   "recipe": "python-package",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "7ebd8f0edbba902bdf83788cca4742462238007ca41c4fd5eb3e448ceac0c257",
-    "recipe_tree": "6a430d3eeb8cc7807ce611bfadd85564b899e2ba"
+    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "recipe_sha256": "74e9331a15e8b004c4a0a22f9962b5b97695da406d1aa98e6788fde14a8666f3",
+    "recipe_tree": "f1f50be1ad46ab8cabee6672c9e0bb015c0efb1d"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -71,14 +71,15 @@
   ],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:d39111103480ad8763010007046c35b7a6b66bce7543f23d3440ff27fd0f2078",
+    "digest": "sha256:0b3ba340795a5051f8f619c25889e565ca9bb7cefa1debd628ff5b134152572e",
     "output": "Hello from Python."
   },
   "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [],
   "limits": [
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:32:18.914Z"
+  "recordedAt": "2026-10-18T05:30:31.556Z"
 }

@@ -4,7 +4,8 @@
   "title": "Build the same application with Yarn Classic",
   "difficulty": "beginner",
   "ecosystems": [
-    "node"
+    "node",
+    "yarn-classic"
   ],
   "capabilities": [
     "build",

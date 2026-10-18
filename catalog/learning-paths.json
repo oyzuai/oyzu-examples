@@ -17,7 +17,8 @@
       "steps": [
         "first-build",
         "tasks-and-hooks",
-        "pnpm-workspace",
+        "npm-package",
+        "incremental-builds",
         "private-dependencies"
       ]
     },
@@ -36,10 +37,13 @@
       "outcome": "Connect workspaces, generators, artifacts and selected deployment mechanisms",
       "steps": [
         "go-workspace",
+        "maven-reactor",
         "developer-tool",
+        "platform-matrices",
+        "polyglot-service",
+        "static-deployment",
         "image-chart-composition",
-        "kubernetes-deployment",
-        "polyglot-service"
+        "kubernetes-deployment"
       ]
     }
   ]

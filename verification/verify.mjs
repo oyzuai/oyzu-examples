@@ -40,7 +40,7 @@ export function copyCommittedProject(repo, commit, recipe, destination) {
   }
 }
 
-const consumers = new Set(['first-build', 'node-application', 'go-command', 'python-package', 'maven-application', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment']);
+const consumers = new Set(['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'python-package', 'maven-application', 'maven-reactor', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment', 'incremental-builds', 'platform-matrices']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
   if (!recipe || !consumers.has(id)) throw Error('No admitted native consumer check for recipe: ' + id);
@@ -78,17 +78,17 @@ async function verifyNative(id, cli, output) {
     copyCommittedProject(root,commit,recipe,scratch);
     const capturedGradle = id === 'gradle-application' && process.platform === 'win32';
     fs.mkdirSync(path.dirname(userConfig),{recursive:true});
-    fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n');
+    fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n'+(id==='incremental-builds'?'[cache]\ndir='+JSON.stringify(path.join(scratch,'.oyzu/proof-cache'))+'\n':''));
     process.env.OYZU_USER_CONFIG=userConfig;
-    const captured = capturedGradle || id === 'node-pnpm' || id === 'tasks-and-hooks';
+    const captured = capturedGradle || id === 'node-pnpm' || id === 'tasks-and-hooks' || id === 'incremental-builds';
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !captured) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
-    const full = ['first-build', 'node-application', 'go-command', 'tasks-and-hooks'].includes(id);
+    const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices'].includes(id);
     invoke(['build', ...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);
     const manifest = JSON.parse(fs.readFileSync(path.join(scratch, 'dist', 'manifest.json'), 'utf8'));
     if (manifest.status !== 'succeeded' || !manifest.artifacts.length) throw Error('Expected a successful delivered artifact');
-    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : manifest.artifacts[0];
+    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : id === 'go-workspace' ? manifest.artifacts.find(item => item.kind === 'binary' || item.path.endsWith('.exe')) : manifest.artifacts[0];
     if (!artifact) throw Error('Expected native primary artifact missing');
     const executable = path.resolve(scratch, 'dist', artifact.path);
     if (!executable.startsWith(path.join(scratch, 'dist') + path.sep)) throw Error('Artifact leaves bundle');
@@ -98,10 +98,77 @@ async function verifyNative(id, cli, output) {
       commands.push(['<delivered executable>', ...args]);
       actual = run(executable, args, scratch);
       expected = id === 'first-build' ? 'Hello, developer! Built with Oyzu.' : 'Hello from Go.';
-    } else if (id === 'node-application' || id === 'node-pnpm' || id === 'tasks-and-hooks') {
+    } else if (id === 'node-application' || id === 'node-pnpm' || id === 'tasks-and-hooks' || id === 'incremental-builds') {
       actual = invoke(['exec', '--', 'node', path.join(executable, 'index.cjs')]);
       expected = id === 'tasks-and-hooks' ? 'Hello from tasks: local.' : 'Hello from Node.';
       if (!fs.existsSync(path.join(executable, 'LICENSE'))) throw Error('Delivered application license missing');
+      if (id === 'tasks-and-hooks') {
+        invoke(['--profile','preview','build','--isolated','--full']);
+        const preview=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+        const previewArtifact=preview.artifacts[0];
+        if(invoke(['exec','--','node',path.join(scratch,'dist',previewArtifact.path,'index.cjs')])!=='Hello from tasks: preview.') throw Error('Profile did not reach the generated input');
+        fs.appendFileSync(path.join(scratch,'oyzu.toml'),'\n[profiles.invalid.env]\nGREETING_MODE="invalid"\n');
+        const args=['--profile','invalid','build','--isolated','--full','--json'];
+        commands.push(['oyzu',...args]);
+        const failed=spawnSync(cli,args,{cwd:scratch,encoding:'utf8',maxBuffer:16*1024*1024});
+        if(failed.status!==1) throw Error('Invalid hook prerequisite did not fail the build');
+        const failure=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+        if(failure.status!=='failed'||failure.artifacts.length||!failure.actions.some(action=>action.id.includes('verify_input')&&action.status==='failed')) throw Error('Failed hook prerequisite did not block artifact publication');
+      }
+      if (id === 'incremental-builds') {
+        const outcomes=value=>Object.values(value.extensions?.['oyzu.dev/action-cache']?.targets??{});
+        invoke(['build','--isolated','--full']);
+        const repeat=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+        if(repeat.artifacts[0].digest!==artifact.digest || !outcomes(repeat).some(value=>value.outcome==='reused') || !repeat.actions.some(action=>action.reuse?.originalRunId)) throw Error('Unchanged build did not report reuse with its original producer');
+        for(const name of ['src/index.cjs','test/greeting.test.cjs']) {const target=path.join(scratch,name);fs.writeFileSync(target,fs.readFileSync(target,'utf8').replaceAll('Hello from Node.','Updated from Node.'));}
+        invoke(['build','--isolated','--full']);invoke(['inspect','dist']);
+        const changed=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+        if(changed.artifacts[0].digest===artifact.digest || !outcomes(changed).some(value=>value.outcome==='executed')) throw Error('Changed native input did not invalidate cached output');
+        const changedOutput=invoke(['exec','--','node',path.join(scratch,'dist',changed.artifacts[0].path,'index.cjs')]);
+        if(changedOutput!=='Updated from Node.') throw Error('Rebuilt consumer did not observe the source change');
+        invoke(['build','--isolated','--full','--no-cache']);
+        const fresh=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+        if(fresh.artifacts[0].digest!==changed.artifacts[0].digest || fresh.actions.some(action=>action.reuse)) throw Error('Fresh build disagreed with the changed result or reused work');
+      }
+    } else if (id === 'npm-package') {
+      const consumer=path.join(scratch,'consumer');fs.mkdirSync(consumer);
+      fs.writeFileSync(path.join(consumer,'package.json'),'{"private":true}\n');
+      invoke(['exec','--','npm','install','--prefix',consumer,'--ignore-scripts','--no-audit','--no-fund','--offline',executable]);
+      actual=invoke(['exec','--','node','-e',`console.log(require(${JSON.stringify(path.join(consumer,'node_modules/oyzu-example-greeting'))}).hello('developer'))`]);
+      expected='Hello, developer, from the delivered package.';
+    } else if (id === 'go-workspace') {
+      if(!fs.existsSync(path.join(scratch,'go.work'))) throw Error('Native workspace source missing');
+      if(run(executable,[],scratch)!=='Hello from the workspace library.') throw Error('Workspace consumer did not use its local library');
+      const source=path.join(scratch,'shared/greeting.go');fs.writeFileSync(source,fs.readFileSync(source,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
+      const test=path.join(scratch,'shared/greeting_test.go');fs.writeFileSync(test,fs.readFileSync(test,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
+      invoke(['build','--full']);invoke(['inspect','dist']);
+      const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      const result=rebuilt.artifacts.find(item=>item.kind==='binary'||item.path.endsWith('.exe'));
+      if(!result || result.digest===artifact.digest) throw Error('Workspace library change did not reach the executable');
+      actual=run(path.join(scratch,'dist',result.path),[],scratch);expected='Updated workspace library.';
+    } else if (id === 'maven-reactor') {
+      const jars=manifest.artifacts.filter(item=>item.path.endsWith('.jar'));
+      if(jars.length!==2 || !jars.some(item=>item.path.includes('greeting-app')) || !jars.some(item=>item.path.includes('greeting-library'))) throw Error('Both reactor module artifacts are required');
+      actual=invoke(['exec','--','java','-cp',jars.map(item=>path.join(scratch,'dist',item.path)).join(path.delimiter),'example.Hello']);
+      expected='Hello from the reactor library.';
+    } else if (id === 'platform-matrices') {
+      if(run(executable,[],scratch)!=='Hello from Go.') throw Error('Native host artifact failed');
+      invoke(['build','--all-platforms','--full']);invoke(['inspect','dist']);
+      const matrix=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+      const targets=matrix.targets.map(item=>item.platform);
+      for(const platform of ['windows/amd64','linux/amd64','linux/arm64']) if(!targets.includes(platform)) throw Error('Declared artifact platform missing: '+platform);
+      if(matrix.artifacts.length!==3 || new Set(matrix.artifacts.map(item=>item.path)).size!==3) throw Error('Matrix did not retain three distinct outputs');
+      for(const item of matrix.artifacts){
+        const target=matrix.targets.find(target=>target.id===item.target);
+        const bytes=fs.readFileSync(path.join(scratch,'dist',item.path));
+        if(target.platform==='windows/amd64' && bytes.subarray(0,2).toString()!=='MZ') throw Error('Windows output is not PE');
+        if(target.platform.startsWith('linux/') && (bytes.subarray(0,4).toString('hex')!=='7f454c46' || bytes.readUInt16LE(18)!==(target.platform.endsWith('/arm64')?183:62))) throw Error('Linux output architecture differs');
+        if(target.platform==='linux/amd64') {
+          const value=container('oyzu-toolchain/go:1.24-mod0.25.0','/input/'+path.basename(item.path),['type=bind,source='+path.dirname(path.join(scratch,'dist',item.path))+',target=/input,readonly'],[]);
+          if(value!=='Hello from Go.') throw Error('Linux amd64 delivered output failed');
+        }
+      }
+      actual='Host executable and Linux amd64 consumer passed; all declared binary headers matched';expected=actual;
     } else if (['maven-application', 'gradle-application', 'ant-application'].includes(id)) {
       if (capturedGradle || id === 'ant-application') {
         const image = id === 'ant-application' ? 'oyzu-toolchain/ant:1.10.18-jdk17' : 'oyzu-toolchain/gradle:8.14.3-jdk17';

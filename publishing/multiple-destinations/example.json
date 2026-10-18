@@ -6,7 +6,8 @@
   "ecosystems": [
     "maven",
     "oci",
-    "github"
+    "github",
+    "java"
   ],
   "capabilities": [
     "publish",

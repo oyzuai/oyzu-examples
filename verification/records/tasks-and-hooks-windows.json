@@ -1,13 +1,13 @@
 {
   "recipe": "tasks-and-hooks",
   "subject": {
-    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
-    "recipe_sha256": "7216e549c03e0263982abaac320fc33d94fc8551c2562772dc5a3457492dee6c",
-    "recipe_tree": "efb9a038063cb28c6f16a76ff86be8c5af935e4c"
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "5c22d660c6d75a51e61c69b6221389ed91db3ae6500986afcde676426095b448",
+    "recipe_tree": "ffa443e9e1852561797fd0198c7da2ac3d3c3d95"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
-    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -17,27 +17,23 @@
   "commands": [
     [
       "oyzu",
-      "install",
-      "--frozen"
-    ],
-    [
-      "oyzu",
       "build",
       "--plan"
     ],
     [
       "oyzu",
       "build",
+      "--isolated",
       "--full"
     ]
   ],
   "result": "failed",
   "diagnostic": {
-    "summary": "oyzu.exe build --full failed (1):",
+    "summary": "oyzu.exe build --isolated --full failed (1):",
     "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
   },
   "limits": [
     "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T04:50:08.994Z"
+  "recordedAt": "2026-10-18T05:53:35.013Z"
 }

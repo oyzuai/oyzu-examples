@@ -17,8 +17,9 @@ Preserve native conventions and add only necessary exceptions.
 
 1. [Your first build](../getting-started/first-build/README.md)
 2. [Order native tasks and build hooks](../workflows/tasks-and-hooks/README.md)
-3. [Build a pnpm workspace](#pnpm-workspace)
-4. [Acquire private dependencies without leaking credentials](#private-dependencies)
+3. [Consume a delivered npm package](../builds/node/npm-package/README.md)
+4. [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md)
+5. [Acquire private dependencies without leaking credentials](#private-dependencies)
 
 ## Deliver a release
 
@@ -31,11 +32,14 @@ Build, inspect evidence, publish, retrieve and retry safely.
 
 Connect workspaces, generators, artifacts and selected deployment mechanisms.
 
-1. [Connect Go workspace modules](#go-workspace)
-2. [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md)
-3. [Connect an image and Helm chart](#image-chart-composition)
-4. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
+1. [Build related Go workspace modules](../builds/go/workspace/README.md)
+2. [Build and consume a Maven reactor](../builds/maven/reactor/README.md)
+3. [Build a release tool with a native Cargo workspace](../reference-apps/developer-tool/README.md)
+4. [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md)
 5. [Serve a built frontend from a Go service](../reference-apps/polyglot-service/README.md)
+6. [Serve the selected static artifact locally](../deployment/local-static/README.md)
+7. [Connect an image and Helm chart](#image-chart-composition)
+8. [Observe Kubernetes readiness and rollback](#kubernetes-deployment)
 
 ## Native baselines
 
@@ -60,19 +64,16 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Publish finalized files to OCI and GitHub](../publishing/multiple-destinations/README.md) | implemented-partial | experimental |
 | [Order native tasks and build hooks](../workflows/tasks-and-hooks/README.md) | implemented-partial | experimental |
 | [Serve the selected static artifact locally](../deployment/local-static/README.md) | generic-task | experimental |
+| [Consume a delivered npm package](../builds/node/npm-package/README.md) | implemented-partial | experimental |
+| [Build related Go workspace modules](../builds/go/workspace/README.md) | implemented-partial | experimental |
+| [Build and consume a Maven reactor](../builds/maven/reactor/README.md) | implemented-partial | experimental |
+| [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md) | implemented-partial | experimental |
+| [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md) | implemented-partial | experimental |
 
 ## Gaps and assessments
 
 No runnable project or Run action is supplied for these entries. Product support
 and missing example qualification remain separate facts.
-
-### npm-package
-
-**Consume an npm package**. Product support: implemented-partial; recipe readiness: planned.
-
-The collection has an npm directory application; a separately consumed native package archive still needs its own recipe.
-
-Next proof: Build a package with Oyzu, install the delivered tarball in a second project, and call its exported API.
 
 ### pnpm-workspace
 
@@ -113,22 +114,6 @@ Next proof: Lock a small package with native Poetry, build through Oyzu and inst
 A legacy setup.py recipe needs a genuine native compiler prerequisite and a compiled-extension consumer proof.
 
 Next proof: Build and import the delivered extension with the declared native prerequisites, keeping unrelated runtimes unavailable.
-
-### go-workspace
-
-**Connect Go workspace modules**. Product support: implemented-partial; recipe readiness: planned.
-
-The single-command baseline does not qualify go.work relationships or several executable outputs.
-
-Next proof: Build local modules linked through go.work and run each delivered command after changing the shared library.
-
-### maven-reactor
-
-**Build a Maven reactor**. Product support: implemented-partial; recipe readiness: planned.
-
-A single-module build does not prove reactor relationships, integration-test reports or WAR output.
-
-Next proof: Build a library/application reactor, run the delivered application and collect its native integration-test report.
 
 ### gradle-composite
 
@@ -177,22 +162,6 @@ Next proof: Package a local library dependency, render the delivered umbrella ch
 The source fixtures are design contracts and bounded acquisition proofs; no public collection recipe has qualified disposable authenticated endpoints.
 
 Next proof: Use scoped test repositories, acquire through supported routes and prove replay and reports contain no credential values.
-
-### incremental-builds
-
-**Observe reuse and invalidation**. Product support: implemented-partial; recipe readiness: planned.
-
-A repeated successful build alone does not prove the right graph was reused or invalidated.
-
-Next proof: Build two consumers, repeat unchanged work, change one shared input and require exactly the relevant dependent artifacts to change.
-
-### platform-matrices
-
-**Separate host, executor and artifact targets**. Product support: implemented-partial; recipe readiness: planned.
-
-Host execution, isolated execution and artifact target compatibility are independent and not universally qualified.
-
-Next proof: Exercise selected supported host/target pairs and record independent tests, artifact identities and unsupported placements.
 
 ### reports-and-failures
 

@@ -1,6 +1,6 @@
 # Order native tasks and build hooks
 
-A native Node build consumes a file prepared by an explicit pre-build hook. The hook depends on an input check, and a post-build hook checks that native output exists. A normal configuration profile changes the resolved environment. This recipe selects captured execution: provision a supported Docker engine and the documented npm/Node executor first. The observed host path did not run this hook and failed on the missing generated input; that host scenario is not qualified.
+A native Node build consumes a file prepared by an explicit, target-qualified pre-build hook. The hook depends on a qualified input check, and a post-build hook checks that native output exists. A normal configuration profile changes the resolved environment. This recipe selects captured execution: provision a supported Docker engine and the documented npm/Node executor first.
 
 ## Build and observe
 

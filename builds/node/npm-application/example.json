@@ -4,7 +4,8 @@
   "title": "Build a native npm application",
   "difficulty": "beginner",
   "ecosystems": [
-    "node"
+    "node",
+    "npm"
   ],
   "capabilities": [
     "build",

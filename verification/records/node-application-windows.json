@@ -1,13 +1,13 @@
 {
   "recipe": "node-application",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "e2c5d399aacc8efb8acadae5fc130c04d53210b277f38574da0b81bf808f6c97",
-    "recipe_tree": "310187452b59cd4f5bfbce587c945b08aee33f18"
+    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "recipe_sha256": "ec945b7cbbe1c08fb5de79d9ae3bac3fd89e3918a903725b25df6adfb62c08bd",
+    "recipe_tree": "29b88d027e7c9f7dca9eb07e95fa72592d2577b0"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -53,10 +53,11 @@
     "output": "Hello from Node."
   },
   "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [
     {
       "kind": "test",
-      "digest": "sha256:48481d32d24e683b29c49e63ecaa5ea16ccd7bda01cfc8d7fbf536fc78b962a4"
+      "digest": "sha256:8da20231b87bd95ec483b23541f66446e065415566485e63070cd979bd0c0aa7"
     },
     {
       "kind": "coverage",
@@ -67,5 +68,5 @@
     "Full native checks selected; no other host or cross-compilation qualification",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:31:56.217Z"
+  "recordedAt": "2026-10-18T05:29:10.771Z"
 }

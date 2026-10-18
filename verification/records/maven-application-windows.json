@@ -1,13 +1,13 @@
 {
   "recipe": "maven-application",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "7d33d3b1f51bf35c7752318340d1facf4a078c776a50b64f5d8bdc79bbe3fa1b",
-    "recipe_tree": "e32ac3cb8613f02c96481047472f64e1456ebe2b"
+    "commit": "5fd7db7cb7be1e55248dbd3c034af05e9f98ce6f",
+    "recipe_sha256": "4f4086038db979ffab1eb42f5a887e16b0aea09c2b16c8fda44fe5268b7e617d",
+    "recipe_tree": "8aa55c7670a51e5334deb9e4a8c33c5c20f7cf6b"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -50,14 +50,15 @@
   ],
   "result": "passed",
   "artifact": {
-    "digest": "sha256:d8a2f4ca46b05013b74411641b4d755b53cc52ffcfe1676be14b03a04c5b9ddd",
+    "digest": "sha256:8b87f261d512849ce640d1ef1179960e60b56aa758ed0c3b5e6e18aa04488de7",
     "output": "Hello from Maven."
   },
   "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [],
   "limits": [
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:32:24.267Z"
+  "recordedAt": "2026-10-18T05:30:59.201Z"
 }

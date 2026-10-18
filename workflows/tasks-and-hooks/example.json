@@ -4,7 +4,8 @@
   "title": "Order native tasks and build hooks",
   "difficulty": "intermediate",
   "ecosystems": [
-    "node"
+    "node",
+    "npm"
   ],
   "capabilities": [
     "tasks",

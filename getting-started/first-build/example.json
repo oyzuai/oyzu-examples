@@ -4,7 +4,8 @@
   "title": "Your first build",
   "difficulty": "beginner",
   "ecosystems": [
-    "rust"
+    "rust",
+    "cargo"
   ],
   "capabilities": [
     "build",

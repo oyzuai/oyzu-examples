@@ -94,27 +94,34 @@
       "id": "static-deployment",
       "path": "deployment/local-static",
       "kind": "external-tool-task"
+    },
+    {
+      "id": "npm-package",
+      "path": "builds/node/npm-package",
+      "kind": "workflow"
+    },
+    {
+      "id": "go-workspace",
+      "path": "builds/go/workspace",
+      "kind": "workflow"
+    },
+    {
+      "id": "maven-reactor",
+      "path": "builds/maven/reactor",
+      "kind": "workflow"
+    },
+    {
+      "id": "incremental-builds",
+      "path": "workflows/incremental-builds",
+      "kind": "workflow"
+    },
+    {
+      "id": "platform-matrices",
+      "path": "workflows/platform-matrices",
+      "kind": "workflow"
     }
   ],
   "gaps": [
-    {
-      "id": "npm-package",
-      "title": "Consume an npm package",
-      "ecosystems": [
-        "node",
-        "npm"
-      ],
-      "capabilities": [
-        "build",
-        "consume"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The collection has an npm directory application; a separately consumed native package archive still needs its own recipe.",
-      "nextProof": "Build a package with Oyzu, install the delivered tarball in a second project, and call its exported API."
-    },
     {
       "id": "pnpm-workspace",
       "title": "Build a pnpm workspace",
@@ -203,40 +210,6 @@
       "role": "workflow",
       "currentGap": "A legacy setup.py recipe needs a genuine native compiler prerequisite and a compiled-extension consumer proof.",
       "nextProof": "Build and import the delivered extension with the declared native prerequisites, keeping unrelated runtimes unavailable."
-    },
-    {
-      "id": "go-workspace",
-      "title": "Connect Go workspace modules",
-      "ecosystems": [
-        "go"
-      ],
-      "capabilities": [
-        "build",
-        "workspaces"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "The single-command baseline does not qualify go.work relationships or several executable outputs.",
-      "nextProof": "Build local modules linked through go.work and run each delivered command after changing the shared library."
-    },
-    {
-      "id": "maven-reactor",
-      "title": "Build a Maven reactor",
-      "ecosystems": [
-        "maven"
-      ],
-      "capabilities": [
-        "build",
-        "workspaces"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "A single-module build does not prove reactor relationships, integration-test reports or WAR output.",
-      "nextProof": "Build a library/application reactor, run the delivered application and collect its native integration-test report."
     },
     {
       "id": "gradle-composite",
@@ -349,40 +322,6 @@
       "role": "workflow",
       "currentGap": "The source fixtures are design contracts and bounded acquisition proofs; no public collection recipe has qualified disposable authenticated endpoints.",
       "nextProof": "Use scoped test repositories, acquire through supported routes and prove replay and reports contain no credential values."
-    },
-    {
-      "id": "incremental-builds",
-      "title": "Observe reuse and invalidation",
-      "ecosystems": [
-        "oyzu"
-      ],
-      "capabilities": [
-        "cache",
-        "affected-builds"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "A repeated successful build alone does not prove the right graph was reused or invalidated.",
-      "nextProof": "Build two consumers, repeat unchanged work, change one shared input and require exactly the relevant dependent artifacts to change."
-    },
-    {
-      "id": "platform-matrices",
-      "title": "Separate host, executor and artifact targets",
-      "ecosystems": [
-        "oyzu"
-      ],
-      "capabilities": [
-        "build",
-        "platforms"
-      ],
-      "difficulty": "intermediate",
-      "productSupport": "implemented-partial",
-      "maturity": "planned",
-      "role": "workflow",
-      "currentGap": "Host execution, isolated execution and artifact target compatibility are independent and not universally qualified.",
-      "nextProof": "Exercise selected supported host/target pairs and record independent tests, artifact identities and unsupported placements."
     },
     {
       "id": "reports-and-failures",

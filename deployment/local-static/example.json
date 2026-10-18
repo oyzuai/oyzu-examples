@@ -4,7 +4,8 @@
   "title": "Serve the selected static artifact locally",
   "difficulty": "intermediate",
   "ecosystems": [
-    "node"
+    "node",
+    "npm"
   ],
   "capabilities": [
     "deploy",

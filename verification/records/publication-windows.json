@@ -1,0 +1,149 @@
+{
+  "recipe": "publication-multiple",
+  "subject": {
+    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "result": "passed",
+  "execution": "observed-local-build-and-live-providers",
+  "repository": "oyzuai/oyzu-examples",
+  "tag": "examples-proof-611-20261018",
+  "releaseId": 416232837,
+  "artifact": {
+    "digest": "sha256:f2a09f1fea9ba74d661a68efb87101075cc412868beb5c914abe9e673286cb5b",
+    "consumer": "Hello from Maven."
+  },
+  "commands": [
+    {
+      "args": [
+        "install",
+        "--frozen"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "build"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "inspect",
+        "dist"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "publish",
+        "--manifest",
+        "dist/manifest.json",
+        "--destination",
+        "oci",
+        "--destination",
+        "unavailable",
+        "--json"
+      ],
+      "result": 2
+    },
+    {
+      "args": [
+        "exec",
+        "--",
+        "<native Docker>",
+        "start",
+        "examples-proof-611-retry-registry"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "publish",
+        "--manifest",
+        "dist/manifest.json",
+        "--destination",
+        "oci",
+        "--destination",
+        "unavailable",
+        "--json"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "publish",
+        "--manifest",
+        "dist/manifest.json",
+        "--destination",
+        "oci",
+        "--destination",
+        "github",
+        "--json"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "publish",
+        "--manifest",
+        "dist/manifest.json",
+        "--destination",
+        "oci",
+        "--destination",
+        "github",
+        "--json"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "exec",
+        "--",
+        "java",
+        "-cp",
+        "<project>\\received.jar",
+        "example.Hello"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "build"
+      ],
+      "result": 0
+    },
+    {
+      "args": [
+        "publish",
+        "--manifest",
+        "dist/manifest.json",
+        "--destination",
+        "github",
+        "--json"
+      ],
+      "result": 1
+    }
+  ],
+  "observations": [
+    "OCI partial failure preserved successful first destination",
+    "unchanged retry reconciled completed effects and finished the remaining destination",
+    "OCI and GitHub native retrieval matched original payload/provenance",
+    "matching repeat reconciled both destinations",
+    "retrieved JAR ran independently",
+    "occupied GitHub filename refused and original asset stayed unchanged"
+  ],
+  "limits": [
+    "Explicit local test-witness keys; no protected origin, keyless identity, transparency or SLSA-level claim",
+    "Anonymous loopback OCI and GitHub.com only",
+    "Temporary registry/tag/release provisioned separately; no product release"
+  ],
+  "recordedAt": "2026-10-18T05:04:51.164Z"
+}

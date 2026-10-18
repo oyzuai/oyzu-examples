@@ -4,7 +4,8 @@
   "title": "Package a conventional Ant application",
   "difficulty": "beginner",
   "ecosystems": [
-    "ant"
+    "ant",
+    "java"
   ],
   "capabilities": [
     "build",

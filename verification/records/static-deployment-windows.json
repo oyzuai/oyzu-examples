@@ -1,19 +1,23 @@
 {
   "recipe": "static-deployment",
   "subject": {
-    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
-    "recipe_sha256": "cbb17c405dbe91106afad2c0217af9d683525ca584a54fcc85aa930229d43dd5",
-    "recipe_tree": "664ac185e165877f27ce26d39da60052d897f8cc"
+    "commit": "0d52fc397c8d4cc4c6ad402852de55d59f6fed38",
+    "recipe_sha256": "3ec19546c7549b60565b5bbedc6486043545fc27977b8847c684263620eac6f7",
+    "recipe_tree": "4183e1585555423ec1c83084e7cab8cc73013e87"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
-    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "attempted-native-build",
+  "execution": "host",
+  "target": {
+    "arch": "amd64",
+    "os": "windows"
+  },
   "commands": [
     [
       "oyzu",
@@ -41,13 +45,17 @@
       "with SITE_DIR=<delivered directory> and PORT=<ephemeral-port>"
     ]
   ],
-  "result": "failed",
-  "diagnostic": {
-    "summary": "Delivered service did not respond",
-    "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:0439303524333855c54278904a9480c3029decbd152626219f54bc958c5f1219",
+    "output": "Selected static artifact observed over HTTP"
   },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
   "limits": [
-    "This failed attempt does not qualify the recipe or its host/executor/target"
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:50:24.341Z"
+  "recordedAt": "2026-10-18T05:31:28.436Z"
 }

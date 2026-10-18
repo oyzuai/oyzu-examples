@@ -4,7 +4,8 @@
   "title": "Build a package with uv",
   "difficulty": "beginner",
   "ecosystems": [
-    "python"
+    "python",
+    "uv"
   ],
   "capabilities": [
     "build",

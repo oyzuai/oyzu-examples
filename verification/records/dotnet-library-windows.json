@@ -1,23 +1,19 @@
 {
   "recipe": "dotnet-library",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "20a7d31a4ce09a7d4aabe0332c2725a39ee68674e73594a5103315293fce1c3e",
-    "recipe_tree": "1af397f54ce0675e1fc59055bcfcfc7e11682482"
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "564e90cb239442c0a9bd81f6a727951f5f563c05ff02aac8a12079b39680a740",
+    "recipe_tree": "22583549c2eb66818d6d03539cf2f85afbec460d"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "recorded-in-bundle",
-  "target": {
-    "arch": "amd64",
-    "os": "linux"
-  },
+  "execution": "attempted-native-build",
   "commands": [
     [
       "oyzu",
@@ -27,106 +23,15 @@
     [
       "oyzu",
       "build"
-    ],
-    [
-      "oyzu",
-      "inspect",
-      "dist"
-    ],
-    [
-      "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "image",
-      "inspect",
-      "oyzu-toolchain/dotnet:10.0.401",
-      "--format",
-      "{{.Id}}"
-    ],
-    [
-      "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "run",
-      "--rm",
-      "--network",
-      "none",
-      "--entrypoint",
-      "dotnet",
-      "--mount",
-      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
-      "--mount",
-      "type=bind,source=<project>\\consumer,target=/consumer",
-      "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2",
-      "restore",
-      "/consumer/Consumer.csproj",
-      "--source",
-      "/input",
-      "--packages",
-      "/consumer/packages"
-    ],
-    [
-      "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "image",
-      "inspect",
-      "oyzu-toolchain/dotnet:10.0.401",
-      "--format",
-      "{{.Id}}"
-    ],
-    [
-      "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "run",
-      "--rm",
-      "--network",
-      "none",
-      "--entrypoint",
-      "dotnet",
-      "--mount",
-      "type=bind,source=<project>\\dist\\project\\artifacts\\nuget-packages-0.1.0-dev.g834854faf242,target=/input,readonly",
-      "--mount",
-      "type=bind,source=<project>\\consumer,target=/consumer",
-      "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2",
-      "run",
-      "--project",
-      "/consumer/Consumer.csproj",
-      "--no-restore"
     ]
   ],
-  "result": "passed",
-  "artifact": {
-    "digest": "sha256:f31e741da6903a9156d15acc56f8b936f1dcbceff068e3b9f46ed5d3da6c2e88",
-    "output": "Hello from .NET."
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build failed (1):",
+    "code": "BUILD_FAILED"
   },
-  "nativeConsumerImages": [
-    {
-      "image": "oyzu-toolchain/dotnet:10.0.401",
-      "digest": "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2"
-    },
-    {
-      "image": "oyzu-toolchain/dotnet:10.0.401",
-      "digest": "sha256:d2936a12a89ac611806e3826ce6676954cc7fd3689075e5105473be11cb1a1d2"
-    }
-  ],
-  "reports": [],
   "limits": [
-    "Fast build and delivered consumer only; native quality checks not selected",
-    "No live publication or deployment qualification"
+    "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T04:33:55.451Z"
+  "recordedAt": "2026-10-18T05:52:40.741Z"
 }

@@ -4,7 +4,8 @@
   "title": "Build the same application with pnpm",
   "difficulty": "beginner",
   "ecosystems": [
-    "node"
+    "node",
+    "pnpm"
   ],
   "capabilities": [
     "build",

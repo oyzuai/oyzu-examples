@@ -1,0 +1,27 @@
+{
+  "id": "go-workspace",
+  "slug": "go-workspace",
+  "title": "Build related Go workspace modules",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "go"
+  ],
+  "capabilities": [
+    "build",
+    "workspaces",
+    "consume",
+    "generated-sources"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "native-host"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/go-workspace-windows.json"
+  ],
+  "traceability": []
+}

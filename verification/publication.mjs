@@ -151,10 +151,12 @@ try {
   const java = path.join(scratch,'src/main/java/example/Hello.java');
   fs.writeFileSync(java,fs.readFileSync(java,'utf8').replace('Hello from Maven.','Conflicting candidate.'));
   const conflictStarted=new Date().toISOString();command(['build']);
-  const second=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json'))).artifacts[0];
+  const secondManifest=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
+  const second=secondManifest.artifacts[0];
   const secondPayload=fs.readFileSync(path.join(scratch,'dist',second.path));
   const statement=JSON.parse(Buffer.from(JSON.parse(provenance).dsseEnvelope.payload,'base64'));
   statement.subject[0].digest.sha256=sha(secondPayload); statement.predicate.runDetails.metadata={invocationId:crypto.randomUUID(),startedOn:conflictStarted,finishedOn:new Date().toISOString()};
+  statement.predicate.buildDefinition.externalParameters={...buildParameters,sourceTree:secondManifest.source.treeDigest,sourceAdjustment:'Conflicting candidate at the same native version; original Java source changed'};
   fs.writeFileSync(path.join(scratch,'build.sigstore.json'),sign(statement));
   const conflict=command(publish(['github']),1);
   assert(conflict.includes('PUBLISH_CONFLICT'),'Occupied GitHub filename did not fail as conflict');

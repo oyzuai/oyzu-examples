@@ -4,7 +4,8 @@
   "title": "Build a single-module Maven application",
   "difficulty": "beginner",
   "ecosystems": [
-    "maven"
+    "maven",
+    "java"
   ],
   "capabilities": [
     "build",

@@ -1,13 +1,13 @@
 {
   "recipe": "gradle-application",
   "subject": {
-    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
-    "recipe_sha256": "327b11503b52873d6fa8f61d6a55e92d28921557b36afd28786294feecf5a28f",
-    "recipe_tree": "7bfe730303c9bf200cc06a17f0d62c7f81478cd2"
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "563273575d4dedffeaf50baa0a784c26c5491d49fcb7b16ba2cdea6f1cc325ea",
+    "recipe_tree": "b7ac68a8e9ac3a76fe9bd5af7368d8e0d9c05a65"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
-    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -24,33 +24,15 @@
       "oyzu",
       "build",
       "--isolated"
-    ],
-    [
-      "oyzu",
-      "inspect",
-      "dist"
-    ],
-    [
-      "oyzu",
-      "--root",
-      "<collection>",
-      "exec",
-      "--",
-      "docker",
-      "image",
-      "inspect",
-      "oyzu-toolchain/gradle:8.14.3-jdk17",
-      "--format",
-      "{{.Id}}"
     ]
   ],
   "result": "failed",
   "diagnostic": {
-    "summary": "Native consumer docker failed: ✗ COMMAND_FAILED: resolution differs from tool request",
-    "code": "COMMAND_FAILED"
+    "summary": "oyzu.exe build --isolated failed (1):",
+    "code": "BUILD_FAILED"
   },
   "limits": [
     "This failed attempt does not qualify the recipe or its host/executor/target"
   ],
-  "recordedAt": "2026-10-18T04:49:23.896Z"
+  "recordedAt": "2026-10-18T05:52:43.022Z"
 }

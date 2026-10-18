@@ -5,7 +5,8 @@
   "difficulty": "advanced",
   "ecosystems": [
     "node",
-    "go"
+    "go",
+    "npm"
   ],
   "capabilities": [
     "build",

@@ -1,19 +1,23 @@
 {
   "recipe": "docker-file-image",
   "subject": {
-    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
-    "recipe_sha256": "200e9407ab7767c3ed823669d17a7325fba35c1930fb20e57cd410a55c263472",
-    "recipe_tree": "c608cb21503801910b5a60847c15aa3420c3f004"
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "ab859e9419f5c21a3c38f3b9c3256bdfcce557e665970a7049b2daab686274d3",
+    "recipe_tree": "59f8874c53d84581a4313f0ca96e1a8edbda36ad"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
-    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
     "arch": "x64"
   },
-  "execution": "attempted-native-build",
+  "execution": "host-coordinated",
+  "target": {
+    "arch": "amd64",
+    "os": "linux"
+  },
   "commands": [
     [
       "oyzu",
@@ -39,15 +43,112 @@
       "-xOf",
       "<project>\\dist\\project\\artifacts\\project-0.0.0-dev.g40ed6860dc98.oci.tar",
       "index.json"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "tar",
+      "-xOf",
+      "<project>\\dist\\project\\artifacts\\project-0.0.0-dev.g40ed6860dc98.oci.tar",
+      "blobs/sha256/5e9b362c698ab51720d60006ae19d5e7d625aa8f307a69265f3229427cd801f3"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "docker.io/oyzu/project:0.0.0-dev.g40ed6860dc98",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "load",
+      "--input",
+      "<project>\\dist\\project\\artifacts\\project-0.0.0-dev.g40ed6860dc98.oci.tar"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "inspect",
+      "docker.io/oyzu/project:0.0.0-dev.g40ed6860dc98",
+      "--format",
+      "{{.Id}}"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "create",
+      "--name",
+      "oyzu-examples-b7ad86cc3251",
+      "sha256:5e9b362c698ab51720d60006ae19d5e7d625aa8f307a69265f3229427cd801f3",
+      "/message.txt"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "cp",
+      "oyzu-examples-b7ad86cc3251:/message.txt",
+      "<project>\\message.received"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "rm",
+      "oyzu-examples-b7ad86cc3251"
+    ],
+    [
+      "oyzu",
+      "--root",
+      "<collection>",
+      "exec",
+      "--",
+      "docker",
+      "image",
+      "rm",
+      "docker.io/oyzu/project:0.0.0-dev.g40ed6860dc98"
     ]
   ],
-  "result": "failed",
-  "diagnostic": {
-    "summary": "Native consumer tar failed: ✗ COMMAND_FAILED: resolution differs from tool request",
-    "code": "COMMAND_FAILED"
+  "result": "passed",
+  "artifact": {
+    "digest": "sha256:9c0d63d81a58faaefcaf1651f8fa5fb06ddf2e4a943cf33d707d63e63c6f62c1",
+    "output": "Hello from the image."
   },
+  "nativeConsumerImages": [],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
+  "reports": [],
   "limits": [
-    "This failed attempt does not qualify the recipe or its host/executor/target"
+    "Fast build and delivered consumer only; native quality checks not selected",
+    "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:47:58.032Z"
+  "recordedAt": "2026-10-18T05:52:38.848Z"
 }

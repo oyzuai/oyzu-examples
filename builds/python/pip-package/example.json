@@ -4,7 +4,8 @@
   "title": "Build a Python wheel",
   "difficulty": "beginner",
   "ecosystems": [
-    "python"
+    "python",
+    "pip"
   ],
   "capabilities": [
     "build",

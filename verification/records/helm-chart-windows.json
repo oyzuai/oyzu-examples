@@ -1,13 +1,13 @@
 {
   "recipe": "helm-chart",
   "subject": {
-    "commit": "b72695ba69aa99e823b0eb6951ed88f79a2c1483",
-    "recipe_sha256": "e81de8d8878989ef718cd7b36b9f854fb458ad2de6f3c8264639cf502c88e8b6",
-    "recipe_tree": "f26ac95c58534d8189970ad317259cf8d76b7d07"
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "f735a0aa9fd554f303236eef4ab6ab2d38effcaf495aac0ea003f745c9a5bc11",
+    "recipe_tree": "cdbd58cffefd197dc4ac54df63da40461a748bee"
   },
   "oyzu": {
-    "version": "oyzu 0.1.0-local.8b6975247d20 (release; x86_64-pc-windows-msvc; build 1791776075)",
-    "binary_sha256": "62ebd12912fdb91ec803dfcc83dfc5dca6fe475bcc1b850b498692b19192b09d"
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
   },
   "host": {
     "os": "win32",
@@ -61,7 +61,7 @@
       "helm",
       "--mount",
       "type=bind,source=<project>\\dist\\project\\artifacts,target=/input,readonly",
-      "sha256:03cc5c4d41035e123c00311f8c50fb8fcd6fe7a87ced1512839a0e00b45ca07e",
+      "sha256:68f1a0e9ec650995de9f43ca68df232803becb0fbb72a2a8e41633d4b223df85",
       "template",
       "hello",
       "/input/greeting-0.1.0-dev.gce5abb16b76f.tgz"
@@ -75,13 +75,14 @@
   "nativeConsumerImages": [
     {
       "image": "oyzu-toolchain/helm:3.22.0",
-      "digest": "sha256:03cc5c4d41035e123c00311f8c50fb8fcd6fe7a87ced1512839a0e00b45ca07e"
+      "digest": "sha256:68f1a0e9ec650995de9f43ca68df232803becb0fbb72a2a8e41633d4b223df85"
     }
   ],
+  "configurationScope": "Copied project and disposable empty user settings; native machine/organization controls retained",
   "reports": [],
   "limits": [
     "Fast build and delivered consumer only; native quality checks not selected",
     "No live publication or deployment qualification"
   ],
-  "recordedAt": "2026-10-18T04:32:44.251Z"
+  "recordedAt": "2026-10-18T05:52:28.474Z"
 }

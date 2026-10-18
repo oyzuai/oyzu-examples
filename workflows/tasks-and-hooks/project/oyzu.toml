@@ -8,13 +8,13 @@ GREETING_MODE = "local"
 [profiles.preview.env]
 GREETING_MODE = "preview"
 
-[tasks.verify_input]
+[tasks."greeting:verify_input"]
 argv = ["node", "tasks.mjs", "verify"]
 
-[tasks.pre_build]
+[tasks."greeting:pre_build"]
 argv = ["node", "tasks.mjs", "prepare"]
-depends_on = ["verify_input"]
+depends_on = ["greeting:verify_input"]
 outputs = ["generated.json"]
 
-[tasks.post_build]
+[tasks."greeting:post_build"]
 argv = ["node", "tasks.mjs", "check"]

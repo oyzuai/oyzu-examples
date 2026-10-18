@@ -1,0 +1,27 @@
+{
+  "id": "platform-matrices",
+  "slug": "platform-matrices",
+  "title": "Separate host execution from artifact platforms",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "go"
+  ],
+  "capabilities": [
+    "build",
+    "platforms",
+    "matrix"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "native-host",
+    "captured"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/platform-matrices-windows.json"
+  ],
+  "traceability": []
+}

@@ -1,0 +1,27 @@
+{
+  "id": "maven-reactor",
+  "slug": "maven-reactor",
+  "title": "Build and consume a Maven reactor",
+  "difficulty": "intermediate",
+  "ecosystems": [
+    "java",
+    "maven"
+  ],
+  "capabilities": [
+    "build",
+    "workspaces",
+    "consume"
+  ],
+  "productSupport": "implemented-partial",
+  "maturity": "experimental",
+  "executionProfiles": [
+    "native-host"
+  ],
+  "prerequisites": [
+    "Installed Oyzu and the tools/executor named in the recipe"
+  ],
+  "verification": [
+    "verification/records/maven-reactor-windows.json"
+  ],
+  "traceability": []
+}

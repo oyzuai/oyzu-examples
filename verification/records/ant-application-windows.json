@@ -1,0 +1,37 @@
+{
+  "recipe": "ant-application",
+  "subject": {
+    "commit": "a2e2e911fa81edec800a865a6d082b2053cf5f72",
+    "recipe_sha256": "812784445d9483df34798b755c5750918dc484066fec25842cba50d34a196298",
+    "recipe_tree": "9749a9e0336218ee844852c17e93ce0e0ae099ab"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792299565)",
+    "binary_sha256": "470a2658b33af80545f496fb339ed78202ab940a5077787a3c54c4580a486ee3"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build"
+    ]
+  ],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build failed (1):",
+    "code": "BUILD_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T05:54:03.994Z"
+}

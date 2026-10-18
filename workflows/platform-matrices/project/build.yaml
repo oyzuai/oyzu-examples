@@ -1,0 +1,4 @@
+builds:
+  greeting:
+    uses: go/app
+    platforms: [windows/amd64, linux/amd64, linux/arm64]
