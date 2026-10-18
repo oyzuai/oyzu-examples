@@ -67,6 +67,8 @@ async function verifyNative(id, cli, output) {
     return {status: result.status, text: result.stdout.trim()};
   };
   const containers = [];
+  const goImage=['go-command','go-workspace','polyglot-service','platform-matrices'].includes(id)?process.env.EXAMPLES_GO_IMAGE:undefined;
+  const build=options=>invoke(['build',...options,...(goImage?['--image','go='+goImage]:[])]);
   const container = (image, entrypoint, mounts, args) => {
     const identity = native('docker', ['image', 'inspect', image, '--format', '{{.Id}}']).text;
     if (!/^sha256:[a-f0-9]{64}$/.test(identity)) throw Error('Native consumer image identity unavailable');
@@ -84,11 +86,12 @@ async function verifyNative(id, cli, output) {
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !captured) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
     const full = ['first-build', 'node-application', 'npm-package', 'go-command', 'go-workspace', 'tasks-and-hooks', 'incremental-builds', 'platform-matrices'].includes(id);
-    invoke(['build', ...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
+    if(goImage) containers.push({purpose:'Provided Go build executor',image:goImage,digest:native('docker',['image','inspect',goImage,'--format','{{.Id}}']).text});
+    build([...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);
     const manifest = JSON.parse(fs.readFileSync(path.join(scratch, 'dist', 'manifest.json'), 'utf8'));
     if (manifest.status !== 'succeeded' || !manifest.artifacts.length) throw Error('Expected a successful delivered artifact');
-    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : id === 'go-workspace' ? manifest.artifacts.find(item => item.kind === 'binary' || item.path.endsWith('.exe')) : manifest.artifacts[0];
+    const artifact = id === 'helm-chart' ? manifest.artifacts.find(item => item.path.endsWith('.tgz')) : id === 'polyglot-service' ? manifest.artifacts.find(item => item.target === 'service') : id === 'go-workspace' ? manifest.artifacts.find(item => item.name === 'primary') : manifest.artifacts[0];
     if (!artifact) throw Error('Expected native primary artifact missing');
     const executable = path.resolve(scratch, 'dist', artifact.path);
     if (!executable.startsWith(path.join(scratch, 'dist') + path.sep)) throw Error('Artifact leaves bundle');
@@ -141,9 +144,9 @@ async function verifyNative(id, cli, output) {
       if(run(executable,[],scratch)!=='Hello from the workspace library.') throw Error('Workspace consumer did not use its local library');
       const source=path.join(scratch,'shared/greeting.go');fs.writeFileSync(source,fs.readFileSync(source,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
       const test=path.join(scratch,'shared/greeting_test.go');fs.writeFileSync(test,fs.readFileSync(test,'utf8').replace('Hello from the workspace library.','Updated workspace library.'));
-      invoke(['build','--full']);invoke(['inspect','dist']);
+      build(['--full']);invoke(['inspect','dist']);
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
-      const result=rebuilt.artifacts.find(item=>item.kind==='binary'||item.path.endsWith('.exe'));
+      const result=rebuilt.artifacts.find(item=>item.name==='primary');
       if(!result || result.digest===artifact.digest) throw Error('Workspace library change did not reach the executable');
       actual=run(path.join(scratch,'dist',result.path),[],scratch);expected='Updated workspace library.';
     } else if (id === 'maven-reactor') {
@@ -153,18 +156,20 @@ async function verifyNative(id, cli, output) {
       expected='Hello from the reactor library.';
     } else if (id === 'platform-matrices') {
       if(run(executable,[],scratch)!=='Hello from Go.') throw Error('Native host artifact failed');
-      invoke(['build','--all-platforms','--full']);invoke(['inspect','dist']);
+      build(['--all-platforms','--full']);invoke(['inspect','dist']);
       const matrix=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
-      const targets=matrix.targets.map(item=>item.platform);
+      const platformOf=target=>typeof target.platform==='string'?target.platform:target.platform.os+'/'+target.platform.arch;
+      const targets=matrix.targets.map(platformOf);
       for(const platform of ['windows/amd64','linux/amd64','linux/arm64']) if(!targets.includes(platform)) throw Error('Declared artifact platform missing: '+platform);
       if(matrix.artifacts.length!==3 || new Set(matrix.artifacts.map(item=>item.path)).size!==3) throw Error('Matrix did not retain three distinct outputs');
       for(const item of matrix.artifacts){
         const target=matrix.targets.find(target=>target.id===item.target);
         const bytes=fs.readFileSync(path.join(scratch,'dist',item.path));
-        if(target.platform==='windows/amd64' && bytes.subarray(0,2).toString()!=='MZ') throw Error('Windows output is not PE');
-        if(target.platform.startsWith('linux/') && (bytes.subarray(0,4).toString('hex')!=='7f454c46' || bytes.readUInt16LE(18)!==(target.platform.endsWith('/arm64')?183:62))) throw Error('Linux output architecture differs');
-        if(target.platform==='linux/amd64') {
-          const value=container('oyzu-toolchain/go:1.24-mod0.25.0','/input/'+path.basename(item.path),['type=bind,source='+path.dirname(path.join(scratch,'dist',item.path))+',target=/input,readonly'],[]);
+        const platform=platformOf(target);
+        if(platform==='windows/amd64' && bytes.subarray(0,2).toString()!=='MZ') throw Error('Windows output is not PE');
+        if(platform.startsWith('linux/') && (bytes.subarray(0,4).toString('hex')!=='7f454c46' || bytes.readUInt16LE(18)!==(platform.endsWith('/arm64')?183:62))) throw Error('Linux output architecture differs');
+        if(platform==='linux/amd64') {
+          const value=container(goImage??'oyzu-toolchain/go:1.24-mod0.25.0','/input/'+path.basename(item.path),['type=bind,source='+path.dirname(path.join(scratch,'dist',item.path))+',target=/input,readonly'],[]);
           if(value!=='Hello from Go.') throw Error('Linux amd64 delivered output failed');
         }
       }

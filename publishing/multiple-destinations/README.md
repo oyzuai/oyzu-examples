@@ -1,6 +1,6 @@
 # Publish finalized files to OCI and GitHub
 
-Build a small original Maven JAR, supply explicitly accepted existing signed provenance, and publish its unchanged bytes to several independently required destinations. Retrieve the payload and evidence with native interfaces and run the retrieved JAR. This is generic file publication, not a Maven repository upload or native OCI image publication.
+Build two small original Maven reactor JARs, supply explicitly accepted existing signed provenance for each file, and publish their unchanged bytes. OCI selects both files; GitHub selects only the application. Retrieve the payloads and evidence with native interfaces and run the application with the retrieved library. This is generic file publication, not a Maven repository upload or native OCI image publication.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ oyzu build
 oyzu inspect dist
 ~~~
 
-Read the exact regular-file artifact path, digest and output ID from the manifest. For this native JAR the selector is project/jar-hello; a primary output would use only its target ID. A successful build alone does not supply every publication prerequisite.
+Read each exact regular-file artifact path, digest and output ID from the manifest. Select the application and library outputs separately; a primary output would use only its target ID. A successful build alone does not supply every publication prerequisite. The selectors below illustrate the reactor's named outputs; use the exact IDs in your inspected bundle.
 
 <!-- example-source: project/pom.xml -->
 
@@ -29,7 +29,7 @@ Use independently accepted provenance and signing roots. The local verification 
 kind = "oci"
 registry = "http://127.0.0.1:26111"
 repository = "examples/files"
-artifacts = ["project/jar-hello"]
+artifacts = ["APPLICATION_OUTPUT_ID", "LIBRARY_OUTPUT_ID"]
 
 [publish.destinations.github]
 kind = "github-release"
@@ -37,10 +37,18 @@ apiUrl = "https://api.github.com"
 repository = "your-owner/your-disposable-repository"
 tag = "your-preexisting-test-tag"
 tokenEnv = "EXAMPLES_GITHUB_TOKEN"
-artifacts = ["project/jar-hello"]
+artifacts = ["APPLICATION_OUTPUT_ID"]
 
-[publish.requirements.provenance]
-bundlePath = "build.sigstore.json"
+[publish.destinations.github.evidence]
+mode = "destination"
+
+[publish.requirements.provenance.byArtifact."APPLICATION_OUTPUT_ID"]
+bundlePath = "application.sigstore.json"
+publicKey = "<accepted builder public key>"
+builderId = "<accepted exact builder identity>"
+
+[publish.requirements.provenance.byArtifact."LIBRARY_OUTPUT_ID"]
+bundlePath = "library.sigstore.json"
 publicKey = "<accepted builder public key>"
 builderId = "<accepted exact builder identity>"
 
@@ -49,7 +57,7 @@ keyEnv = "PUBLICATION_SIGNING_SEED"
 publicKey = "<matching publication public key>"
 ~~~
 
-This is illustrative configuration requiring real evidence and roots. Keep it in the normal configuration owner; destination maps replace atomically across the cascade. Secret settings are environment references. Required managed controls still apply. Run:
+Replace APPLICATION_OUTPUT_ID and LIBRARY_OUTPUT_ID with the exact target/name selectors from the inspected manifest. This is illustrative configuration requiring real evidence and roots. Keep it in the normal configuration owner; destination maps replace atomically across the cascade. Secret settings are environment references. Required managed controls still apply. Run:
 
 ~~~sh
 oyzu publish --manifest dist/manifest.json --destination local --destination github
@@ -59,7 +67,7 @@ Publishing does not build, repackage, scan or execute project hooks. The artifac
 
 ## Retrieve, repeat and recover
 
-Use the recorded OCI digest reference with the registry's native manifest/blob GET interfaces. Verify manifest, payload, original provenance and publication-intent bytes and their identities. For GitHub, list the existing release's assets and download the JAR plus its .provenance.sigstore.json and .publication.sigstore.json assets. Verify both signatures and their exact subject. Run java -cp with the retrieved JAR and example.Hello; expect Hello from Maven.
+Use each recorded OCI digest reference with the registry's native manifest/blob GET interfaces. Verify manifest, config, payload, original provenance and publication-intent bytes and their identities. For GitHub, list the existing release's assets and download the application JAR plus its .provenance.sigstore.json and .publication.sigstore.json assets. Verify both signatures and their exact subject. Confirm that GitHub has no unselected library payload. Run java -cp with the retrieved application and library JARs, using the native path separator, and example.Hello; expect Hello from the reactor library.
 
 Repeat the identical publication: matching content must reconcile as already-present. A changed genuine build at an occupied GitHub filename must refuse as PUBLISH_CONFLICT and leave the original bytes unchanged. For partial recovery, select two disposable registries with the second stopped: the first can succeed while the second fails. Start the second and retry the unchanged selection; reconcile the first and finish the remaining destination. Retain every failed/unfinished outcome; there is no automatic rollback.
 

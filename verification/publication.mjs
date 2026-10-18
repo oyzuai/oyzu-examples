@@ -77,8 +77,10 @@ try {
   const userConfig=path.join(scratch,'.oyzu/verification-user/config.toml');
   fs.mkdirSync(path.dirname(userConfig),{recursive:true});fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n');
   process.env.OYZU_USER_CONFIG=userConfig;
-  const pom = path.join(scratch,'pom.xml');
-  fs.writeFileSync(pom,fs.readFileSync(pom,'utf8').replace('<version>0.1.0</version>','<version>0.1.0-'+namespace+'</version>'));
+  for(const name of ['pom.xml','app/pom.xml','shared/pom.xml']) {
+    const pom=path.join(scratch,name);
+    fs.writeFileSync(pom,fs.readFileSync(pom,'utf8').replaceAll('<version>0.1.0</version>','<version>0.1.0-'+namespace+'</version>'));
+  }
   const configuration = fs.readFileSync(path.join(scratch,'oyzu.toml'),'utf8');
   command(['install','--frozen']);
   const started = new Date().toISOString();
@@ -86,26 +88,59 @@ try {
   const finished = new Date().toISOString();
   command(['inspect','dist']);
   const manifest = JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
-  const artifact = manifest.artifacts[0];
-  artifact.filename = path.basename(artifact.path);
+  assert(manifest.status==='succeeded' && manifest.artifacts.length===2 && manifest.artifacts.every(item=>item.kind==='file'),'This proof requires two real finalized reactor JARs');
+  const files=manifest.artifacts.map(artifact=>{
+    const id=artifact.name==='primary'?artifact.target:artifact.target+'/'+artifact.name;
+    const payload=fs.readFileSync(path.join(scratch,'dist',artifact.path));
+    assert(digest(payload)===artifact.digest,'Finalized file digest differs');
+    return {artifact:{...artifact,filename:path.basename(artifact.path)},id,payload};
+  });
+  const application=files.find(item=>item.artifact.path.includes('greeting-app'));
+  const library=files.find(item=>item.artifact.path.includes('greeting-library'));
+  assert(application && library,'Both native reactor modules are required');
+  const {artifact,id,payload}=application;
   const buildParameters={command:'oyzu build',nativeVersion:artifact.version,sourceTree:manifest.source.treeDigest,sourceAdjustment:'Unique native Maven version for a disposable test attempt'};
-  assert(manifest.status==='succeeded' && artifact.kind!=='directory','This proof requires a real finalized file');
-  const payload = fs.readFileSync(path.join(scratch,'dist',artifact.path));
-  assert(digest(payload)===artifact.digest,'Finalized file digest differs');
-  const id = artifact.name==='primary'?artifact.target:artifact.target+'/'+artifact.name;
   const builderId = 'https://example.invalid/oyzu-examples/local-test-witness';
-  const provenance = sign({_type:'https://in-toto.io/Statement/v1',subject:[{name:id,digest:{sha256:sha(payload)}}],predicateType:'https://slsa.dev/provenance/v1',predicate:{buildDefinition:{buildType:'https://example.invalid/oyzu-examples/observed-local-build',externalParameters:buildParameters,resolvedDependencies:[{uri:'git+https://github.com/oyzuai/oyzu-examples',digest:{gitCommit:sourceCommit}}]},runDetails:{builder:{id:builderId},metadata:{invocationId:crypto.randomUUID(),startedOn:started,finishedOn:finished}}}});
-  fs.writeFileSync(path.join(scratch,'build.sigstore.json'),provenance);
+  for(const [index,file] of files.entries()) {
+    file.provenance=sign({_type:'https://in-toto.io/Statement/v1',subject:[{name:file.id,digest:{sha256:sha(file.payload)}}],predicateType:'https://slsa.dev/provenance/v1',predicate:{buildDefinition:{buildType:'https://example.invalid/oyzu-examples/observed-local-build',externalParameters:buildParameters,resolvedDependencies:[{uri:'git+https://github.com/oyzuai/oyzu-examples',digest:{gitCommit:sourceCommit}}]},runDetails:{builder:{id:builderId},metadata:{invocationId:crypto.randomUUID(),startedOn:started,finishedOn:finished}}}});
+    file.evidencePath='build-'+index+'.sigstore.json';
+    fs.writeFileSync(path.join(scratch,file.evidencePath),file.provenance);
+  }
+  const provenance=application.provenance;
   process.env.EXAMPLES_PUBLICATION_SEED = publisher.seed;
   const release = await github(`/repos/${repository}/releases/tags/${encodeURIComponent(tag)}`);
   assert(release.tag_name===tag,'Existing test release changed');
   // A second registry that is deliberately unavailable makes partial effects observable.
   const unavailable = new URL(registry); unavailable.port='26112';
-  const configure = failure => fs.writeFileSync(path.join(scratch,'oyzu.toml'), configuration+`\n[publish.destinations.oci]\nkind="oci"\nregistry=${JSON.stringify(registry.origin)}\nrepository="${namespace}/files"\nartifacts=[${JSON.stringify(id)}]\n[publish.destinations.github]\nkind="github-release"\nrepository=${JSON.stringify(repository)}\ntag=${JSON.stringify(tag)}\ntokenEnv="EXAMPLES_GITHUB_TOKEN"\nartifacts=[${JSON.stringify(id)}]\n[publish.destinations.unavailable]\nkind="oci"\nregistry=${JSON.stringify(unavailable.origin)}\nrepository="${namespace}/files"\nartifacts=[${JSON.stringify(id)}]\n[publish.requirements.provenance]\nbundlePath="build.sigstore.json"\npublicKey=${JSON.stringify(builder.root)}\nbuilderId=${JSON.stringify(builderId)}\n[publish.requirements.signing]\nkeyEnv="EXAMPLES_PUBLICATION_SEED"\npublicKey=${JSON.stringify(publisher.root)}\n`);
-  configure();
-  const configuredPath=path.join(scratch,'oyzu.toml');
-  fs.writeFileSync(configuredPath,fs.readFileSync(configuredPath,'utf8').replace('kind="github-release"\nrepository=', 'kind="github-release"\napiUrl="https://api.github.com"\nrepository='));
-  fs.appendFileSync(path.join(scratch,'oyzu.toml'),'\n[publish.destinations.github.evidence]\nmode="destination"\n');
+  fs.writeFileSync(path.join(scratch,'oyzu.toml'), configuration+`
+[publish.destinations.oci]
+kind="oci"
+registry=${JSON.stringify(registry.origin)}
+repository="${namespace}/files"
+artifacts=${JSON.stringify(files.map(file=>file.id))}
+[publish.destinations.github]
+kind="github-release"
+apiUrl="https://api.github.com"
+repository=${JSON.stringify(repository)}
+tag=${JSON.stringify(tag)}
+tokenEnv="EXAMPLES_GITHUB_TOKEN"
+artifacts=[${JSON.stringify(id)}]
+[publish.destinations.github.evidence]
+mode="destination"
+[publish.destinations.unavailable]
+kind="oci"
+registry=${JSON.stringify(unavailable.origin)}
+repository="${namespace}/files"
+artifacts=[${JSON.stringify(library.id)}]
+${files.map(file=>`[publish.requirements.provenance.byArtifact.${JSON.stringify(file.id)}]
+bundlePath=${JSON.stringify(file.evidencePath)}
+publicKey=${JSON.stringify(builder.root)}
+builderId=${JSON.stringify(builderId)}
+`).join('')}
+[publish.requirements.signing]
+keyEnv="EXAMPLES_PUBLICATION_SEED"
+publicKey=${JSON.stringify(publisher.root)}
+`);
   const publish = destinations => ['publish','--manifest','dist/manifest.json',...destinations.flatMap(name=>['--destination',name]),'--json'];
   const partial = JSON.parse(command(publish(['oci','unavailable']),2));
   assert(partial.destinations.some(item=>item.outcome==='published') && partial.destinations.some(item=>item.outcome==='failed'),'Partial receipt did not retain both outcomes');
@@ -115,10 +150,17 @@ try {
   retryStarted=true;
   const recovered = JSON.parse(command(publish(['oci','unavailable'])));
   assert(recovered.destinations.some(item=>item.outcome==='already-present') && recovered.destinations.some(item=>item.outcome==='published'),'Unchanged retry did not reconcile the first destination and finish the second');
+  assert(partial.planDigest===recovered.planDigest,'Unchanged retry changed the frozen publication plan');
   const first = JSON.parse(command(publish(['oci','github'])));
   const repeat = JSON.parse(command(publish(['oci','github'])));
   assert(repeat.destinations.every(item=>item.outcome==='already-present'),'Matching repeat was not reconciled');
-  const oci = first.destinations.find(item=>item.kind==='oci').entries[0];
+  const ociEntries=first.destinations.find(item=>item.kind==='oci').entries;
+  const githubEntries=first.destinations.find(item=>item.kind==='github-release').entries;
+  assert(ociEntries.length===2 && githubEntries.length===1 && githubEntries[0].artifactId===id,'Distinct destination selections were not retained');
+  const receivedFiles=new Map();
+  for(const file of files) {
+  const oci=ociEntries.find(item=>item.artifactId===file.id);
+  assert(oci,'Selected OCI output missing');
   const coordinate = oci.coordinate;
   const nativeManifest = await fetch(`${registry.origin}/v2/${coordinate.repository}/manifests/${oci.reference.split('@')[1]}`,{headers:{Accept:'application/vnd.oci.image.manifest.v1+json'}});
   assert(nativeManifest.ok,'Independent OCI manifest GET failed');
@@ -131,13 +173,19 @@ try {
   assert(digest(configBytes)===image.config.digest && configBytes.length===image.config.size,'OCI config identity differs');
   const layers=[];
   for(const layer of image.layers){const response=await fetch(`${registry.origin}/v2/${coordinate.repository}/blobs/${layer.digest}`);assert(response.ok,'OCI layer unavailable');const bytes=Buffer.from(await response.arrayBuffer());assert(digest(bytes)===layer.digest && bytes.length===layer.size,'OCI layer identity differs');layers.push(bytes);}
-  assert(layers.some(bytes=>bytes.equals(payload)) && layers.some(bytes=>bytes.equals(provenance)),'OCI original bytes missing');
+  assert(layers.some(bytes=>bytes.equals(file.payload)) && layers.some(bytes=>bytes.equals(file.provenance)),'OCI original bytes missing');
+  verifyEvidence(file.provenance,builder.root,file.artifact.digest,'https://slsa.dev/provenance/v1');
   const ociIntent=layers.find(bytes=>{
     try {const envelope=JSON.parse(bytes).dsseEnvelope;return envelope && JSON.parse(Buffer.from(envelope.payload,'base64')).predicateType==='https://oyzu.dev/attestations/publication-intent/v1alpha1';}catch{return false;}
   });
   assert(ociIntent,'OCI publication intent missing');
-  verifyEvidence(ociIntent,publisher.root,artifact.digest,'https://oyzu.dev/attestations/publication-intent/v1alpha1');
+  verifyEvidence(ociIntent,publisher.root,file.artifact.digest,'https://oyzu.dev/attestations/publication-intent/v1alpha1');
+  const received=path.join(scratch,'received-'+file.artifact.filename);
+  fs.writeFileSync(received,layers.find(bytes=>bytes.equals(file.payload)));
+  receivedFiles.set(file.id,received);
+  }
   const assets = await github(`/repos/${repository}/releases/${release.id}/assets?per_page=100`);
+  assert(!assets.some(asset=>asset.name===library.artifact.filename),'GitHub received an unselected library payload');
   const names=[artifact.filename,artifact.filename+'.provenance.sigstore.json',artifact.filename+'.publication.sigstore.json'];
   const downloaded=[];
   for(const name of names){const asset=assets.find(item=>item.name===name);assert(asset,'Missing native GitHub asset: '+name);downloaded.push(await github(`/repos/${repository}/releases/assets/${asset.id}`,true));}
@@ -145,24 +193,33 @@ try {
   verifyEvidence(downloaded[1],builder.root,artifact.digest,'https://slsa.dev/provenance/v1');
   verifyEvidence(downloaded[2],publisher.root,artifact.digest,'https://oyzu.dev/attestations/publication-intent/v1alpha1');
   const received = path.join(scratch,'received.jar'); fs.writeFileSync(received,downloaded[0]);
-  const consumer = command(['exec','--','java','-cp',received,'example.Hello']).trim();
-  assert(consumer==='Hello from Maven.','Retrieved JAR consumer failed');
+  const consumer = command(['exec','--','java','-cp',[received,receivedFiles.get(library.id)].join(path.delimiter),'example.Hello']).trim();
+  assert(consumer==='Hello from the reactor library.','Retrieved JAR consumer failed');
   // Produce a second genuine build at the occupied filename; never edit a manifest digest.
-  const java = path.join(scratch,'src/main/java/example/Hello.java');
-  fs.writeFileSync(java,fs.readFileSync(java,'utf8').replace('Hello from Maven.','Conflicting candidate.'));
+  const java = path.join(scratch,'app/src/main/java/example/Hello.java');
+  fs.writeFileSync(java,fs.readFileSync(java,'utf8').replace('Greeting.message()','"Conflicting candidate."'));
   const conflictStarted=new Date().toISOString();command(['build']);
   const secondManifest=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
-  const second=secondManifest.artifacts[0];
+  const second=secondManifest.artifacts.find(item=>item.name===artifact.name && item.target===artifact.target);
   const secondPayload=fs.readFileSync(path.join(scratch,'dist',second.path));
   const statement=JSON.parse(Buffer.from(JSON.parse(provenance).dsseEnvelope.payload,'base64'));
   statement.subject[0].digest.sha256=sha(secondPayload); statement.predicate.runDetails.metadata={invocationId:crypto.randomUUID(),startedOn:conflictStarted,finishedOn:new Date().toISOString()};
   statement.predicate.buildDefinition.externalParameters={...buildParameters,sourceTree:secondManifest.source.treeDigest,sourceAdjustment:'Conflicting candidate at the same native version; original Java source changed'};
-  fs.writeFileSync(path.join(scratch,'build.sigstore.json'),sign(statement));
+  fs.writeFileSync(path.join(scratch,application.evidencePath),sign(statement));
   const conflict=command(publish(['github']),1);
   assert(conflict.includes('PUBLISH_CONFLICT'),'Occupied GitHub filename did not fail as conflict');
   const original=assets.find(item=>item.name===artifact.filename);
   assert((await github(`/repos/${repository}/releases/assets/${original.id}`,true)).equals(payload),'Conflict replaced original bytes');
-  const record={recipe:'publication-multiple',subject,parameters:buildParameters,oyzu:{version:spawnSync(cli,['--version'],{encoding:'utf8'}).stdout.trim(),binary_sha256:sha(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},result:'passed',execution:'observed-local-build-and-live-providers',repository,tag,releaseId:release.id,artifact:{digest:artifact.digest,consumer},testWitness:{builderId,builderPublicKey:builder.root,publicationPublicKey:publisher.root},commands:history,observations:['OCI partial failure preserved successful first destination','unchanged retry reconciled completed effects and finished the remaining destination','OCI and GitHub native retrieval matched original payload/provenance','matching repeat reconciled both destinations','retrieved JAR ran independently','occupied GitHub filename refused and original asset stayed unchanged'],limits:['Explicit local test-witness keys; no protected origin, keyless identity, transparency or SLSA-level claim','Anonymous loopback OCI and GitHub.com only','Temporary registry/tag/release provisioned separately; no product release'],recordedAt:new Date().toISOString()};
+  const record={
+    recipe:'publication-multiple',subject,parameters:buildParameters,
+    oyzu:{version:spawnSync(cli,['--version'],{encoding:'utf8'}).stdout.trim(),binary_sha256:sha(fs.readFileSync(cli))},
+    host:{os:process.platform,arch:process.arch},result:'passed',execution:'observed-local-build-and-live-providers',
+    repository,tag,releaseId:release.id,artifact:{digest:artifact.digest,consumer},
+    artifacts:files.map(file=>({id:file.id,digest:file.artifact.digest,ociReference:ociEntries.find(entry=>entry.artifactId===file.id).reference,githubSelected:file.id===id})),
+    testWitness:{builderId,builderPublicKey:builder.root,publicationPublicKey:publisher.root},commands:history,
+    observations:['Distinct destination selections: two OCI files, one GitHub payload; no unselected library asset','OCI partial failure preserved successful first destination','unchanged retry retained the plan digest, reconciled completed effects and finished the remaining destination','OCI manifest/config/layer identities and both evidence signatures independently checked','OCI and GitHub native retrieval matched original payload/provenance','matching repeat reconciled both destinations','retrieved application and library ran independently','occupied GitHub filename refused and original asset stayed unchanged'],
+    limits:['Explicit local test-witness keys; no protected origin, keyless identity, transparency or SLSA-level claim','Anonymous loopback OCI and GitHub.com only','Temporary registry/tag/release provisioned separately; no product release'],recordedAt:new Date().toISOString()
+  };
   fs.mkdirSync(path.dirname(path.resolve(recordPath)),{recursive:true});fs.writeFileSync(recordPath,JSON.stringify(record,null,2)+'\n');
   console.log('Live OCI/GitHub publication, native retrieval, repeat, partial effects and conflict passed.');
 } finally {

@@ -11,6 +11,15 @@ on:
       release_tag:
         description: 'Exact candidate Oyzu release tag (otherwise the configured pin)'
         type: string
+      release_asset:
+        description: 'Candidate asset name; required together with a candidate tag and SHA-256'
+        type: string
+      release_sha256:
+        description: 'Candidate artifact SHA-256; required together with tag and asset'
+        type: string
+      release_executable:
+        description: 'Relative executable path in the candidate archive (default oyzu)'
+        type: string
 
 permissions:
   contents: read
@@ -60,10 +69,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           OYZU_RELEASE_TAG: ${{ inputs.release_tag || vars.OYZU_RELEASE_TAG }}
-          OYZU_RELEASE_ASSET: ${{ vars.OYZU_RELEASE_ASSET }}
-          OYZU_RELEASE_SHA256: ${{ vars.OYZU_RELEASE_SHA256 }}
-          OYZU_RELEASE_EXECUTABLE: ${{ vars.OYZU_RELEASE_EXECUTABLE }}
-        run: node verification/install-cli.mjs
+          OYZU_RELEASE_ASSET: ${{ inputs.release_tag && inputs.release_asset || vars.OYZU_RELEASE_ASSET }}
+          OYZU_RELEASE_SHA256: ${{ inputs.release_tag && inputs.release_sha256 || vars.OYZU_RELEASE_SHA256 }}
+          OYZU_RELEASE_EXECUTABLE: ${{ inputs.release_tag && inputs.release_executable || vars.OYZU_RELEASE_EXECUTABLE }}
+          EXAMPLES_CANDIDATE_TAG: ${{ inputs.release_tag }}
+          EXAMPLES_CANDIDATE_ASSET: ${{ inputs.release_asset }}
+          EXAMPLES_CANDIDATE_SHA256: ${{ inputs.release_sha256 }}
+        run: |
+          if [ -n "$EXAMPLES_CANDIDATE_TAG$EXAMPLES_CANDIDATE_ASSET$EXAMPLES_CANDIDATE_SHA256" ]; then
+            test -n "$EXAMPLES_CANDIDATE_TAG" && test -n "$EXAMPLES_CANDIDATE_ASSET" && test -n "$EXAMPLES_CANDIDATE_SHA256" || { echo '::error::Supply the complete candidate tag, asset and checksum tuple'; exit 1; }
+          fi
+          node verification/install-cli.mjs
       - name: Build and consume the committed native recipe
         env:
           EXAMPLES_RECIPE: ${{ matrix.recipe }}

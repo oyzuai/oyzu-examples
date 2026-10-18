@@ -24,6 +24,25 @@ releases exercise all admitted native consumers. Captured executor and live
 publication/deployment checks remain separately attributable; an omitted family
 is not reported as verified. Current image prerequisites and blockers are in the
 recipe metadata and coverage inventory.
+For Go proofs, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
+compatible Go executor through Oyzu's ordinary `--image go=...` option. The
+verifier records that reference, immutable image identity and actual command;
+it does not install a compiler or treat a stale default image as compatible.
+Editorial/catalog-only changes verify the first-build baseline before requesting
+a docs pin update. A manual candidate must supply its complete tag, asset and
+checksum tuple; it cannot accidentally combine a candidate tag with the baseline
+release's checksum. Externally provisioned executor checks can be run locally
+with the same verifier, and are not counted as hosted native passes.
+`Provided executor examples` is a separate manual workflow for a dedicated
+Linux runner labelled oyzu-examples, with Node and the documented executor
+images already provisioned. It neither installs missing SDKs nor grants success
+when one is unavailable. `Live publication examples` is a manual job on a
+disposable GitHub runner: it uses that repository's short-lived contents token,
+separately provisions two local registries, then exercises an existing test
+prerelease selected by the operator. It removes only containers it created.
+Inspect and delete that test release/tag afterward; the publisher never creates,
+finalizes or deletes releases. Neither workflow runs as an untrusted PR job or
+receives a website credential. These jobs require the public CLI release first.
 
 ## Published CLI selection
 

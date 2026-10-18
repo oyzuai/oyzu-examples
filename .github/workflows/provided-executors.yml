@@ -1,0 +1,41 @@
+name: Provided executor examples
+
+on:
+  workflow_dispatch:
+    inputs:
+      recipe:
+        description: 'Requires an existing dedicated runner with the recipe executor images provisioned'
+        required: true
+        type: choice
+        options: [tasks-and-hooks, incremental-builds, platform-matrices, node-pnpm, docker-file-image, helm-chart, dotnet-library, ant-application, static-deployment]
+
+permissions:
+  contents: read
+
+jobs:
+  captured:
+    name: Provided executor (${{ inputs.recipe }})
+    runs-on: [self-hosted, oyzu-examples]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Acquire the configured public Oyzu release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OYZU_RELEASE_TAG: ${{ vars.OYZU_RELEASE_TAG }}
+          OYZU_RELEASE_ASSET: ${{ vars.OYZU_RELEASE_ASSET }}
+          OYZU_RELEASE_SHA256: ${{ vars.OYZU_RELEASE_SHA256 }}
+          OYZU_RELEASE_EXECUTABLE: ${{ vars.OYZU_RELEASE_EXECUTABLE }}
+        run: node verification/install-cli.mjs
+      - name: Build and consume with the provided executor
+        env:
+          EXAMPLES_RECIPE: ${{ inputs.recipe }}
+        run: node verification/verify.mjs "$EXAMPLES_RECIPE" "$OYZU_CLI" ".oyzu/verification/$EXAMPLES_RECIPE.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: provided-executor-${{ inputs.recipe }}
+          path: .oyzu/verification/*.json
