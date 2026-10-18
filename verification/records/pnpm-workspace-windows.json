@@ -1,0 +1,40 @@
+{
+  "recipe": "pnpm-workspace",
+  "subject": {
+    "commit": "7c841f90acc9a4abca56c9e5007fccca2dd7c216",
+    "recipe_sha256": "39d13c2f9e834caf07f47c567af8aecac01b7e1c18953bde217b0d908924cde1",
+    "recipe_tree": "71f18f03b0ea6ecc5cec778d2c88a8a15f3a3798"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.00d74f78a045.dirty (debug; x86_64-pc-windows-msvc; build 1792303617)",
+    "binary_sha256": "23d8c59ffbe8c435033f55c0f0df164da064a9a490cc0fd9b19c239036cc1ad9"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated",
+      "--full"
+    ]
+  ],
+  "observations": [],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build --isolated --full failed (1):",
+    "code": "BUILD_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T13:52:26.838Z"
+}

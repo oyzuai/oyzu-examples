@@ -171,9 +171,14 @@ async function verifyNative(id, cli, output) {
       const archives=manifest.artifacts.filter(item=>item.path.endsWith('.tgz'));
       if(archives.length!==2 || manifest.artifacts.length!==2) throw Error('Both native workspace archives are required');
       const consumer=fs.mkdtempSync(path.join(os.tmpdir(),'oyzu-workspace-consumer-'));
+      const redactConsumer=value=>value.replaceAll(JSON.stringify(consumer).slice(1,-1),'<consumer>').replaceAll(consumer,'<consumer>');
+      const consume=args=>{
+        commands.push(['oyzu',...args.map(value=>redactConsumer(value.replaceAll(scratch,'<project>')))]);
+        return run(cli,args,consumer);
+      };
       try {
         fs.writeFileSync(path.join(consumer,'package.json'),'{"private":true}\n');
-        invoke(['exec','--','npm','install','--prefix',consumer,'--ignore-scripts','--no-audit','--no-fund','--offline',...archives.map(item=>path.join(scratch,'dist',item.path))]);
+        consume(['--root',scratch,'exec','--','npm','install','--prefix',consumer,'--ignore-scripts','--no-audit','--no-fund','--offline',...archives.map(item=>path.join(scratch,'dist',item.path))]);
         const installed=name=>path.join(consumer,'node_modules',name);
         for(const name of ['oyzu-example-workspace-library','oyzu-example-workspace-app']) {
           if(fs.lstatSync(installed(name)).isSymbolicLink() || !fs.existsSync(path.join(installed(name),'LICENSE'))) throw Error('Consumer needs installed package bytes and licenses, not workspace links');
@@ -183,12 +188,14 @@ async function verifyNative(id, cli, output) {
         if(app.dependencies?.[library.name]!==library.version || !archives.some(item=>item.version===library.version)) throw Error('Delivered local dependency does not bind the delivered library version');
         // A separate working directory plus only archive-installed packages keeps
         // the authored workspace out of Node's module resolution path.
-        commands.push(['oyzu','exec','--','node','<archive-only consumer>']);
-        actual=run(cli,['--root',scratch,'exec','--','node','-e',`console.log(require(${JSON.stringify(installed('oyzu-example-workspace-app'))}).greet('developer'))`],consumer);
+        actual=consume(['--root',scratch,'exec','--','node','-e',`console.log(require(${JSON.stringify(installed('oyzu-example-workspace-app'))}).greet('developer'))`]);
         expected='Hello, developer, from the delivered workspace.';
         observations.push('Two delivered archives installed offline outside the source tree; exact projected library version, regular package directories, licenses and application-to-library behavior passed');
+      } catch(error) {
+        throw Error(redactConsumer(error.message));
       } finally {
-        fs.rmSync(consumer,{recursive:true,force:true});
+        try {fs.rmSync(consumer,{recursive:true,force:true});}
+        catch(error) {throw Error(redactConsumer(error.message));}
       }
     } else if (id === 'go-workspace') {
       if(!fs.existsSync(path.join(scratch,'go.work'))) throw Error('Native workspace source missing');

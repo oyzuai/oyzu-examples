@@ -72,7 +72,7 @@ Connect workspaces, generators, artifacts and selected deployment mechanisms.
 | [Observe cache reuse and source invalidation](../workflows/incremental-builds/README.md) | implemented-partial | experimental |
 | [Separate host execution from artifact platforms](../workflows/platform-matrices/README.md) | implemented-partial | blocked |
 | [Build only targets changed from a Git baseline](../workflows/affected-builds/README.md) | implemented-partial | experimental |
-| [Deliver two related pnpm workspace packages](../builds/node/pnpm-workspace/README.md) | implemented-partial | experimental |
+| [Deliver two related pnpm workspace packages](../builds/node/pnpm-workspace/README.md) | implemented-partial | blocked |
 
 ## Gaps and assessments
 

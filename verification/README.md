@@ -30,6 +30,12 @@ releases exercise all admitted native consumers. Captured executor and live
 publication/deployment checks remain separately attributable; an omitted family
 is not reported as verified. Current image prerequisites and blockers are in the
 recipe metadata and coverage inventory.
+The two-package pnpm workspace now has a native lock and an archive-only
+consumer check in the provided-executor lane. Its Windows attempt passed tool
+preparation and version projection, then failed captured preparation with
+`Unsupported reparse point type` (Oyzu tracking issue 636). The consumer did not
+run; its record is unsuccessful and the recipe remains blocked. The prior
+single-package pnpm proof does not qualify workspace delivery.
 The hosted matrix admits only host-native recipes. In particular, npm package
 and Go workspace proofs need their documented provisioned executor images and
 run in `Provided executor examples`. Changed recipes requiring external

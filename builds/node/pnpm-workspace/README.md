@@ -13,6 +13,14 @@ requirements belong in project/oyzu.toml and the native packageManager field.
 Initial tool preparation needs network access; the projects have no external
 runtime dependencies. A generated native lock is not verification.
 
+## Current verification boundary
+
+The Windows captured attempt reached successful workspace version projection,
+then failed during prepare with BUILD_FAILED: Unsupported reparse point type.
+The archive consumer has not run. This recipe is blocked; the commands below
+describe the intended proof, not a passing result. Oyzu tracking issue 636 owns
+the product blocker.
+
 ## Build and inspect
 
 Copy the entire project/ directory outside the collection, preserving each
@@ -61,7 +69,7 @@ Missing executors are prerequisites, not permission to install an ambient
 replacement. Regenerate a stale pnpm lock with native pnpm through Oyzu and
 commit it before verification. Remove only the copied project outputs and its
 consumer directory after testing. Check out the exact displayed source commit
-before copying. See [pnpm builds](https://docs.oyzu.ai/docs/reference/pnpm).
+before copying. See [native builds](https://docs.oyzu.ai/docs/reference/local-builds).
 
 This dependency-free two-package proof does not qualify private registries,
 modern Yarn, every pnpm release, publication or deployment. Host controller,
