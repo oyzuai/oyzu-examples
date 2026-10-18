@@ -7,7 +7,7 @@ on:
         description: 'Requires an existing dedicated runner with the recipe executor images provisioned'
         required: true
         type: choice
-        options: [tasks-and-hooks, incremental-builds, platform-matrices, node-pnpm, docker-file-image, helm-chart, dotnet-library, gradle-application, ant-application, static-deployment]
+        options: [npm-package, go-workspace, tasks-and-hooks, incremental-builds, platform-matrices, node-pnpm, docker-file-image, helm-chart, dotnet-library, gradle-application, ant-application, static-deployment]
 
 permissions:
   contents: read
@@ -34,6 +34,7 @@ jobs:
         env:
           EXAMPLES_RECIPE: ${{ inputs.recipe }}
           EXAMPLES_LINUX_CONSUMER_IMAGE: ${{ vars.EXAMPLES_LINUX_CONSUMER_IMAGE }}
+          EXAMPLES_GO_IMAGE: ${{ vars.EXAMPLES_GO_IMAGE }}
         run: node verification/verify.mjs "$EXAMPLES_RECIPE" "$OYZU_CLI" ".oyzu/verification/$EXAMPLES_RECIPE.json"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: always()

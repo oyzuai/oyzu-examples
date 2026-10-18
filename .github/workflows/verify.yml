@@ -34,6 +34,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       recipes: ${{ steps.affected.outputs.recipes }}
+      required_external_recipes: ${{ steps.affected.outputs.required_external_recipes }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -43,6 +44,7 @@ jobs:
         with:
           node-version: '22'
       - run: node verification/catalog.mjs
+      - run: node --test verification/affected.test.mjs
       - id: affected
         env:
           EXAMPLES_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
@@ -85,12 +87,13 @@ jobs:
           EXAMPLES_RECIPE: ${{ matrix.recipe }}
         run: node verification/verify.mjs "$EXAMPLES_RECIPE" "$OYZU_CLI" ".oyzu/verification/$EXAMPLES_RECIPE.json"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
         with:
           name: verification-${{ matrix.recipe }}
           path: .oyzu/verification/*.json
   notify-docs:
     needs: [catalog, native]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.native.result == 'success'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.native.result == 'success' && needs.catalog.outputs.required_external_recipes == '[]'
     runs-on: ubuntu-24.04
     steps:
       - name: Mint a repository-scoped dispatch token for this run

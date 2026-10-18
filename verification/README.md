@@ -30,6 +30,15 @@ releases exercise all admitted native consumers. Captured executor and live
 publication/deployment checks remain separately attributable; an omitted family
 is not reported as verified. Current image prerequisites and blockers are in the
 recipe metadata and coverage inventory.
+The hosted matrix admits only host-native recipes. In particular, npm package
+and Go workspace proofs need their documented provisioned executor images and
+run in `Provided executor examples`. Changed recipes requiring external
+prerequisites are listed as `requiredExternalRecipes`; they block automatic docs
+notification even if unrelated native checks pass. A first-build baseline never
+substitutes for an affected captured or live recipe. Shared verifier changes
+retain all those obligations. Native failures still upload their exact-subject
+records for inspection. Run `node --test verification/affected.test.mjs` to check
+selection, notification gates and failure-record retention.
 For the Go workspace proof, EXAMPLES_GO_IMAGE can explicitly select an already provisioned
 compatible Go executor through Oyzu's ordinary `--image go=...` option. The
 verifier records that reference, immutable image identity and actual command;
