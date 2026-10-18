@@ -9,3 +9,5 @@
 .env.*
 !.env.example
 oyzu.local.toml
+.oyzu-config-edit.lock
+.oyzu-tool-lock-edit.lock
