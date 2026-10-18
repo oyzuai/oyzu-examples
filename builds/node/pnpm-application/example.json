@@ -11,18 +11,19 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
   ],
-  "profiles": [
-    "see-recipe"
+  "verification": [
+    "verification/records/node-pnpm-windows.json"
   ],
-  "verification": [],
   "traceability": [
     "EX-007",
     "EX-018",
     "EX-050"
   ],
-  "currentGap": "Candidate native-manager recipe awaiting its own captured build and downstream consumer record."
+  "executionProfiles": [
+    "captured"
+  ]
 }

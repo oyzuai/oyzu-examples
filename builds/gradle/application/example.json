@@ -11,16 +11,18 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "The documented captured Gradle 8.14.3 / JDK 17 executor is provisioned on the measured machine. Windows host Gradle installation is not qualified here; use captured execution."
   ],
-  "profiles": [
-    "see-recipe"
+  "verification": [
+    "verification/records/gradle-application-windows.json"
   ],
-  "verification": [],
   "traceability": [
     "EX-024"
   ],
-  "currentGap": "This original sample needs a committed real-CLI build and delivered-artifact consumer proof. Tool/executor availability and any observed failures must be recorded separately."
+  "executionProfiles": [
+    "captured",
+    "native-host-candidate"
+  ]
 }

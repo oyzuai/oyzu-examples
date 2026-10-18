@@ -15,12 +15,12 @@
   "prerequisites": [
     "The captured Ant builder needs its documented provisioned native Java/Ant executor. Ant acquisition is not supplied by adding an invented tool provider. See the current Ant reference before running."
   ],
-  "profiles": [
-    "see-recipe"
-  ],
   "verification": [],
   "traceability": [
     "EX-025"
   ],
-  "currentGap": "This original sample needs a committed real-CLI build and delivered-artifact consumer proof. Tool/executor availability and any observed failures must be recorded separately."
+  "currentGap": "The required explicitly provisioned Ant executor is absent locally. No Ant build or downstream consumer is qualified.",
+  "executionProfiles": [
+    "captured"
+  ]
 }

@@ -25,6 +25,21 @@ export function recipeDigest(repo, commit, recipe) {
   }).join(''));
 }
 
+export function copyCommittedProject(repo, commit, recipe, destination) {
+  const prefix = recipe + '/project/';
+  const rows = run('git', ['ls-tree', '-r', commit, '--', prefix], repo).split('\n');
+  for (const row of rows) {
+    const match = row.match(/^(100644|100755) blob ([0-9a-f]{40})\t(.+)$/);
+    if (!match || !match[3].startsWith(prefix)) throw Error('Project contains nonregular committed material');
+    const name = path.resolve(destination, match[3].slice(prefix.length));
+    if (!name.startsWith(destination + path.sep)) throw Error('Project file leaves verification workspace');
+    const source = spawnSync('git', ['cat-file', 'blob', match[2]], {cwd: repo, encoding: null});
+    if (source.status !== 0) throw Error('Required committed project bytes are unavailable');
+    fs.mkdirSync(path.dirname(name), {recursive: true});
+    fs.writeFileSync(name, source.stdout, {mode: match[1] === '100755' ? 0o755 : 0o644});
+  }
+}
+
 const consumers = new Set(['first-build', 'node-application', 'go-command', 'python-package', 'maven-application', 'gradle-application', 'ant-application', 'dotnet-library', 'docker-file-image', 'helm-chart', 'node-pnpm', 'polyglot-service', 'developer-tool', 'tasks-and-hooks', 'static-deployment']);
 async function verifyNative(id, cli, output) {
   const recipe = JSON.parse(fs.readFileSync(path.join(root, 'catalog/coverage.json'))).recipes.find(item => item.id === id)?.path;
@@ -33,6 +48,8 @@ async function verifyNative(id, cli, output) {
   if (run('git', ['status', '--porcelain', '--', recipe], root)) throw Error('Commit recipe changes before recording verification');
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'oyzu-example-' + id + '-'));
   const commands = [];
+  const previousUserConfig=process.env.OYZU_USER_CONFIG;
+  const userConfig=path.join(scratch,'.oyzu/verification-user/config.toml');
   const invoke = args => {commands.push(['oyzu', ...args.map(value => value.replaceAll(scratch, '<project>'))]); return run(cli, args, scratch);};
   const findExecutable = name => {
     for (const directory of (process.env.PATH ?? '').split(path.delimiter)) {
@@ -58,24 +75,16 @@ async function verifyNative(id, cli, output) {
       ...mounts.flatMap(mount => ['--mount', mount]), identity, ...args]).text;
   };
   try {
-    const prefix = recipe + '/project/';
-    const rows = run('git', ['ls-tree', '-r', commit, '--', prefix], root).split('\n');
-    for (const row of rows) {
-      const match = row.match(/^(100644|100755) blob ([0-9a-f]{40})\t(.+)$/);
-      if (!match || !match[3].startsWith(prefix)) throw Error('Project contains nonregular committed material');
-      const name = path.resolve(scratch, match[3].slice(prefix.length));
-      if (!name.startsWith(scratch + path.sep)) throw Error('Project file leaves verification workspace');
-      const source = spawnSync('git', ['cat-file', 'blob', match[2]], {cwd: root, encoding: null});
-      if (source.status !== 0) throw Error('Required committed project bytes are unavailable');
-      fs.mkdirSync(path.dirname(name), {recursive: true});
-      fs.writeFileSync(name, source.stdout, {mode: match[1] === '100755' ? 0o755 : 0o644});
-    }
+    copyCommittedProject(root,commit,recipe,scratch);
     const capturedGradle = id === 'gradle-application' && process.platform === 'win32';
-    const captured = capturedGradle || id === 'node-pnpm';
+    fs.mkdirSync(path.dirname(userConfig),{recursive:true});
+    fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n');
+    process.env.OYZU_USER_CONFIG=userConfig;
+    const captured = capturedGradle || id === 'node-pnpm' || id === 'tasks-and-hooks';
     if (fs.existsSync(path.join(scratch, 'oyzu.lock')) && !captured) invoke(['install', '--frozen']);
     invoke(['build', '--plan']);
     const full = ['first-build', 'node-application', 'go-command', 'tasks-and-hooks'].includes(id);
-    invoke(full ? ['build', '--full'] : captured ? ['build', '--isolated'] : ['build']);
+    invoke(['build', ...(captured ? ['--isolated'] : []), ...(full ? ['--full'] : [])]);
     invoke(['inspect', 'dist']);
     const manifest = JSON.parse(fs.readFileSync(path.join(scratch, 'dist', 'manifest.json'), 'utf8'));
     if (manifest.status !== 'succeeded' || !manifest.artifacts.length) throw Error('Expected a successful delivered artifact');
@@ -143,17 +152,18 @@ async function verifyNative(id, cli, output) {
       const port = reservation.address().port;
       await new Promise(resolve => reservation.close(resolve));
       const server = id === 'static-deployment'
-        ? spawn(cli, ['--root',scratch,'-C',scratch,'run','serve'],{cwd:scratch,stdio:'ignore',env:{...process.env,SITE_DIR:executable,PORT:String(port)}})
-        : spawn(executable, ['--listen', '127.0.0.1:' + port], {cwd: scratch, stdio:'ignore'});
+        ? spawn(cli, ['--root',scratch,'-C',scratch,'run','serve'],{cwd:scratch,stdio:['ignore','ignore','pipe'],env:{...process.env,SITE_DIR:executable,PORT:String(port)}})
+        : spawn(executable, ['--listen', '127.0.0.1:' + port], {cwd: scratch, stdio:['ignore','ignore','pipe']});
+      let serverError='';server.stderr.on('data',bytes=>{serverError=(serverError+bytes).slice(-4000);});
       const closed = new Promise(resolve => {server.once('exit',resolve); server.once('error',resolve);});
       commands.push(id === 'static-deployment' ? ['oyzu','run','serve','with SITE_DIR=<delivered directory> and PORT=<ephemeral-port>'] : ['<delivered service>', '--listen', '127.0.0.1:<ephemeral-port>']);
       try {
         let response;
-        for (let attempt=0; attempt<60; attempt++) {
+        for (let attempt=0; attempt<120; attempt++) {
           try {response=await fetch('http://127.0.0.1:'+port+'/'); if(response.ok) break;} catch {}
-          await new Promise(resolve=>setTimeout(resolve,50));
+          await new Promise(resolve=>setTimeout(resolve,250));
         }
-        if (!response?.ok) throw Error('Delivered service did not respond');
+        if (!response?.ok) throw Error('Delivered service did not respond\n'+serverError);
         const text=await response.text();
         if(id==='static-deployment') {
           if(text!==fs.readFileSync(path.join(executable,'index.html'),'utf8') || !text.includes('Served from the selected artifact.')) throw Error('Served bytes differ from selected static artifact');
@@ -171,7 +181,7 @@ async function verifyNative(id, cli, output) {
       invoke(['build']);
       const repeated=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       if (repeated.artifacts[0].digest!==artifact.digest) throw Error('Unchanged workspace produced a different artifact');
-      fs.writeFileSync(path.join(scratch,'channel.txt'),'preview\n');
+      fs.writeFileSync(path.join(scratch,'channel.txt'),'PREVIEW\n');
       invoke(['build']); invoke(['inspect','dist']);
       const rebuilt=JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
       if (rebuilt.artifacts[0].digest===artifact.digest) throw Error('Generator input change did not change artifact');
@@ -199,6 +209,7 @@ async function verifyNative(id, cli, output) {
       host: {os: process.platform, arch: process.arch}, execution, target: manifest.targets[0].platform,
       commands, result: 'passed', artifact: {digest: artifact.digest, output: actual},
       nativeConsumerImages: containers,
+      configurationScope:'Copied project and disposable empty user settings; native machine/organization controls retained',
       reports: manifest.reports.map(report => ({kind: report.kind, digest: report.digest})),
       limits: [full ? 'Full native checks selected; no other host or cross-compilation qualification' : 'Fast build and delivered consumer only; native quality checks not selected', 'No live publication or deployment qualification'],
       recordedAt: new Date().toISOString()
@@ -211,6 +222,7 @@ async function verifyNative(id, cli, output) {
     fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(record,null,2)+'\n');
     throw error;
   } finally {
+    if(previousUserConfig===undefined)delete process.env.OYZU_USER_CONFIG;else process.env.OYZU_USER_CONFIG=previousUserConfig;
     if (!path.resolve(scratch).startsWith(path.resolve(os.tmpdir()) + path.sep)) throw Error('Verification cleanup leaves temporary storage');
     fs.rmSync(scratch, {recursive: true, force: true});
   }

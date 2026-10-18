@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2024"
 license = "Apache-2.0"
 [dependencies]
-release-format = { path = "../format", features = ["label"] }
+release-format = { path = "../format", features = ["normalize"] }
 release-macro = { path = "../macro" }

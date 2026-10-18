@@ -6,6 +6,7 @@ import os from 'node:os';
 import crypto from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
+import {copyCommittedProject, recipeDigest} from './verify.mjs';
 const collection = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const [cli, projectInput, registryInput, repository, tag, recordPath] = process.argv.slice(2);
 if (!cli || !path.isAbsolute(cli) || !recordPath || !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository ?? '')) throw Error('Usage: publication.mjs ABS_CLI ABS_PROJECT LOOPBACK_REGISTRY OWNER/REPO EXISTING_TEST_TAG RECORD');
@@ -19,12 +20,15 @@ const sha = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const digest = bytes => 'sha256:' + sha(bytes);
 const assert = (value, message) => {if (!value) throw Error(message);};
 const history = [];
+const previousUserConfig=process.env.OYZU_USER_CONFIG;
 const namespace = 'examples-'+crypto.randomBytes(8).toString('hex');
 let retryStarted=false;
 function command(args, expected = 0) {
-  const result = spawnSync(cli, ['--root', scratch, '-C', scratch, ...args], {cwd:scratch, env:process.env, encoding:'utf8', maxBuffer:16*1024*1024});
+  const env={...process.env};
+  if(args[0]!=='publish'){delete env.EXAMPLES_GITHUB_TOKEN;delete env.EXAMPLES_PUBLICATION_SEED;}
+  const result = spawnSync(cli, ['--root', scratch, '-C', scratch, ...args], {cwd:scratch, env, encoding:'utf8', maxBuffer:16*1024*1024});
   assert(result.status === expected, 'Oyzu ' + args.join(' ') + ' failed: ' + (result.stderr ?? '').replaceAll(token, '[REDACTED]') + '\n' + (result.stdout ?? '').replaceAll(token, '[REDACTED]'));
-  history.push({args,result:result.status});
+  history.push({args:args.map(value=>value===process.env.EXAMPLES_DOCKER_CLI?'<native Docker>':value.replaceAll(scratch,'<project>')),result:result.status});
   return result.stdout;
 }
 const pair = () => {
@@ -63,7 +67,16 @@ async function github(route, binary=false) {
   return binary?Buffer.from(await response.arrayBuffer()):response.json();
 }
 try {
-  fs.cpSync(path.resolve(projectInput),scratch,{recursive:true,filter:file=>!['.oyzu','dist','target','.git'].includes(path.basename(file))});
+  const sourceRecipe='publishing/multiple-destinations';
+  assert(path.resolve(projectInput)===path.join(collection,sourceRecipe,'project'),'Use the canonical committed publication project');
+  const git=args=>{const result=spawnSync('git',args,{cwd:collection,encoding:'utf8'});assert(result.status===0,'Required source identity unavailable');return result.stdout.trim();};
+  const sourceCommit=git(['rev-parse','HEAD']);
+  assert(!git(['status','--porcelain','--',sourceRecipe]),'Commit recipe changes before recording publication');
+  const subject={commit:sourceCommit,recipe_tree:git(['rev-parse',sourceCommit+':'+sourceRecipe]),recipe_sha256:recipeDigest(collection,sourceCommit,sourceRecipe)};
+  copyCommittedProject(collection,sourceCommit,sourceRecipe,scratch);
+  const userConfig=path.join(scratch,'.oyzu/verification-user/config.toml');
+  fs.mkdirSync(path.dirname(userConfig),{recursive:true});fs.writeFileSync(userConfig,'# Disposable verification user settings; native administration remains binding.\n');
+  process.env.OYZU_USER_CONFIG=userConfig;
   const pom = path.join(scratch,'pom.xml');
   fs.writeFileSync(pom,fs.readFileSync(pom,'utf8').replace('<version>0.1.0</version>','<version>0.1.0-'+namespace+'</version>'));
   const configuration = fs.readFileSync(path.join(scratch,'oyzu.toml'),'utf8');
@@ -75,13 +88,13 @@ try {
   const manifest = JSON.parse(fs.readFileSync(path.join(scratch,'dist/manifest.json')));
   const artifact = manifest.artifacts[0];
   artifact.filename = path.basename(artifact.path);
+  const buildParameters={command:'oyzu build',nativeVersion:artifact.version,sourceTree:manifest.source.treeDigest,sourceAdjustment:'Unique native Maven version for a disposable test attempt'};
   assert(manifest.status==='succeeded' && artifact.kind!=='directory','This proof requires a real finalized file');
   const payload = fs.readFileSync(path.join(scratch,'dist',artifact.path));
   assert(digest(payload)===artifact.digest,'Finalized file digest differs');
   const id = artifact.name==='primary'?artifact.target:artifact.target+'/'+artifact.name;
   const builderId = 'https://example.invalid/oyzu-examples/local-test-witness';
-  const sourceCommit = spawnSync('git',['rev-parse','HEAD'],{cwd:collection,encoding:'utf8'}).stdout.trim();
-  const provenance = sign({_type:'https://in-toto.io/Statement/v1',subject:[{name:id,digest:{sha256:sha(payload)}}],predicateType:'https://slsa.dev/provenance/v1',predicate:{buildDefinition:{buildType:'https://example.invalid/oyzu-examples/observed-local-build',externalParameters:{command:'oyzu build'},resolvedDependencies:[{uri:'git+https://github.com/oyzuai/oyzu-examples',digest:{gitCommit:sourceCommit}}]},runDetails:{builder:{id:builderId},metadata:{invocationId:crypto.randomUUID(),startedOn:started,finishedOn:finished}}}});
+  const provenance = sign({_type:'https://in-toto.io/Statement/v1',subject:[{name:id,digest:{sha256:sha(payload)}}],predicateType:'https://slsa.dev/provenance/v1',predicate:{buildDefinition:{buildType:'https://example.invalid/oyzu-examples/observed-local-build',externalParameters:buildParameters,resolvedDependencies:[{uri:'git+https://github.com/oyzuai/oyzu-examples',digest:{gitCommit:sourceCommit}}]},runDetails:{builder:{id:builderId},metadata:{invocationId:crypto.randomUUID(),startedOn:started,finishedOn:finished}}}});
   fs.writeFileSync(path.join(scratch,'build.sigstore.json'),provenance);
   process.env.EXAMPLES_PUBLICATION_SEED = publisher.seed;
   const release = await github(`/repos/${repository}/releases/tags/${encodeURIComponent(tag)}`);
@@ -112,9 +125,18 @@ try {
   const manifestBytes = Buffer.from(await nativeManifest.arrayBuffer());
   assert(digest(manifestBytes)===oci.reference.split('@')[1],'OCI manifest digest differs');
   const image = JSON.parse(manifestBytes);
+  const configResponse=await fetch(`${registry.origin}/v2/${coordinate.repository}/blobs/${image.config.digest}`);
+  assert(configResponse.ok,'Independent OCI config GET failed');
+  const configBytes=Buffer.from(await configResponse.arrayBuffer());
+  assert(digest(configBytes)===image.config.digest && configBytes.length===image.config.size,'OCI config identity differs');
   const layers=[];
   for(const layer of image.layers){const response=await fetch(`${registry.origin}/v2/${coordinate.repository}/blobs/${layer.digest}`);assert(response.ok,'OCI layer unavailable');const bytes=Buffer.from(await response.arrayBuffer());assert(digest(bytes)===layer.digest && bytes.length===layer.size,'OCI layer identity differs');layers.push(bytes);}
   assert(layers.some(bytes=>bytes.equals(payload)) && layers.some(bytes=>bytes.equals(provenance)),'OCI original bytes missing');
+  const ociIntent=layers.find(bytes=>{
+    try {const envelope=JSON.parse(bytes).dsseEnvelope;return envelope && JSON.parse(Buffer.from(envelope.payload,'base64')).predicateType==='https://oyzu.dev/attestations/publication-intent/v1alpha1';}catch{return false;}
+  });
+  assert(ociIntent,'OCI publication intent missing');
+  verifyEvidence(ociIntent,publisher.root,artifact.digest,'https://oyzu.dev/attestations/publication-intent/v1alpha1');
   const assets = await github(`/repos/${repository}/releases/${release.id}/assets?per_page=100`);
   const names=[artifact.filename,artifact.filename+'.provenance.sigstore.json',artifact.filename+'.publication.sigstore.json'];
   const downloaded=[];
@@ -138,12 +160,13 @@ try {
   assert(conflict.includes('PUBLISH_CONFLICT'),'Occupied GitHub filename did not fail as conflict');
   const original=assets.find(item=>item.name===artifact.filename);
   assert((await github(`/repos/${repository}/releases/assets/${original.id}`,true)).equals(payload),'Conflict replaced original bytes');
-  const record={recipe:'publication-multiple',subject:{commit:sourceCommit},oyzu:{version:spawnSync(cli,['--version'],{encoding:'utf8'}).stdout.trim(),binary_sha256:sha(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},result:'passed',execution:'observed-local-build-and-live-providers',repository,tag,releaseId:release.id,artifact:{digest:artifact.digest,consumer},commands:history,observations:['OCI partial failure preserved successful first destination','unchanged retry reconciled completed effects and finished the remaining destination','OCI and GitHub native retrieval matched original payload/provenance','matching repeat reconciled both destinations','retrieved JAR ran independently','occupied GitHub filename refused and original asset stayed unchanged'],limits:['Explicit local test-witness keys; no protected origin, keyless identity, transparency or SLSA-level claim','Anonymous loopback OCI and GitHub.com only','Temporary registry/tag/release provisioned separately; no product release'],recordedAt:new Date().toISOString()};
+  const record={recipe:'publication-multiple',subject,parameters:buildParameters,oyzu:{version:spawnSync(cli,['--version'],{encoding:'utf8'}).stdout.trim(),binary_sha256:sha(fs.readFileSync(cli))},host:{os:process.platform,arch:process.arch},result:'passed',execution:'observed-local-build-and-live-providers',repository,tag,releaseId:release.id,artifact:{digest:artifact.digest,consumer},testWitness:{builderId,builderPublicKey:builder.root,publicationPublicKey:publisher.root},commands:history,observations:['OCI partial failure preserved successful first destination','unchanged retry reconciled completed effects and finished the remaining destination','OCI and GitHub native retrieval matched original payload/provenance','matching repeat reconciled both destinations','retrieved JAR ran independently','occupied GitHub filename refused and original asset stayed unchanged'],limits:['Explicit local test-witness keys; no protected origin, keyless identity, transparency or SLSA-level claim','Anonymous loopback OCI and GitHub.com only','Temporary registry/tag/release provisioned separately; no product release'],recordedAt:new Date().toISOString()};
   fs.mkdirSync(path.dirname(path.resolve(recordPath)),{recursive:true});fs.writeFileSync(recordPath,JSON.stringify(record,null,2)+'\n');
   console.log('Live OCI/GitHub publication, native retrieval, repeat, partial effects and conflict passed.');
 } finally {
   delete process.env.EXAMPLES_PUBLICATION_SEED;
   if(retryStarted) spawnSync(cli,['--root',collection,'exec','--',process.env.EXAMPLES_DOCKER_CLI,'stop','examples-proof-611-retry-registry'],{cwd:collection,stdio:'ignore'});
+  if(previousUserConfig===undefined)delete process.env.OYZU_USER_CONFIG;else process.env.OYZU_USER_CONFIG=previousUserConfig;
   assert(path.resolve(scratch).startsWith(path.resolve(os.tmpdir())+path.sep),'Cleanup outside owned temporary storage');
   fs.rmSync(scratch,{recursive:true,force:true});
 }

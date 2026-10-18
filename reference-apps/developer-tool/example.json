@@ -13,13 +13,15 @@
     "consumer"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "See the canonical recipe for native tools and execution limits"
   ],
-  "profiles": [
-    "local"
+  "verification": [
+    "verification/records/developer-tool-windows.json"
   ],
-  "verification": [],
-  "traceability": []
+  "traceability": [],
+  "executionProfiles": [
+    "native-host"
+  ]
 }

@@ -15,9 +15,6 @@
   "prerequisites": [
     "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
   ],
-  "profiles": [
-    "see-recipe"
-  ],
   "verification": [
     "verification/records/node-application-windows.json"
   ],
@@ -25,5 +22,8 @@
     "EX-007",
     "EX-018",
     "EX-050"
+  ],
+  "executionProfiles": [
+    "native-host"
   ]
 }

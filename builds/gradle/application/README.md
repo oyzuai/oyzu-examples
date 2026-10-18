@@ -6,8 +6,7 @@ Build a Java application through Gradle and consume its delivered JAR.
 
 Use the explicitly provisioned oyzu-toolchain/gradle:8.14.3-jdk17 executor on a supported Docker engine. The normal lock retains genuine Gradle/JDK requirements; host installer qualification is separate. This recipe uses Gradle 8.14.3 and Java 17; native tool/plugin preparation may need network access.
 
-This recipe is blocked pending its own real build and consumer proof. Product
-support is separate from example verification. Check the catalog and exact
+Product support is separate from example verification. Check the catalog and exact
 verification subject before relying on a host, executor or target.
 
 ## Build and inspect
@@ -33,7 +32,7 @@ Gradle's conventional Java plugin produces the JAR. The consumer explicitly sele
 
 ## Consume the delivered artifact
 
-Read the delivered JAR path from dist/manifest.json and run it with the selected java -cp <delivered-jar> example.Hello. Expect Hello from Gradle.
+Read the delivered JAR path from dist/manifest.json and run it with the selected java -cp `<delivered-jar>` example.Hello. Expect Hello from Gradle.
 
 Use recorded artifact paths and identities. This baseline build does not claim
 tests, coverage, lint or format checks that were not selected. Failed checks and

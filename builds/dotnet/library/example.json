@@ -11,14 +11,15 @@
     "artifacts"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "Current Oyzu .NET support requires the separately provisioned Linux captured SDK 10.0.401 executor. There is no host adapter or automatic .NET SDK installer. Do not treat the presence of dotnet on Windows as equivalent qualification."
   ],
-  "profiles": [
-    "see-recipe"
+  "verification": [
+    "verification/records/dotnet-library-windows.json"
   ],
-  "verification": [],
   "traceability": [],
-  "currentGap": "This original sample needs a committed real-CLI build and delivered-artifact consumer proof. Tool/executor availability and any observed failures must be recorded separately."
+  "executionProfiles": [
+    "captured"
+  ]
 }

@@ -18,7 +18,7 @@ oyzu inspect dist
 
 Run the delivered directory's index.cjs with Node and expect Hello from Node.
 
-Read dist/manifest.json for the exact artifact, rather than assuming a generated filename. No account or deployment is involved. A plan or generated lock is not a successful execution. Current recipe readiness remains blocked until a matching verification record exists.
+Read dist/manifest.json for the exact artifact, rather than assuming a generated filename. No account or deployment is involved. A plan or generated lock is not a successful execution. Use the catalog readiness and exact matching verification record; a native lock alone does not qualify this flow.
 
 ## Native source
 

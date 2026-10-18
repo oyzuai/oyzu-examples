@@ -15,14 +15,14 @@
   "prerequisites": [
     "Oyzu can acquire the declared Node and npm versions. This project uses the host npm dist-application path. No Docker engine, account or registry credentials are needed after tool acquisition."
   ],
-  "profiles": [
-    "see-recipe"
-  ],
   "verification": [],
   "traceability": [
     "EX-007",
     "EX-018",
     "EX-050"
   ],
-  "currentGap": "Candidate native-manager recipe awaiting its own captured build and downstream consumer record."
+  "currentGap": "The current pin command refuses the yarn request with TOOL_ALIAS_UNSUPPORTED. The native Yarn lock exists, but it is not proof of an Oyzu build.",
+  "executionProfiles": [
+    "captured-candidate"
+  ]
 }

@@ -11,6 +11,12 @@ artifact. Records identify the exact recipe commit/tree/content digest, CLI
 binary digest, commands, host/execution/target, reports and limits. Raw logs stay
 in ignored local storage or CI logs. A record for changed content is historical,
 not a badge for the new recipe. Failed commands fail the verification process.
+The harness selects a disposable empty user configuration through
+OYZU_USER_CONFIG so hidden user preferences do not become project prerequisites.
+Native machine/organization configuration remains binding, and the shared
+verified tool store is retained. This does not suppress invalid selected locks
+or grant authority. Failed attempts retain a concise record, without publishing
+raw local logs or machine paths.
 
 The native CI job selects affected recipes on PRs and main pushes. Common
 verification changes, Monday compatibility runs and manually selected candidate

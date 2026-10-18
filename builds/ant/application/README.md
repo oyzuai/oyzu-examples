@@ -6,8 +6,7 @@ Use native Ant targets to compile and package a Java application.
 
 The captured Ant builder needs its documented provisioned native Java/Ant executor. Ant acquisition is not supplied by adding an invented tool provider. See the current Ant reference before running.
 
-This recipe is blocked pending its own real build and consumer proof. Product
-support is separate from example verification. Check the catalog and exact
+Product support is separate from example verification. Check the catalog and exact
 verification subject before relying on a host, executor or target.
 
 ## Build and inspect
@@ -33,7 +32,7 @@ build.xml owns compile and jar prerequisites. The project has no external Java d
 
 ## Consume the delivered artifact
 
-Inspect the delivered JAR, then run java -cp <delivered-jar> example.Hello with a compatible provisioned JDK. Expect Hello from Ant.
+Inspect the delivered JAR, then run java -cp `<delivered-jar>` example.Hello with a compatible provisioned JDK. Expect Hello from Ant.
 
 Use recorded artifact paths and identities. This baseline build does not claim
 tests, coverage, lint or format checks that were not selected. Failed checks and

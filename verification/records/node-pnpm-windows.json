@@ -1,0 +1,50 @@
+{
+  "recipe": "node-pnpm",
+  "subject": {
+    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
+    "recipe_sha256": "1f9c84ce9d471665c589b74c24231221323ac207ff34c31a6a676df52866a035",
+    "recipe_tree": "6f08eb1cf5bad11a933fe6c37bfdf65123b743d1"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
+    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--isolated"
+    ],
+    [
+      "oyzu",
+      "inspect",
+      "dist"
+    ],
+    [
+      "oyzu",
+      "exec",
+      "--",
+      "node",
+      "<project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.g8cc0b95d52d7\\index.cjs"
+    ]
+  ],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe exec -- node <project>\\dist\\greeting\\artifacts\\application-0.1.0-dev.g8cc0b95d52d7\\index.cjs failed (1):",
+    "code": "COMMAND_FAILED"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T04:49:52.940Z"
+}

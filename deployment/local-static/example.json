@@ -12,13 +12,15 @@
     "artifact-selection"
   ],
   "productSupport": "generic-task",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "Selected Node/npm tools; see the recipe for local execution inputs"
   ],
-  "profiles": [
-    "local"
+  "verification": [
+    "verification/records/static-deployment-windows.json"
   ],
-  "verification": [],
-  "traceability": []
+  "traceability": [],
+  "executionProfiles": [
+    "external-tool-task"
+  ]
 }

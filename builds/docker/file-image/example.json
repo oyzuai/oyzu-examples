@@ -15,13 +15,13 @@
   "prerequisites": [
     "Use the current Docker/BuildKit captured executor and a running engine. This image has no base-image download or executable application. Image construction does not establish image publication or a deployed service."
   ],
-  "profiles": [
-    "see-recipe"
-  ],
   "verification": [
     "verification/records/docker-file-image-windows.json"
   ],
   "traceability": [
     "EX-026"
+  ],
+  "executionProfiles": [
+    "native-host"
   ]
 }

@@ -1,6 +1,6 @@
 # Order native tasks and build hooks
 
-A native Node build consumes a file prepared by an explicit pre-build hook. The hook depends on an input check, and a post-build hook checks that native output exists. A normal configuration profile changes the resolved environment.
+A native Node build consumes a file prepared by an explicit pre-build hook. The hook depends on an input check, and a post-build hook checks that native output exists. A normal configuration profile changes the resolved environment. This recipe selects captured execution: provision a supported Docker engine and the documented npm/Node executor first. The observed host path did not run this hook and failed on the missing generated input; that host scenario is not qualified.
 
 ## Build and observe
 
@@ -9,11 +9,11 @@ Copy the entire project/ outside the collection, retain LICENSE, and use its nor
 ~~~sh
 oyzu install --frozen
 oyzu build --plan
-oyzu build --full
+oyzu build --isolated --full
 oyzu inspect dist
 ~~~
 
-Run the delivered directory's index.cjs with the selected Node. Expect Hello from tasks: local. Repeat with oyzu --profile preview build --full and expect Hello from tasks: preview. The resolved profile changes data, not authority. Try an invalid GREETING_MODE in a local configuration override: the input prerequisite must fail, and no dependent build becomes successful. Use oyzu run list to inspect authored and builder tasks without executing them.
+Run the delivered directory's index.cjs with the selected Node. Expect Hello from tasks: local. Repeat with oyzu --profile preview build --isolated --full and expect Hello from tasks: preview. The resolved profile changes data, not authority. Try an invalid GREETING_MODE in a local configuration override: the input prerequisite must fail, and no dependent build becomes successful. Use oyzu run list to inspect authored and builder tasks without executing them.
 
 ## Configuration owner
 

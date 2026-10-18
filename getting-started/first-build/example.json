@@ -18,11 +18,11 @@
     "Oyzu installation",
     "Rust selected by project configuration"
   ],
-  "profiles": [
-    "host"
-  ],
   "verification": [
     "verification/records/first-build-windows.json"
   ],
-  "traceability": []
+  "traceability": [],
+  "executionProfiles": [
+    "native-host"
+  ]
 }

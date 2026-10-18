@@ -13,13 +13,15 @@
     "reports"
   ],
   "productSupport": "implemented-partial",
-  "maturity": "blocked",
+  "maturity": "experimental",
   "prerequisites": [
     "Selected Node/npm tools; see the recipe for local execution inputs"
   ],
-  "profiles": [
-    "local"
+  "verification": [
+    "verification/records/tasks-and-hooks-windows.json"
   ],
-  "verification": [],
-  "traceability": []
+  "traceability": [],
+  "executionProfiles": [
+    "captured"
+  ]
 }

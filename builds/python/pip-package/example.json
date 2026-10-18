@@ -15,13 +15,13 @@
   "prerequisites": [
     "Oyzu can acquire the selected CPython 3.13 line. Initial preparation needs access to the native build-backend packages. This package has no runtime dependencies."
   ],
-  "profiles": [
-    "see-recipe"
-  ],
   "verification": [
     "verification/records/python-package-windows.json"
   ],
   "traceability": [
     "EX-013"
+  ],
+  "executionProfiles": [
+    "native-host"
   ]
 }

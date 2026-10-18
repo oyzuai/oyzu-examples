@@ -13,7 +13,7 @@ oyzu build
 oyzu inspect dist
 ~~~
 
-Read the delivered directory path and identity from dist/manifest.json. Set SITE_DIR to that absolute directory and PORT to an unused local port, using your shell's ordinary environment syntax. Then run oyzu run serve. Request http://127.0.0.1:<port>/ and expect Served from the selected artifact. Stop the task with Ctrl+C. The task serves bytes from the selected artifact directory and does not rebuild; changing a checkout file cannot change the running response. Verify the bundle before selecting it. The verification harness observes the response and compares the served bytes with the artifact.
+Read the delivered directory path and identity from dist/manifest.json. Set SITE_DIR to that absolute directory and PORT to an unused local port, using your shell's ordinary environment syntax. Then run oyzu run serve. Request http://127.0.0.1:`<port>`/ and expect Served from the selected artifact. Stop the task with Ctrl+C. The task serves bytes from the selected artifact directory and does not rebuild; changing a checkout file cannot change the running response. Verify the bundle before selecting it. The verification harness observes the response and compares the served bytes with the artifact.
 
 ## Configuration owner
 

@@ -1,0 +1,43 @@
+{
+  "recipe": "tasks-and-hooks",
+  "subject": {
+    "commit": "741ec7c2f32ab79c37520ae4a37f40be6650832d",
+    "recipe_sha256": "7216e549c03e0263982abaac320fc33d94fc8551c2562772dc5a3457492dee6c",
+    "recipe_tree": "efb9a038063cb28c6f16a76ff86be8c5af935e4c"
+  },
+  "oyzu": {
+    "version": "oyzu 0.1.0-local.19e4b2809975.dirty (debug; x86_64-pc-windows-msvc; build 1792298032)",
+    "binary_sha256": "9fee8b5a42eb06934beab270751408dba0ee42834cd82f0c8a16fc84235b0818"
+  },
+  "host": {
+    "os": "win32",
+    "arch": "x64"
+  },
+  "execution": "attempted-native-build",
+  "commands": [
+    [
+      "oyzu",
+      "install",
+      "--frozen"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--plan"
+    ],
+    [
+      "oyzu",
+      "build",
+      "--full"
+    ]
+  ],
+  "result": "failed",
+  "diagnostic": {
+    "summary": "oyzu.exe build --full failed (1):",
+    "code": "CONSUMER_OR_PREREQUISITE_FAILURE"
+  },
+  "limits": [
+    "This failed attempt does not qualify the recipe or its host/executor/target"
+  ],
+  "recordedAt": "2026-10-18T04:50:08.994Z"
+}
