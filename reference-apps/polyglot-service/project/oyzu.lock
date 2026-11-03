@@ -4,12 +4,12 @@ tool = []
 
 [[resolved_environment]]
 required_capabilities = []
-request_digest = "sha256:0dd622df780da8bcd6ea222c608488ca71a50afab20aaab32b718481bebe3044"
-roots = ["sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426", "sha256:1deb6bd6e3668af3399123c805b124c81263bbd0282a7f23ae9f3ad34b3351b3", "sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e", "sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345", "sha256:dfd4992f91da11ebe617e13c4504282aaada258eb885cba37a7886111c678ce7", "sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c", "sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e"]
+request_digest = "sha256:2aba0a03d54cb58fa534bbd95384c8e350351969130cdd3c5c90cdb2e5220312"
+roots = ["sha256:1deb6bd6e3668af3399123c805b124c81263bbd0282a7f23ae9f3ad34b3351b3", "sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56", "sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580", "sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3", "sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b", "sha256:dfd4992f91da11ebe617e13c4504282aaada258eb885cba37a7886111c678ce7", "sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e"]
 
 [resolved_environment.requests]
 "oyzu:go" = "1.24.13"
-"oyzu:node" = "22.23.3"
+"oyzu:node" = "22.23.4"
 "oyzu:npm" = "11.11.0"
 
 [resolved_environment.native_constraints]
@@ -17,27 +17,16 @@ roots = ["sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d42
 
 [[resolved_environment]]
 required_capabilities = []
-request_digest = "sha256:60f2928bcb35c48095e7b8ccaad07ee9fec9f52c8e2d3c4670cb7d72f19715f9"
-roots = ["sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426", "sha256:1deb6bd6e3668af3399123c805b124c81263bbd0282a7f23ae9f3ad34b3351b3", "sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e", "sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345", "sha256:dfd4992f91da11ebe617e13c4504282aaada258eb885cba37a7886111c678ce7", "sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c", "sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e"]
+request_digest = "sha256:dab78f857d676dfdf46e5c5783dc0e18a42cbdf964078e75e038809ab1fc1f84"
+roots = ["sha256:1deb6bd6e3668af3399123c805b124c81263bbd0282a7f23ae9f3ad34b3351b3", "sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56", "sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580", "sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3", "sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b", "sha256:dfd4992f91da11ebe617e13c4504282aaada258eb885cba37a7886111c678ce7", "sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e"]
 
 [resolved_environment.requests]
 "oyzu:go" = "1.24.13"
-"oyzu:node" = "22.23.3"
+"oyzu:node" = "22.23.4"
 "oyzu:npm" = "11.11.0"
 
 [resolved_environment.native_constraints]
 "oyzu:go" = ["go-minimum:>=1.24.13"]
-
-[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426"]
-tool = "oyzu:node"
-version = "22.23.3"
-backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "linux/arm64/gnu"
-components = []
-
-[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-arm64.tar.gz"
-digest = "sha256:5ced2d48d1d7198739b7f86804de0171aefb6823b684b12341d3321afc3cb0b2"
 
 [resolution."sha256:1deb6bd6e3668af3399123c805b124c81263bbd0282a7f23ae9f3ad34b3351b3"]
 tool = "oyzu:go"
@@ -72,16 +61,27 @@ components = []
 url = "https://registry.npmjs.org/npm/-/npm-11.11.0.tgz"
 digest = "sha256:cbcf4cc03148ccdb586a8bf2093c952f093fb43d5cbc97593c98b67ef8c003b0"
 
-[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e"]
+[resolution."sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56"]
 tool = "oyzu:node"
-version = "22.23.3"
+version = "22.23.4"
 backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "darwin/arm64/native"
+execution_platform = "windows/amd64/msvc"
 components = []
 
-[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-darwin-arm64.tar.gz"
-digest = "sha256:23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53"
+[resolution."sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-win-x64.zip"
+digest = "sha256:cbc74b5e0982c9dbb41525fd8fb5dcd32fbee237863f7829072f4639a1ce5f20"
+
+[resolution."sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580"]
+tool = "oyzu:node"
+version = "22.23.4"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-x64.tar.gz"
+digest = "sha256:b8492284c76a54baf58d61668dd0e41ee0fc98adabf9503d30f05d08f55b4406"
 
 [resolution."sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3"]
 tool = "oyzu:go"
@@ -93,6 +93,17 @@ components = []
 [resolution."sha256:8a42a09726c2c6334d7a97ba3123f282268b31631b184d6053f2c0207d7c5cb3".inputs.archive]
 url = "https://dl.google.com/go/go1.24.13.windows-amd64.zip"
 digest = "sha256:40b16bc8f00540a2cb02dff4de72b73e966fdd8d65f95e33d8e4080b48a2459a"
+
+[resolution."sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536"]
+tool = "oyzu:node"
+version = "22.23.4"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-arm64.tar.gz"
+digest = "sha256:f7a1e486dbc8b286847815b477d4fb5e9fb963ed4489c3e1588853d685f589f9"
 
 [resolution."sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309"]
 tool = "oyzu:npm"
@@ -116,16 +127,16 @@ components = []
 url = "https://registry.npmjs.org/npm/-/npm-11.11.0.tgz"
 digest = "sha256:cbcf4cc03148ccdb586a8bf2093c952f093fb43d5cbc97593c98b67ef8c003b0"
 
-[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345"]
+[resolution."sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b"]
 tool = "oyzu:node"
-version = "22.23.3"
+version = "22.23.4"
 backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "linux/amd64/gnu"
+execution_platform = "darwin/arm64/native"
 components = []
 
-[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-x64.tar.gz"
-digest = "sha256:1084aa36196bba4c3a5e69a1ee388a6e4ff729dad09445fbcd434b28fe3c24af"
+[resolution."sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-arm64.tar.gz"
+digest = "sha256:c9e1dbc748b33ed2d14f42445191ecaf14c56259c7a9a26d0042c49ec2b66428"
 
 [resolution."sha256:dfd4992f91da11ebe617e13c4504282aaada258eb885cba37a7886111c678ce7"]
 tool = "oyzu:go"
@@ -138,17 +149,6 @@ components = []
 url = "https://dl.google.com/go/go1.24.13.linux-amd64.tar.gz"
 digest = "sha256:1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730"
 
-[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c"]
-tool = "oyzu:node"
-version = "22.23.3"
-backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "windows/amd64/msvc"
-components = []
-
-[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-win-x64.zip"
-digest = "sha256:2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71"
-
 [resolution."sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e"]
 tool = "oyzu:go"
 version = "1.24.13"
@@ -159,3 +159,34 @@ components = []
 [resolution."sha256:ff28b4b7c4cbc47e49f53873e8e6517e32ff80a026c3729be7e0e978bbecef6e".inputs.archive]
 url = "https://dl.google.com/go/go1.24.13.darwin-arm64.tar.gz"
 digest = "sha256:f282d882c3353485e2fc6c634606d85caf36e855167d59b996dbeae19fa7629a"
+
+[[plugin]]
+reference = "go/app"
+profile = "app"
+package = "oyzu/go"
+major = 0
+version = "0.1.0-preview.2"
+release = "sha256:177c30e705202a92966529f2c3ebb276eb99a8d4f37c86eec79623e8aca16d45"
+
+[[plugin.payloads]]
+os = "darwin"
+arch = "amd64"
+digest = "sha256:9b05af61332fd4a3b8f0df30ed0bc54df2eed6818733097c8916328bbb680126"
+
+[[plugin.payloads]]
+os = "linux"
+arch = "amd64"
+abi = "musl"
+digest = "sha256:a027a0bfb260b8f3cf152f065d358d48cf28b17483b11b88c4afb3ee16199789"
+
+[[plugin.payloads]]
+os = "linux"
+arch = "arm64"
+abi = "musl"
+digest = "sha256:95fd3fd79ffaca3ea8eead8f4c215fadf58504a5e40738795c8d7e01b24f798d"
+
+[[plugin.payloads]]
+os = "windows"
+arch = "amd64"
+abi = "msvc"
+digest = "sha256:eb3694ed899fb949b52d8356856f36fff1fcb32876ce654223ce318b828b09c6"

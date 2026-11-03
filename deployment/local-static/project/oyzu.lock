@@ -4,27 +4,16 @@ tool = []
 
 [[resolved_environment]]
 required_capabilities = []
-request_digest = "sha256:87e755d601a4859deeba89d5ea3e097a8fffbebb158158130251efcf7f0b42be"
-roots = ["sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426", "sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345", "sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c"]
+request_digest = "sha256:aaf6cfed07e3369b84a696f3999d962f8dd1a95da2a9ffbe0d8ccd430c01cc5e"
+roots = ["sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7", "sha256:2409fafb0368d52cf915821b9cab08a6b4886520f32421114eb70a800f8b00f9", "sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56", "sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580", "sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536", "sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309", "sha256:b181313c3a4c4253be2a8721a659c7611c2ce3b240fc7a4d797256bde119f7d9", "sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b"]
 
 [resolved_environment.requests]
-"oyzu:node" = "22.23.3"
+"oyzu:node" = "22.23.4"
 "oyzu:npm" = "11.11.0"
 
 [resolved_environment.native_constraints]
 "oyzu:node" = ["npm-semver:>=22"]
 "oyzu:npm" = ["package-manager:11.11.0"]
-
-[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426"]
-tool = "oyzu:node"
-version = "22.23.3"
-backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "linux/arm64/gnu"
-components = []
-
-[resolution."sha256:0b8751dbd133f9434b385cdac862b3cbae1562706b306aba359c02836426d426".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-arm64.tar.gz"
-digest = "sha256:5ced2d48d1d7198739b7f86804de0171aefb6823b684b12341d3321afc3cb0b2"
 
 [resolution."sha256:2104814934f0f29d966db5e4fe4b272c008c4c0c5293540bad40c19c2abe5ce7"]
 tool = "oyzu:npm"
@@ -48,16 +37,38 @@ components = []
 url = "https://registry.npmjs.org/npm/-/npm-11.11.0.tgz"
 digest = "sha256:cbcf4cc03148ccdb586a8bf2093c952f093fb43d5cbc97593c98b67ef8c003b0"
 
-[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e"]
+[resolution."sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56"]
 tool = "oyzu:node"
-version = "22.23.3"
+version = "22.23.4"
 backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "darwin/arm64/native"
+execution_platform = "windows/amd64/msvc"
 components = []
 
-[resolution."sha256:2cc114b11255a5b7720a97e016fbd6ce8c4e706f08ed7d29605bfa34f3ecd55e".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-darwin-arm64.tar.gz"
-digest = "sha256:23b25245dcfb9af7262f8ff142e9e2e0af025368117329e7a7458a51e5922f53"
+[resolution."sha256:41fa8f2d15185eba60f5075164c2a23114d2692dd3fffb004e053757ce3d4a56".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-win-x64.zip"
+digest = "sha256:cbc74b5e0982c9dbb41525fd8fb5dcd32fbee237863f7829072f4639a1ce5f20"
+
+[resolution."sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580"]
+tool = "oyzu:node"
+version = "22.23.4"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/amd64/gnu"
+components = []
+
+[resolution."sha256:6891b1993c56d51d0a85c9e4929f40a0b5f7ca6151899d47928d816f00789580".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-x64.tar.gz"
+digest = "sha256:b8492284c76a54baf58d61668dd0e41ee0fc98adabf9503d30f05d08f55b4406"
+
+[resolution."sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536"]
+tool = "oyzu:node"
+version = "22.23.4"
+backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
+execution_platform = "linux/arm64/gnu"
+components = []
+
+[resolution."sha256:8e72c944dfbbf27de94a93f34f2403e2d138b3130c9415f664b3c685ed02b536".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-linux-arm64.tar.gz"
+digest = "sha256:f7a1e486dbc8b286847815b477d4fb5e9fb963ed4489c3e1588853d685f589f9"
 
 [resolution."sha256:a69eaa93e59c969eca8593f648c2ce78c11a1cebf6c9740e86e01cbe527f0309"]
 tool = "oyzu:npm"
@@ -81,24 +92,13 @@ components = []
 url = "https://registry.npmjs.org/npm/-/npm-11.11.0.tgz"
 digest = "sha256:cbcf4cc03148ccdb586a8bf2093c952f093fb43d5cbc97593c98b67ef8c003b0"
 
-[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345"]
+[resolution."sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b"]
 tool = "oyzu:node"
-version = "22.23.3"
+version = "22.23.4"
 backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "linux/amd64/gnu"
+execution_platform = "darwin/arm64/native"
 components = []
 
-[resolution."sha256:bb4ff1b1977fa8cefbc9cb59eb9a0d2afa0c5a0886af30e5eb8db6b75d10f345".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-linux-x64.tar.gz"
-digest = "sha256:1084aa36196bba4c3a5e69a1ee388a6e4ff729dad09445fbcd434b28fe3c24af"
-
-[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c"]
-tool = "oyzu:node"
-version = "22.23.3"
-backend_digest = "sha256:b03a56044afc327f709f699dc5d62874624ff05cc426afed981d2bf679b93705"
-execution_platform = "windows/amd64/msvc"
-components = []
-
-[resolution."sha256:f32cd70ea9ae0013bf25410de19cf57e406e47ab5feec6ae97a6b7af0a64772c".inputs.archive]
-url = "https://nodejs.org/dist/v22.23.3/node-v22.23.3-win-x64.zip"
-digest = "sha256:2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71"
+[resolution."sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b".inputs.archive]
+url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-arm64.tar.gz"
+digest = "sha256:c9e1dbc748b33ed2d14f42445191ecaf14c56259c7a9a26d0042c49ec2b66428"
