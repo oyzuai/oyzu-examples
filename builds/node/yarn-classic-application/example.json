@@ -14,7 +14,7 @@
   "productSupport": "implemented-partial",
   "maturity": "executable",
   "prerequisites": [
-    "Selected Node 22.23.3, native packageManager yarn@1.22.22, Docker and the explicitly provisioned compatible Yarn Classic executor; Yarn remains an executor prerequisite, not a managed tool."
+    "Selected Node 22.23.4, native packageManager yarn@1.22.22, Docker and the explicitly provisioned compatible Yarn Classic executor; Yarn remains an executor prerequisite, not a managed tool."
   ],
   "verification": [
     "verification/records/node-yarn-classic-windows.json",
