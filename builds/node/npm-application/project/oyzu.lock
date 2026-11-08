@@ -102,3 +102,23 @@ components = []
 [resolution."sha256:c27615de4ce80cb58513e2b19cd8403cbee37de54c44ae85662202c3743e5b0b".inputs.archive]
 url = "https://nodejs.org/dist/v22.23.4/node-v22.23.4-darwin-arm64.tar.gz"
 digest = "sha256:c9e1dbc748b33ed2d14f42445191ecaf14c56259c7a9a26d0042c49ec2b66428"
+
+[[plugin]]
+reference = "node/app"
+profile = "app"
+package = "oyzu/node"
+major = 0
+version = "0.1.0-preview.4"
+release = "sha256:0632680e7481e9547fa49e6e9c12d400867e140b1110febff7b4ccaa7e3ea5ef"
+
+[[plugin.payloads]]
+os = "linux"
+arch = "amd64"
+abi = "musl"
+digest = "sha256:d5122da97ba1bc78b31b17785f9b17f10b2140fc49eba9cef6c7197a49565ddd"
+
+[[plugin.payloads]]
+os = "windows"
+arch = "amd64"
+abi = "msvc"
+digest = "sha256:1374d2870df45df72e412675a7666144d9aa2114957bb92c9a7e9898730a0413"
