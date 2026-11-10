@@ -131,7 +131,7 @@ Next proof: Run a real Ant test suite, inspect native reports, then introduce a 
 
 **Build a locked .NET solution**. Product support: implemented-partial; recipe readiness: planned.
 
-The current .NET product proof is Linux captured and needs its explicitly provisioned SDK image; broad host support is unproved.
+The solution recipe remains planned. The library baseline uses Docker with a locked SDK restored by Oyzu, not a separately provisioned SDK image; historical Linux captured records do not qualify the locked-tool solution flow or broad host support.
 
 Next proof: Build a solution with locked restore and project references under SDK 10.0.401, consume its NuGet package and record exact SDK/host facts.
 

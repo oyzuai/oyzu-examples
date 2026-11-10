@@ -72,8 +72,13 @@ release's checksum. Externally provisioned executor checks can be run locally
 with the same verifier, and are not counted as hosted native passes.
 `Provided executor examples` is a separate manual workflow for a dedicated
 Linux runner labelled oyzu-examples, with Node and the documented executor
-images already provisioned. It neither installs missing SDKs nor grants success
-when one is unavailable. `Live publication examples` is a manual job on a
+images already provisioned. The workflow does not provision those executor
+images or grant success when a required one is unavailable. The .NET recipe's
+isolated build locks SDK 10.0.401 with `oyzu pin` and restores it through Oyzu
+into the base execution image. Its verifier's independent package consumer
+still uses `oyzu-toolchain/dotnet:10.0.401`; that consumer image is a separate
+verification prerequisite, not a recipe build prerequisite.
+`Live publication examples` is a manual job on a
 disposable GitHub runner: it uses that repository's short-lived contents token,
 separately provisions two local registries, then exercises an existing test
 prerelease selected by the operator. It removes only containers it created.
