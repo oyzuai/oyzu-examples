@@ -4,7 +4,7 @@ Produce a native NuGet package from a small SDK-style library.
 
 ## Prerequisites and status
 
-Current Oyzu .NET support requires the separately provisioned Linux captured SDK 10.0.401 executor. There is no host adapter or automatic .NET SDK installer. Do not treat the presence of dotnet on Windows as equivalent qualification.
+Oyzu's .NET builder is experimental. It supports Linux and Windows x64 native host builds and Linux amd64 isolated builds with Docker or crun; macOS is unsupported. In an isolated build the .NET SDK (10.0.401 by default) is a locked Oyzu tool restored read-only into the container, not a separately provisioned executor, and the base execution image carries no SDK. Native host builds use the SDK that `oyzu install` provisions. Do not treat a `dotnet` already present on the host as equivalent qualification. See [.NET builds](https://docs.oyzu.ai/docs/reference/dotnet).
 
 Product support is separate from example verification. Check the catalog and exact
 verification subject before relying on a host, executor or target.
