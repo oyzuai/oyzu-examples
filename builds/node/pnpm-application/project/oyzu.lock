@@ -102,3 +102,23 @@ components = []
 [resolution."sha256:f9d975b569f5228931cb63fca4eaa544369dd0db25f36f4f959fe5066ab7ec87".inputs.archive]
 url = "https://registry.npmjs.org/@pnpm/linux-x64/-/linux-x64-10.11.0.tgz"
 digest = "sha256:704e9a2570c98d29e8a26906e570729797b75fb659e051e02627af84ef3708ea"
+
+[[plugin]]
+reference = "node/app"
+profile = "app"
+package = "oyzu/node"
+major = 0
+version = "0.1.0-preview.4"
+release = "sha256:0632680e7481e9547fa49e6e9c12d400867e140b1110febff7b4ccaa7e3ea5ef"
+
+[[plugin.payloads]]
+os = "linux"
+arch = "amd64"
+abi = "musl"
+digest = "sha256:d5122da97ba1bc78b31b17785f9b17f10b2140fc49eba9cef6c7197a49565ddd"
+
+[[plugin.payloads]]
+os = "windows"
+arch = "amd64"
+abi = "msvc"
+digest = "sha256:1374d2870df45df72e412675a7666144d9aa2114957bb92c9a7e9898730a0413"

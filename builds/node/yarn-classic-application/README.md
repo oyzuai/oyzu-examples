@@ -4,7 +4,9 @@ Use the native yarn project and lock to build the same small original applicatio
 
 ## Prerequisites
 
-Use an Oyzu binary supporting this adapter and an explicitly provisioned `oyzu-toolchain/node:yarn1.22.22-node22` executor with a supported Docker engine. Node selection remains in oyzu.toml. Yarn Classic is an executor prerequisite rather than an Oyzu-managed tool: package.json declares yarn@1.22.22, the native lock selects Classic, and preparation records the manager version and immutable executor identity. Do not add a tools.yarn request: the current tool installer does not admit it. The image is not downloaded or silently replaced by this collection. Initial native dependency preparation needs network access. Modern Yarn remains unsupported.
+Use an Oyzu binary supporting this adapter and an explicitly provisioned `oyzu-toolchain/node:yarn1.22.22-node22` executor with a supported Docker engine. Node selection remains in oyzu.toml. Oyzu supplies Yarn Classic 1.22.22 from registry.npmjs.org, selected by package.json's packageManager declaration and resolved as oyzu:yarn in oyzu.lock; no separate tools.yarn request is needed. The native yarn.lock selects Classic, and preparation records the manager version and immutable executor identity. The image is not downloaded or silently replaced by this collection. Initial native dependency preparation needs network access. Modern Yarn remains unsupported.
+
+The tools.lockPlatforms setting in oyzu.toml keeps tool resolutions for Windows amd64, Linux amd64 and arm64, and Darwin arm64 when running oyzu pin. Lock coverage does not establish successful builds on those platforms.
 
 ## Build and consume
 
